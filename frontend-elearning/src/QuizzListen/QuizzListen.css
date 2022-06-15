@@ -1,36 +1,154 @@
 .background1 {
-    color : aqua;
+    color: aqua;
     background-color: black;
 }
 
 .page {
     margin: 10px 10px 10px 10px;
     background-color: brown;
+    padding: 10px;
+}
+
+.div--description {
+    background-color: white;
+    height: 150px;
+    margin: 10px 0px 10px 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+.div--must-description {
+    background-color: white;
+    height: auto;
+    margin: 10px 0px 10px 0;
+    border-top: 1px solid black;
+    border-radius: 2px;
+    box-sizing: border-box;
+    padding-top: 50px;
+}
+
+.div--attemps-time {
+    background-color: white;
+    height: auto;
+    margin: 10px 0px 0px 0px;
+}
+
+.div--dynamic-info {
+    background-color: green;
+    height: auto;
+    margin: 10px 0px 0px 0;
+}
+
+.div--dynamic-table_up {
+    border-top: 1px solid rgb(212, 20, 20);
+    border-bottom: 1px solid rgb(212, 20, 20);
+    background-color: white;
+    list-style: none;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    display: flex;
+}
+
+.div--dynamic-table_down {
+    border-bottom: 1px solid rgb(212, 20, 20);
+    background-color: #dbdbdb;
+    list-style: none;
+    margin: 0 0 30px 0;
+    height: 50px;
+    padding: 0;
+    align-items: center;
+    display: flex;
+}
+
+.div--dynamic-table_down:hover {
+    background-color: #bab8b8;
+}
+
+.text {
+    font-size: 25px;
+}
+
+.text--finalgrade {
+    margin-top: 100px;
+    padding-left: 200px;
+    font-size: 25px;
+}
+
+.one {
+    flex: 6;
+    text-align: left;
+    align-items: left;
+    padding-left: 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.two {
+    flex: 3;
+    background-color: coral;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100%;
+}
+
+.three {
+    flex: 2;
+    background-color: darkkhaki;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+}
+
+.list--parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.list--items {
+    display: block;
+    list-style-type: none;
+    font-size: 13px;
+    padding: 5px;
+    text-transform: uppercase;
 }
 
 .nav {
-    margin-top: 100px;
-    margin-bottom: 130px;
+    margin-bottom: 10px;
     background-color: aqua;
+    border: 1px solid black;
+    border-radius: 2px;
+    box-sizing: border-box;
 }
 
 .background2 {
-    color : red;
+    color: red;
 }
 
 .background3 {
-    color : blueviolet;
+    color: blueviolet;
 }
 
 .background4 {
-    color : chocolate;
+    color: chocolate;
 }
 
 .background5 {
-    color : darkgreen;
+    color: darkgreen;
 }
 
 .background6 {
-    color : greenyellow;
+    color: greenyellow;
 }
-

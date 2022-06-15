@@ -3,7 +3,6 @@ import './Button.css';
 type Props = {
     text:string;
     func:any;
-
 }
 
 export default function Button(props: Props) {
