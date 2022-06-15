@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
 import LoginPage from './Login/LoginPage';
+import QuizzPlay from './QuizPlay/QuizzPlay';
 import QuizzListen from './QuizzListen/QuizzListen';
 import RegisterPage from './Register/RegisterPage';
 
 function App() {
   return (
-    <QuizzListen></QuizzListen>
+    <QuizzPlay></QuizzPlay>
+    //<QuizzListen></QuizzListen>
     //<LoginPage></LoginPage>
     //<RegisterPage></RegisterPage>
     );

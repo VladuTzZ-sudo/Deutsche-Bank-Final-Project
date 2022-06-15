@@ -1,0 +1,378 @@
+.background1 {
+    color: #c9ebf0;
+    background-color: #c9ebf0;
+}
+
+.page {
+    margin: 10px 10px 10px 10px;
+    background-color: white;
+    padding: 10px;
+}
+
+.div--description__principal {
+    height: 130px;
+    margin: 20px 0px 0px 0;
+    border: 1px solid #c1c2c7;
+    border-radius: 2px;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+}
+
+.div--all--questions {
+    background-color: white;
+    flex: 7;
+    height: auto;
+    margin: 0px 20px 0px 0px;
+    padding: 20px;
+    border-radius: 2px;
+    border: 1px solid #c1c2c7;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+}
+
+.div--question--and--info {
+    background-color: white;
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.div--question {
+    background-color: #c9ebf0;
+    flex: 8;
+    padding: 10px;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.text--flex {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.div--question--info {
+    background-color: #f2f2f2;
+    flex: 0.61;
+    height: fit-content;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-radius: 2px;
+    border: 1px solid #c1c2c7;
+    box-sizing: border-box;
+    margin-right: 30px;
+    align-items: left;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.div--quizz {
+    background-color: white !important;
+    border-radius: 2px;
+    height: fit-content;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.text--title {
+    margin-bottom: 10px;
+    font-size: 37px;
+    padding-left: 20px;
+}
+
+.text--subtitle__principal {
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+
+.text--subtitle {
+    margin-bottom: 10px;
+    font-size: 25px;
+    padding-left: 20px;
+}
+
+.text--normal {
+    padding-left: 0px;
+}
+
+.text--normal__attempt {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.text--normal__principal {
+    padding-left: 20px;
+}
+
+.paragraph_general {
+    padding-left: 10px;
+    font-size: 13px;
+    padding-top: 7px;
+}
+
+.paragraph_special {
+    padding-left: 10px;
+    font-size: 13px;
+}
+
+.button {
+    width: 30px;
+    height: 40px;
+    padding: 10px;
+    margin: 3px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid black;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+.button:hover{
+    font-weight: bold;
+    background-color: white;
+    color: #125dff;
+    border:1px;
+    border-style: solid;
+    border-color: #125dff;
+    opacity: 1;
+}
+
+.upperButton {
+    flex: 1;
+    padding: 0px;
+    font-size: 15px;
+    font-weight: 400;
+    padding-bottom: 20px;
+    height: 0px;
+    width: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px 4px 0px 0px;
+    background-color: white;
+    background-color: white;
+}
+
+.lowerButton {
+    flex: 1;
+    padding: 0px;
+    font-size: 15px;
+    font-weight: 400;
+    padding-bottom: 17px;
+    height: 0px;
+    width: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 0px 4px 4px;
+    background-color: white;
+    background-color: red;
+}
+
+.paragraph_navi {
+    padding: 5px;
+    padding-left: 10px;
+    font-size: 15px;
+}
+
+.paragraph_quiz--navaigation {
+    padding: 5px;
+    padding-top: 10px;
+    padding-left: 20px;
+    font-size: 15px;
+}
+
+.answer_special {
+    padding-top: 15px;
+    padding-left: 25px;
+    font-size: 15px;
+}
+
+.answer {
+    padding-top: 10px;
+    padding-left: 25px;
+    font-size: 15px;
+}
+
+.paragraph_number {
+    font-weight: bold;
+    font-size: large;
+}
+
+.container-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 15px;
+}
+
+.div--squareNumbers {
+    flex: 1.6;
+    height: fit-content;
+    background-color: white;
+    margin: 0px 0px 0px 0;
+    border-radius: 2px;
+    border: 1px solid #c1c2c7;
+    box-sizing: border-box;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.div--attemps-time {
+    height: auto;
+    margin: 100px 0px 0px 0px;
+}
+
+.div--dynamic-info {
+    height: auto;
+    margin: 10px 0px 0px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.div--dynamic-table_up {
+    border-top: 1px solid #c5dbe6;
+    border-bottom: 1px solid #c5dbe6;
+    background-color: white;
+    list-style: none;
+    height: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 0;
+    align-items: center;
+    display: flex;
+}
+
+.div--dynamic-table_down {
+    border-bottom: 1px solid #c5dbe6;
+    background-color: #dbdbdb;
+    list-style: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    height: 50px;
+    padding: 0;
+    align-items: center;
+    display: flex;
+}
+
+.div--dynamic-table_down:hover {
+    background-color: #bab8b8;
+}
+
+.text {
+    font-size: 25px;
+}
+
+.text--finalgrade {
+    padding-left: 200px;
+    font-size: 25px;
+}
+
+.text--attempsAllowed {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.general--columm {
+    justify-content: center;
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+    height: 100%;
+}
+
+.one {
+    flex: 6;
+    text-align: left;
+    align-items: left;
+    padding-left: 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.two {
+    flex: 3;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100%;
+}
+
+.three {
+    flex: 2;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+}
+
+.elemFlexCenter {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.list--parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.list--items {
+    display: block;
+    list-style-type: none;
+    padding: 5px;
+    text-transform: uppercase;
+}
+
+.nav {
+    margin-bottom: 10px;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+.background2 {
+    color: red;
+}
+
+.background3 {
+    color: blueviolet;
+}
+
+.background4 {
+    color: chocolate;
+}
+
+.background5 {
+    color: darkgreen;
+}
+
+.background6 {
+    color: greenyellow;
+}
