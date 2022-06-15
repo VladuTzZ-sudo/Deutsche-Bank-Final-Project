@@ -1,0 +1,36 @@
+.background1 {
+    color : aqua;
+    background-color: black;
+}
+
+.page {
+    margin: 10px 10px 10px 10px;
+    background-color: brown;
+}
+
+.nav {
+    margin-top: 100px;
+    margin-bottom: 130px;
+    background-color: aqua;
+}
+
+.background2 {
+    color : red;
+}
+
+.background3 {
+    color : blueviolet;
+}
+
+.background4 {
+    color : chocolate;
+}
+
+.background5 {
+    color : darkgreen;
+}
+
+.background6 {
+    color : greenyellow;
+}
+
