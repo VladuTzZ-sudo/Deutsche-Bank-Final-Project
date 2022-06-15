@@ -1,6 +1,7 @@
 import Button from '../Button/Button';
 import './LoginPage.css';
 import  { ChangeEvent, useState } from "react";
+import axios from "axios";
 type Props = {}
 type UserLoginCred = {
   email:string;
@@ -12,10 +13,30 @@ export default function LoginPage({}: Props) {
 
 
 
+  
+
   const[userInput, setInput] = useState({
     email:"",
     password:"",
   });
+
+  const[beResources, setResources] = useState({
+    JWT:"",
+    idUser:"",
+    prenumele:"",
+  });
+  function sendCredentials() {
+    axios
+      .post("http://localhost:8080/login", userInput)
+      .then((response) => {
+        
+        
+        console.log(response);
+        alert(response.data);
+        
+      })
+      .catch((err) => {alert(err.response.data);});
+  };
 
   function flushForm() {
     setInput({
@@ -70,8 +91,10 @@ export default function LoginPage({}: Props) {
   }
   const handleSubmit = () =>{
       console.log(userInput);
-      if (isUserInpuValid())
-        flushForm();
+      if (isUserInpuValid()) {
+        sendCredentials();
+      }
+      
   };
   return (
     <div className='login-page'>
