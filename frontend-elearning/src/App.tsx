@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import Button from './Button/Button';
 import LoginPage from './Login/LoginPage';
+import CoursesMainPage from './pages/Courses/CoursesMainPage';
+import QuizzListen from './QuizzListen/QuizzListen';
 import RegisterPage from './Register/RegisterPage';
 
 function App() {
   return (
-
-    <div className="App"><LoginPage/></div>
+    <div className="App"><RegisterPage/></div>
   );
 }
 

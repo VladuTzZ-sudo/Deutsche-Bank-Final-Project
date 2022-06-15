@@ -7,33 +7,37 @@ type UserLoginCred = {
   email:string;
   password:string;
 }
+type toTransfer = {
+  token: string,
+  name: string,
+  role: string,
+}
 
 export default function LoginPage({}: Props) {
 
 
 
 
-  
+ 
 
   const[userInput, setInput] = useState({
     email:"",
     password:"",
   });
 
-  const[beResources, setResources] = useState({
-    JWT:"",
-    idUser:"",
-    prenumele:"",
-  });
+  function gotToNextPage(data:toTransfer) {
+    if (data.role==="student") {
+        alert("You will go to the student page!");
+    } else if(data.role==="teacher") {
+      alert("You will go to the teacher page!");
+    }
+
+  }
   function sendCredentials() {
     axios
       .post("http://localhost:8080/login", userInput)
       .then((response) => {
-        
-        
-        console.log(response);
-        alert(response.data);
-        
+          gotToNextPage(response.data);
       })
       .catch((err) => {alert(err.response.data);});
   };
