@@ -1,23 +1,14 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import StartPage from "./MainPage/components/StartPage";
+import React from 'react';
+import './App.css';
+import LoginPage from './Login/LoginPage';
+import QuizzListen from './QuizzListen/QuizzListen';
+import RegisterPage from './Register/RegisterPage';
 
 export default function App() {
   return (
-    
-  );
+    <QuizzListen></QuizzListen>
+    //<LoginPage></LoginPage>
+    //<RegisterPage></RegisterPage>
+    );
 }
 
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
