@@ -1,10 +1,11 @@
 .pageColor {
-    background-color: yellow;
+    background-color: #0b1357;
     padding: 10px 600px 10px 600px;
     display: flex;
     flex-direction: column;
 }
 
 .text--footer {
+    color: white;
     margin-left: 0px;
 }

@@ -1,42 +1,94 @@
 .background1 {
     color: aqua;
-    background-color: black;
+    background-color: #c1c2c7;
 }
 
 .page {
     margin: 10px 10px 10px 10px;
-    background-color: brown;
+    background-color: white;
     padding: 10px;
 }
 
-.div--description {
-    background-color: white;
-    height: 150px;
-    margin: 10px 0px 10px 0;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+.div--description__principal {
+    height: 130px;
+    margin: 20px 0px 0px 0;
+    border: 1px solid #c1c2c7;
     border-radius: 2px;
     box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+}
+
+.div--description {
+    height: 130px;
+    margin: 0px 20px 0px 20px;
+    border-bottom: 1px solid #c1c2c7;
+    border-radius: 2px;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+}
+
+.div--incapsulation {
+    background-color: white !important;
+    border-radius: 2px;
+    margin-top: 20px;
+    border: 1px solid #c1c2c7;
+    box-sizing: border-box;
+}
+
+.text--title {
+    margin-bottom: 10px;
+    font-size: 37px;
+    padding-left: 20px;
+}
+
+.text--subtitle__principal {
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+
+.text--subtitle {
+    margin-bottom: 10px;
+    font-size: 25px;
+    padding-left: 20px;
+}
+
+.text--normal {
+    padding-left: 0px;
+}
+
+.text--normal__attempt {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.text--normal__principal {
+    padding-left: 20px;
+}
+
+.paragraph {
+    padding-left: 20px;
 }
 
 .div--must-description {
-    background-color: white;
     height: auto;
-    margin: 10px 0px 10px 0;
-    border-top: 1px solid black;
+    margin: 0px 0px 10px 0;
     border-radius: 2px;
     box-sizing: border-box;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .div--attemps-time {
-    background-color: white;
     height: auto;
-    margin: 10px 0px 0px 0px;
+    margin: 100px 0px 0px 0px;
 }
 
 .div--dynamic-info {
-    background-color: green;
     height: auto;
     margin: 10px 0px 0px 0;
     display: flex;
@@ -44,22 +96,25 @@
 }
 
 .div--dynamic-table_up {
-    border-top: 1px solid rgb(212, 20, 20);
-    border-bottom: 1px solid rgb(212, 20, 20);
+    border-top: 1px solid rgb(43, 83, 192);
+    border-bottom: 1px solid rgb(43, 83, 192);
     background-color: white;
     list-style: none;
     height: 50px;
-    margin: 0;
+    margin-left: 20px;
+    margin-right: 20px;
     padding: 0;
     align-items: center;
     display: flex;
 }
 
 .div--dynamic-table_down {
-    border-bottom: 1px solid rgb(212, 20, 20);
+    border-bottom: 1px solid rgb(43, 83, 192);
     background-color: #dbdbdb;
     list-style: none;
-    margin: 0 0 30px 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
     height: 50px;
     padding: 0;
     align-items: center;
@@ -86,6 +141,14 @@
     margin-bottom: 5px;
 }
 
+.general--columm {
+    justify-content: center;
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+    height: 100%;
+}
+
 .one {
     flex: 6;
     text-align: left;
@@ -99,7 +162,6 @@
 
 .two {
     flex: 3;
-    background-color: coral;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -109,7 +171,6 @@
 
 .three {
     flex: 2;
-    background-color: darkkhaki;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -134,7 +195,6 @@
 .list--items {
     display: block;
     list-style-type: none;
-    font-size: 13px;
     padding: 5px;
     text-transform: uppercase;
 }
