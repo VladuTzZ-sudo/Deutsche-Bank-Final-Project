@@ -2,8 +2,6 @@ import Button from '../Button/Button';
 import './RegisterPage.css';
 import  { ChangeEvent, useState } from "react";
 
-
-
 type UserRegisterCred = {
   email:string;
   password:string;
