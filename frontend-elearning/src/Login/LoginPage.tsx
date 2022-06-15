@@ -1,10 +1,16 @@
 import Button from '../Button/Button';
 import './LoginPage.css';
 import  { ChangeEvent, useState } from "react";
+import axios from "axios";
 type Props = {}
 type UserLoginCred = {
   email:string;
   password:string;
+}
+type toTransfer = {
+  token: string,
+  name: string,
+  role: string,
 }
 
 export default function LoginPage({}: Props) {
@@ -12,10 +18,29 @@ export default function LoginPage({}: Props) {
 
 
 
+ 
+
   const[userInput, setInput] = useState({
     email:"",
     password:"",
   });
+
+  function gotToNextPage(data:toTransfer) {
+    if (data.role==="student") {
+        alert("You will go to the student page!");
+    } else if(data.role==="teacher") {
+      alert("You will go to the teacher page!");
+    }
+
+  }
+  function sendCredentials() {
+    axios
+      .post("http://localhost:8080/login", userInput)
+      .then((response) => {
+          gotToNextPage(response.data);
+      })
+      .catch((err) => {alert(err.response.data);});
+  };
 
   function flushForm() {
     setInput({
@@ -70,8 +95,10 @@ export default function LoginPage({}: Props) {
   }
   const handleSubmit = () =>{
       console.log(userInput);
-      if (isUserInpuValid())
-        flushForm();
+      if (isUserInpuValid()) {
+        sendCredentials();
+      }
+      
   };
   return (
     <div className='login-page'>

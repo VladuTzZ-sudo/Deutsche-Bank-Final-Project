@@ -1,6 +1,7 @@
 import Button from '../Button/Button';
 import './RegisterPage.css';
 import  { ChangeEvent, useState } from "react";
+import axios from "axios";
 
 type UserRegisterCred = {
   email:string;
@@ -19,6 +20,17 @@ export default function RegisterPage() {
     lastName:"",
     role:""
   });
+
+  function sendCredentials() {
+    axios
+      .post("http://localhost:8080/register", userInput)
+      .then((response) => {
+        flushForm();  
+        alert(response.data);
+        
+      })
+      .catch((err) => {alert(err.response.data);});
+  };
 
   function flushForm() {
     setInput({
@@ -111,8 +123,10 @@ export default function RegisterPage() {
   }
   const handleSubmit = () =>{
       console.log(userInput);
-      if (isUserInpuValid())
-        flushForm();
+      if (isUserInpuValid()) {
+        sendCredentials();
+      }
+       
   };
 
   return (
@@ -131,8 +145,8 @@ export default function RegisterPage() {
             <label className='register-page__form__label' >Role</label>
             <select   onChange={handleChange} id="role"  className="register-page__form__select" >
                 <option value="NONE">Please select role</option>
-                <option value="TEACHER">Teacher</option>
-                <option value="STUDENT">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="student">Student</option>
             </select>
             <Button text='Register!' func={()=>{ handleSubmit()}}/>
         </div>
