@@ -24,6 +24,7 @@
   padding: 2rem;
   border-radius: 1.4rem;
   transition: 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .card__content:hover {

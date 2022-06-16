@@ -3,6 +3,27 @@
   margin: 0 auto;
 }
 
+.grid {
+  display: grid;
+}
+
+.grid-3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-row-2 {
+  grid-row: 2;
+}
+
+.grid-row-3 {
+  grid-row: 3;
+  width: 100%;
+}
+
+.grid-col-span {
+  grid-column: 1/ 4;
+}
+
 .margin-bot--md {
   margin-bottom: 2.6rem;
 }
