@@ -5,6 +5,7 @@
 
 .grid {
   display: grid;
+  row-gap: 2.6rem;
 }
 
 .grid-3-cols {
@@ -17,7 +18,10 @@
 
 .grid-row-3 {
   grid-row: 3;
-  width: 100%;
+}
+
+.grid-col-3 {
+  grid-column: 3;
 }
 
 .grid-col-span {
@@ -34,4 +38,25 @@
 
 .header--primary {
   font-size: 3.2rem;
+}
+
+.btn-add {
+  align-self: center;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #3a2e39;
+}
+
+.btn__icon {
+  font-size: 1.8rem;
+}
+
+.justify-self--center {
+  justify-self: center;
+}
+
+.align-self--center {
+  align-self: center;
 }
