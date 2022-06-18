@@ -1,12 +1,13 @@
 import Button from '../Button/Button';
 import './RegisterPage.css';
 import  { ChangeEvent, useState } from "react";
+import axios from "axios";
 
 type UserRegisterCred = {
   email:string;
   password:string;
-  firstName:string;
-  lastName:string;
+  surname:string;
+  name:string;
   role:string;
 }
 
@@ -15,24 +16,35 @@ export default function RegisterPage() {
   const[userInput, setInput] = useState({
     email:"",
     password:"",
-    firstName:"",
-    lastName:"",
+    surname:"",
+    name:"",
     role:""
   });
+
+  function sendCredentials() {
+    axios
+      .post("http://localhost:8080/register", userInput)
+      .then((response) => {
+        flushForm();  
+        alert(response.data);
+        
+      })
+      .catch((err) => {alert(err.response.data);});
+  };
 
   function flushForm() {
     setInput({
       email:"",
       password:"",
-      firstName:"",
-      lastName:"",
+      surname:"",
+      name:"",
       role:""
     });
 
     (document.getElementById("email") as HTMLInputElement).value="";
     (document.getElementById("password") as HTMLInputElement).value="";
-    (document.getElementById("firstName") as HTMLInputElement).value="";
-    (document.getElementById("lastName") as HTMLInputElement).value="";
+    (document.getElementById("surname") as HTMLInputElement).value="";
+    (document.getElementById("name") as HTMLInputElement).value="";
     (document.getElementById("role") as HTMLInputElement).value="NONE";
   }
   const handleChange = (event:ChangeEvent<HTMLInputElement>|ChangeEvent<HTMLSelectElement>) => { 
@@ -64,16 +76,16 @@ export default function RegisterPage() {
     }
       return true;
   }
-  function isFirstNameValid(firstName:string){
-    if(firstName.length<3 || firstName.length>20) {
+  function issurnameValid(surname:string){
+    if(surname.length<3 || surname.length>20) {
       alert("Your first name must have between 3 and 20 characters!");
       return false;
     }
     return true;
   }
 
-  function isLastNameValid(lastName:string){
-    if(lastName.length<3 || lastName.length>20) {
+  function isnameValid(name:string){
+    if(name.length<3 || name.length>20) {
       alert("Your last name must have between 3 and 20 characters!");
       return false;
     }
@@ -97,10 +109,10 @@ export default function RegisterPage() {
       ok = isPasswordValid(userInput.password);
     }
     if (ok === true) {
-      ok = isFirstNameValid(userInput.firstName);
+      ok = issurnameValid(userInput.surname);
     }
     if (ok === true) {
-      ok = isLastNameValid(userInput.lastName);
+      ok = isnameValid(userInput.name);
     }
     if (ok === true) {
       ok = isRoleValid(userInput.role);
@@ -111,8 +123,10 @@ export default function RegisterPage() {
   }
   const handleSubmit = () =>{
       console.log(userInput);
-      if (isUserInpuValid())
-        flushForm();
+      if (isUserInpuValid()) {
+        sendCredentials();
+      }
+       
   };
 
   return (
@@ -124,15 +138,15 @@ export default function RegisterPage() {
             <input  onChange={handleChange} className="register-page__form__input-text" type="text" id="email"  placeholder="Your email is...." />
             <label className='register-page__form__label' >Password</label>
             <input   onChange={handleChange} className="register-page__form__input-text" type="password" id="password"  placeholder="Your password is...." />
-            <label className='register-page__form__label' >First Name</label>
-            <input  onChange={handleChange} className="register-page__form__input-text" type="text" id="firstName"  placeholder="Your first name is...." />
-            <label className='register-page__form__label' >Last Name</label>
-            <input onChange={handleChange} className="register-page__form__input-text" type="text" id="lastName"  placeholder="Your last name is...." />
+            <label className='register-page__form__label' >Surname</label>
+            <input  onChange={handleChange} className="register-page__form__input-text" type="text" id="surname"  placeholder="Your surname is...." />
+            <label className='register-page__form__label' >Name</label>
+            <input onChange={handleChange} className="register-page__form__input-text" type="text" id="name"  placeholder="Your name is...." />
             <label className='register-page__form__label' >Role</label>
             <select   onChange={handleChange} id="role"  className="register-page__form__select" >
                 <option value="NONE">Please select role</option>
-                <option value="TEACHER">Teacher</option>
-                <option value="STUDENT">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="student">Student</option>
             </select>
             <Button text='Register!' func={()=>{ handleSubmit()}}/>
         </div>

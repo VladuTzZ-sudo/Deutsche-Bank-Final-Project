@@ -1,0 +1,54 @@
+.list {
+  list-style: none;
+  display: grid;
+  grid-auto-rows: 1fr;
+  row-gap: 0.8rem;
+  border-radius: 1.4rem;
+  box-shadow: 0rem 0rem 0.5rem 0.2rem rgba(0, 0, 0, 0.1);
+  padding: 1.4rem;
+}
+
+.list__participant {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  align-items: center;
+}
+
+.list__icon {
+  font-size: 2rem;
+  justify-self: center;
+  color: #b3bae5;
+}
+
+.list__decimal-style {
+  font-size: 1.6rem;
+  justify-self: center;
+}
+
+.list__number {
+  color: #9d979c;
+}
+
+.list__text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.list__text {
+  font-size: 1.4rem;
+}
+
+.list__text--top {
+  font-size: 1.2rem;
+  color: #756d74;
+}
+
+.list__score {
+  text-align: right;
+  font-size: 1.6rem;
+}
+
+.list__score:first-of-type {
+  color: #a1a7ce;
+  font-weight: 600;
+}

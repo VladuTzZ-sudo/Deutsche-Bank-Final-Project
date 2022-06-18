@@ -1,0 +1,66 @@
+.container {
+  max-width: 130rem;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  row-gap: 2.6rem;
+}
+
+.grid-3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-row-2 {
+  grid-row: 2;
+}
+
+.grid-row-3 {
+  grid-row: 3;
+}
+
+.grid-col-3 {
+  grid-column: 3;
+}
+
+.grid-col-span {
+  grid-column: 1/ 4;
+}
+
+.margin-bot--md {
+  margin-bottom: 2.6rem;
+}
+
+.margin-top--lg {
+  margin-top: 4.2rem;
+}
+
+.header--primary {
+  font-size: 3.2rem;
+}
+
+.btn-add {
+  align-self: center;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #3a2e39;
+}
+
+.btn__icon {
+  font-size: 1.8rem;
+}
+
+.justify-self--center {
+  justify-self: center;
+}
+
+.align-self--center {
+  align-self: center;
+}
+
+.modal {
+  min-width: 30rem;
+}
