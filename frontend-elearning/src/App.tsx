@@ -13,6 +13,7 @@ function App() {
     <QuizzListen></QuizzListen>
     //<LoginPage></LoginPage>
     //<RegisterPage></RegisterPage>
+    <CoursesMainPage></CoursesMainPage>
     );
 
 }

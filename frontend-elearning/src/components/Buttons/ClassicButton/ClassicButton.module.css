@@ -1,0 +1,15 @@
+.btn {
+  border: none;
+  border-radius: 1.4rem;
+  padding: 1rem 2rem;
+  width: fit-content;
+  height: fit-content;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.btn:hover {
+  filter: brightness(90%);
+}

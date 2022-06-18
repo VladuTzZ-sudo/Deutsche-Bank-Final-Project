@@ -5,16 +5,17 @@ import styles from "./CoursesList.module.css";
 
 interface ListProps {
   courses: Course[];
+  className?: string;
 }
 
 const CoursesList: FC<ListProps> = (props) => {
-  const courses = props.courses.map((course) => (
+  const courses: JSX.Element[] = props.courses.map((course) => (
     <li>
       <CourseCard color="#b3bae5" course={course}></CourseCard>
     </li>
   ));
 
-  return <ul className={styles["list"]}>{courses}</ul>;
+  return <ul className={`${styles["list"]} ${props.className}`}>{courses}</ul>;
 };
 
 export default CoursesList;
