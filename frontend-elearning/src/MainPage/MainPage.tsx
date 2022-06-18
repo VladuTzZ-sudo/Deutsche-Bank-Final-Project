@@ -7,9 +7,16 @@ import SecondSection from "../InfoCard/SecondSection";
 import AboutUs from "../InfoCard/AboutUs";
 
 export default function MainPage() {
+  const navLinks = [
+    { text: "text", linkUrl: "url" },
+    { text: "text", linkUrl: "url" },
+    { text: "text", linkUrl: "url" },
+    { text: "text", linkUrl: "url" },
+  ];
+
   return (
     <div className="main-page">
-      <NavBar></NavBar>
+      <NavBar links={navLinks}></NavBar>
       <InfoMainCard></InfoMainCard>
       <SecondSection></SecondSection>
       <AboutUs></AboutUs>
