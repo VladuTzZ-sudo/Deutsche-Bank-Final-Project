@@ -1,50 +1,50 @@
-.info-title-about-section{
-    color:#212529;
-    margin-top: 120px;
-    margin-bottom: 50px;
-    font-size: 300%;
+.info-title-about-section {
+  color: #212529;
+  margin-top: 120px;
+  margin-bottom: 50px;
+  font-size: 300%;
 }
 
-.card-footer{
-    background-color: #f4e9ea !important;
+.card-footer {
+  background-color: #f4e9ea !important;
 }
 
-.btn-linkedin{
-    font-size: 150% !important;
+.btn-linkedin {
+  font-size: 150% !important;
 }
 
-.about-us{
-    background-color: #f4e9ea;
-    font-family: 'PT Sans', sans-serif !important;
+.about-us {
+  background-color: #f4e9ea;
+  font-family: "PT Sans", sans-serif !important;
 }
 
-.aboutus-text{
-    margin-bottom: 110px;
-    color:#212529;
+.aboutus-text {
+  margin-bottom: 110px;
+  color: #212529;
 }
 
-.img-responsive{
-    width: 251px;
-    height: 251px;
-    border-radius: 50%;
+.img-responsive {
+  width: 251px;
+  height: 251px;
+  border-radius: 50%;
 }
 
-.spacing-rows{
-    margin: 70px 100px;
+.spacing-rows {
+  margin: 70px 100px;
 }
 
-.spacing-column{
-    margin:20px 30px;
+.spacing-column {
+  margin: 20px 30px;
 }
 
-.card-description{
-    text-align: justify;
+.card-description {
+  text-align: justify;
 }
 
-.spacing-right{
-    margin-right: 100px !important;
-}
-
+/* .spacing-right {
+  margin-right: 100px !important;
+} */
+/* 
 .spacing-left{
     margin-left: 100px !important;
-}
+} */
