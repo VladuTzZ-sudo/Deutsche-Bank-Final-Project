@@ -1,11 +1,12 @@
-import React from 'react';
-import './App.css';
-import LoginPage from './Login/LoginPage';
-import QuizzPlay from './QuizPlay/QuizzPlay';
-import CoursesMainPage from './pages/Courses/CoursesMainPage';
-import QuizzListen from './QuizzListen/QuizzListen';
-import RegisterPage from './Register/RegisterPage';
-import MainPage from './MainPage/MainPage';
+import React from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import LoginPage from "./Login/LoginPage";
+import QuizzPlay from "./QuizPlay/QuizzPlay";
+import CoursesMainPage from "./pages/Courses/CoursesMainPage";
+import QuizzListen from "./QuizzListen/QuizzListen";
+import RegisterPage from "./Register/RegisterPage";
+import MainPage from "./MainPage/MainPage";
 
 export default function App() {
   return (
@@ -15,8 +16,6 @@ export default function App() {
     //<LoginPage></LoginPage>
     //<RegisterPage></RegisterPage>
     //<CoursesMainPage></CoursesMainPage>
-    <MainPage/>
-    );
-
+    <MainPage />
+  );
 }
-

@@ -1,49 +1,49 @@
 .text-part {
-    background-color: #f4e9ea;
+  background-color: #f4e9ea;
+  width: 100%;
 }
 
 .container-center {
-    display: flex;
-    justify-content: center;
-    font-family: 'PT Sans', sans-serif;
-    text-align: center;
-    max-width: 43%;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  font-family: "PT Sans", sans-serif;
+  text-align: center;
+  max-width: 43%;
+  margin: 0 auto;
 }
 
 .info-title {
-    margin-top: 90px;
-    margin-bottom: 60px;
-    font-size: 300%;
+  margin-top: 90px;
+  margin-bottom: 60px;
+  font-size: 300%;
 }
 
 .about-text {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-.join-text{
-    margin-bottom: 20px;
+.join-text {
+  margin-bottom: 20px;
 }
 #join-text-id {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .join-btn {
-    border-radius: 28px;
-    font-family: 'PT Sans', sans-serif;
-    color: #f4e9ea;
-    font-size: 27px;
-    background: #3da7ed;
-    padding: 5px 60px 5px 60px;
-    text-decoration: none;
-    display: block !important;
-    margin: 0 auto;
-    margin-top: 30px;
-    margin-bottom: 130px;
+  border-radius: 28px;
+  font-family: "PT Sans", sans-serif;
+  color: #f4e9ea;
+  font-size: 27px;
+  background: #3da7ed;
+  padding: 5px 60px 5px 60px;
+  text-decoration: none;
+  display: block !important;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 130px;
 }
 
 .join-btn:hover {
-    background: #3cb0fd;
-    text-decoration: none;
+  background: #3cb0fd;
+  text-decoration: none;
 }
-

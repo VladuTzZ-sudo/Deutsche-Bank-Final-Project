@@ -40,6 +40,11 @@
 .btn-close {
   cursor: pointer;
   color: #fff;
+  transition: 0.2s ease-in-out;
+}
+
+.btn-close:hover {
+  filter: brightness(90%);
 }
 
 .form-container {
