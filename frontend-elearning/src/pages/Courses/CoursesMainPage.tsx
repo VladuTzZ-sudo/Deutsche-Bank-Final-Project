@@ -103,7 +103,12 @@ const CoursesMainPage: FC = () => {
           <Leaderboard participants={users}></Leaderboard>
         </article>
       </div>
-      {isModalOpened && <AddCourseModal onClose={closeModal}></AddCourseModal>}
+      {isModalOpened && (
+        <AddCourseModal
+          onClose={closeModal}
+          className={styles["modal"]}
+        ></AddCourseModal>
+      )}
     </React.Fragment>
   );
 };

@@ -60,3 +60,7 @@
 .align-self--center {
   align-self: center;
 }
+
+.modal {
+  min-width: 30rem;
+}

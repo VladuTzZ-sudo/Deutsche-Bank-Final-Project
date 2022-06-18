@@ -7,14 +7,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 interface ModalProps {
-  onClose?: React.MouseEventHandler<SVGSVGElement>;
+  className?: string;
+  onClose?: React.MouseEventHandler;
 }
 
 const AddCourseModal: FC<ModalProps> = (props) => {
   return ReactDOM.createPortal(
     <div className={styles["modal"]}>
-      <div className={styles["modal__background"]}></div>
-      <div className={styles["modal__content"]}>
+      <div
+        className={styles["modal__background"]}
+        onClick={props.onClose}
+      ></div>
+      <div className={`${styles["modal__content"]} ${props.className}`}>
         <div className={styles["title"]}>
           <span>ADD COURSE</span>{" "}
           <FontAwesomeIcon
