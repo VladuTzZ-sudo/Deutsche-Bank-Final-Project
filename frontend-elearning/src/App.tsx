@@ -5,6 +5,7 @@ import QuizzPlay from './QuizPlay/QuizzPlay';
 import CoursesMainPage from './pages/Courses/CoursesMainPage';
 import QuizzListen from './QuizzListen/QuizzListen';
 import RegisterPage from './Register/RegisterPage';
+import MainPage from './MainPage/MainPage';
 
 export default function App() {
   return (
@@ -13,7 +14,8 @@ export default function App() {
     //<QuizzListen></QuizzListen>
     //<LoginPage></LoginPage>
     //<RegisterPage></RegisterPage>
-    <CoursesMainPage></CoursesMainPage>
+    //<CoursesMainPage></CoursesMainPage>
+    <MainPage/>
     );
 
 }
