@@ -8,9 +8,9 @@ import RegisterPage from './Register/RegisterPage';
 
 function App() {
   return (
-    <QuizzPlay></QuizzPlay>
+    //<QuizzPlay></QuizzPlay>
     //<div className="App"><RegisterPage/></div>
-    //<QuizzListen></QuizzListen>
+    <QuizzListen></QuizzListen>
     //<LoginPage></LoginPage>
     //<RegisterPage></RegisterPage>
     );
