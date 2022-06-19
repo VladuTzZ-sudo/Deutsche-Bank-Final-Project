@@ -7,9 +7,12 @@ import {
   useRef,
   useState,
 } from "react";
+import Data from "../../models/Data";
+import DataCard from "../DataCard/DataCard";
 import styles from "./DragFiles.module.css";
 
 interface DragFilesProps {
+  data?: string[];
   onDragEnter?: DragEventHandler;
   onDragLeave?: DragEventHandler;
   onDragOver?: DragEventHandler;
@@ -60,6 +63,20 @@ const DragFiles: FC<DragFilesProps> = (props) => {
     }
   };
 
+  const mockData = {
+    title: "File 1",
+    date: new Date(),
+    icon: "",
+  };
+
+  const files = props.data?.map((file, index) => (
+    <DataCard
+      dataInfo={mockData}
+      className={styles["data__card"]}
+      key={index}
+    ></DataCard>
+  ));
+
   return (
     <div
       className={`${styles["container"]} ${props.className}`}
@@ -68,6 +85,9 @@ const DragFiles: FC<DragFilesProps> = (props) => {
       onDragOver={onDragOver}
       onDrop={onDrop}
     >
+      <div className={`${styles["content"]}`}>
+        <div className={styles["data-container"]}>{files}</div>
+      </div>
       {isDragging && <div className={styles["overlay"]} ref={overlayRef}></div>}
     </div>
   );

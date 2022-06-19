@@ -16,8 +16,8 @@ export default function App() {
     //<QuizzListen></QuizzListen>
     //<LoginPage></LoginPage>
     //<RegisterPage></RegisterPage>
-    <CoursesMainPage></CoursesMainPage>
-    //<CourseDetailPage></CourseDetailPage>
+    //<CoursesMainPage></CoursesMainPage>
+    <CourseDetailPage></CourseDetailPage>
     //<MainPage />
   );
 }
