@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import styles from "./ModalContainer.module.css";
 import ReactDOM from "react-dom";
 
@@ -14,7 +14,7 @@ const ModalContainer: FC<ModalProps> = (props) => {
         className={styles["modal__background"]}
         onClick={props.onClose}
       ></div>
-      {props.children}
+      <div className={styles["modal__content"]}>{props.children}</div>
     </div>,
     document.getElementById("modal")!
   );
