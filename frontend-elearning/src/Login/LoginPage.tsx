@@ -2,6 +2,7 @@ import Button from '../Button/Button';
 import './LoginPage.css';
 import  { ChangeEvent, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 type Props = {}
 type UserLoginCred = {
   email:string;
@@ -14,7 +15,7 @@ type toTransfer = {
 }
 
 export default function LoginPage({}: Props) {
-
+  let navigate = useNavigate();
 
 
 
@@ -30,6 +31,10 @@ export default function LoginPage({}: Props) {
         alert("You will go to the student page!");
     } else if(data.role==="teacher") {
       alert("You will go to the teacher page!");
+    }
+
+    if (data.role==="student" || data.role==="teacher") {
+      navigate("/student", {state:data});
     }
 
   }

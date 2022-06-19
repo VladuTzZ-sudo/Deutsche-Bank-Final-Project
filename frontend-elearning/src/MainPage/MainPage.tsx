@@ -8,8 +8,8 @@ import AboutUs from "../InfoCard/AboutUs";
 
 export default function MainPage() {
   const navLinks = [
-    { text: "Login", linkUrl: "url" },
-    { text: "Register", linkUrl: "url" },
+    { text: "Login", linkUrl: "/loginPage" },
+    { text: "Register", linkUrl: "/registerPage" },
   ];
 
   return (
