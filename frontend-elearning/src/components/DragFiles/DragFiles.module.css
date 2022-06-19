@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+}
+
+.overlay {
+  border: 0.2rem dashed blue;
+  border-radius: 0.5rem;
+  position: absolute;
+  width: 94%;
+  height: 94%;
+  top: 3%;
+  left: 3%;
+}

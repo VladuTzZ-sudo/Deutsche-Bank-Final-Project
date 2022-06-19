@@ -57,4 +57,9 @@
 
 .input {
   width: 100%;
+  font-size: 1.6rem;
+}
+
+.btn-save {
+  font-size: 1.6rem;
 }

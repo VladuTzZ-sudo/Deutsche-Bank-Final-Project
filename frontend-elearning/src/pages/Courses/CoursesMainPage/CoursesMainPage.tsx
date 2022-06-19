@@ -1,14 +1,14 @@
 import { faDisplay, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import React, { FC, useState } from "react";
-import CoursesList from "../../components/Courses/CoursesList/CoursesList";
-import Course from "../../models/Course";
-import "./global.css";
+import CoursesList from "../../../components/Courses/CoursesList/CoursesList";
+import Course from "../../../models/Course";
+import "../global.css";
 import styles from "./CoursesMainPage.module.css";
-import Leaderboard from "../../components/Leaderboard/Leaderboard";
-import UserScore from "../../models/UserScore";
-import ClassicButton from "../../components/Buttons/ClassicButton/ClassicButton";
+import Leaderboard from "../../../components/Leaderboard/Leaderboard";
+import UserScore from "../../../models/UserScore";
+import ClassicButton from "../../../components/Buttons/ClassicButton/ClassicButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AddCourseModal from "../../components/Modals/AddCourseModal/AddCourseModal";
+import AddCourseModal from "../../../components/Modals/AddCourseModal/AddCourseModal";
 
 const CoursesMainPage: FC = () => {
   const courses: Course[] = [
@@ -88,7 +88,7 @@ const CoursesMainPage: FC = () => {
           onClick={openModal}
         >
           <FontAwesomeIcon className={styles["btn__icon"]} icon={faBookOpen} />
-          <span>ADD COURSE</span>
+          <span className={styles["btn__text"]}>ADD COURSE</span>
         </ClassicButton>
         <CoursesList
           className={`${styles["grid-row-2"]} ${styles["grid-col-span"]}`}

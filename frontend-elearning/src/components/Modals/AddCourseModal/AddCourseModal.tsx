@@ -5,6 +5,7 @@ import UnderlinedInput from "../../Inputs/UnderlinedInput";
 import styles from "./AddCourseModal.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import ModalContainer from "../ModalContainer/ModalContainer";
 
 interface ModalProps {
   className?: string;
@@ -12,12 +13,8 @@ interface ModalProps {
 }
 
 const AddCourseModal: FC<ModalProps> = (props) => {
-  return ReactDOM.createPortal(
-    <div className={styles["modal"]}>
-      <div
-        className={styles["modal__background"]}
-        onClick={props.onClose}
-      ></div>
+  return (
+    <ModalContainer onClose={props.onClose}>
       <div className={`${styles["modal__content"]} ${props.className}`}>
         <div className={styles["title"]}>
           <span>ADD COURSE</span>{" "}
@@ -36,11 +33,12 @@ const AddCourseModal: FC<ModalProps> = (props) => {
             className={styles["input"]}
             placeholder="Course Description"
           ></UnderlinedInput>
-          <ClassicButton onClick={() => {}}>Send</ClassicButton>
+          <ClassicButton onClick={() => {}} className={styles["btn-save"]}>
+            Send
+          </ClassicButton>
         </div>
       </div>
-    </div>,
-    document.getElementById("modal")!
+    </ModalContainer>
   );
 };
 
