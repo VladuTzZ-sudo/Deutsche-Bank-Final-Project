@@ -1,5 +1,5 @@
 import { faDisplay, faBookOpen } from "@fortawesome/free-solid-svg-icons";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import CoursesList from "../../../components/Courses/CoursesList/CoursesList";
 import Course from "../../../models/Course";
 import "../global.css";
@@ -9,42 +9,37 @@ import UserScore from "../../../models/UserScore";
 import ClassicButton from "../../../components/Buttons/ClassicButton/ClassicButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddCourseModal from "../../../components/Modals/AddCourseModal/AddCourseModal";
+import { useLocation, Location } from "react-router-dom";
+import UserAuth from "../../../models/UserAuth";
+import { useJwt } from "react-jwt";
+import Jwt from "../../../models/Jwt";
+import NavBar from "../../../Navbar/NavBar";
+import CustomNavLink from "../../../models/CustomNavLink";
+import { Roles } from "../../../Constants/Constants";
 
 const CoursesMainPage: FC = () => {
   const courses: Course[] = [
     {
       icon: faDisplay,
-      title: "Machine Learning",
+      title: "Machine Learning1",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
       icon: faDisplay,
-      title: "Machine Learning",
+      title: "Machine Learning2",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
       icon: faDisplay,
-      title: "Machine Learning",
+      title: "Machine Learning3",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
       icon: faDisplay,
-      title: "Machine Learning",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      icon: faDisplay,
-      title: "Machine Learning",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      icon: faDisplay,
-      title: "Machine Learning",
+      title: "Machine Learning4",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
@@ -63,45 +58,77 @@ const CoursesMainPage: FC = () => {
     { name: "David Simpson", score: 2 },
   ];
 
-  const [isModalOpened, setIsModalOpened] = useState(false);
+  const studentLinks: CustomNavLink[] = [
+    { text: "s1", href: "asd" },
+    { text: "s2", href: "asd" },
+    { text: "s3", href: "asd" },
+    { text: "s4", href: "asd" },
+  ];
 
-  const openModal = () => {
+  const teacherLinks: CustomNavLink[] = [
+    { text: "t1", href: "asd" },
+    { text: "t2", href: "asd" },
+    { text: "t3", href: "asd" },
+    { text: "t4", href: "asd" },
+  ];
+
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [loggedUser, setLoggedUser]: [
+    UserAuth,
+    React.Dispatch<React.SetStateAction<UserAuth>>
+  ] = useState({
+    name: "",
+    role: "",
+    token: "",
+  });
+
+  const location: Location = useLocation();
+
+  useEffect(() => {
+    setLoggedUser(location.state as UserAuth);
+  }, []);
+
+  const openModal = (): void => {
     setIsModalOpened(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsModalOpened(false);
   };
 
   return (
     <React.Fragment>
+      <NavBar
+        links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
+      ></NavBar>
       <div
         className={`${styles["container"]} ${styles["grid"]} ${styles["grid-3-cols"]}`}
       >
-        <h1
-          className={`${styles["header--primary"]} ${styles["align-self--center"]}`}
-        >
-          Courses
-        </h1>
-        <ClassicButton
-          className={`${styles["grid-col-3"]} ${styles["btn-add"]}`}
-          onClick={openModal}
-        >
-          <FontAwesomeIcon className={styles["btn__icon"]} icon={faBookOpen} />
-          <span className={styles["btn__text"]}>ADD COURSE</span>
-        </ClassicButton>
+        <div className={`${styles["courses-btns"]}`}>
+          <h1
+            className={`${styles["header--primary"]} ${styles["align-self--center"]}`}
+          >
+            Courses
+          </h1>
+          {loggedUser.role !== Roles.TEACHER ? null : (
+            <ClassicButton
+              className={`${styles["btn-add"]}`}
+              onClick={openModal}
+            >
+              <FontAwesomeIcon
+                className={styles["btn__icon"]}
+                icon={faBookOpen}
+              />
+              <span className={styles["btn__text"]}>ADD COURSE</span>
+            </ClassicButton>
+          )}
+        </div>
+        <h1 className={`${styles["header--primary"]}`}>Leaderboard</h1>
         <CoursesList
-          className={`${styles["grid-row-2"]} ${styles["grid-col-span"]}`}
+          className={`${styles["courses__list"]}`}
           courses={courses}
         ></CoursesList>
-        <article className={styles["grid-row-3"]}>
-          <h1
-            className={`${styles["header--primary"]} ${styles["margin-bot--md"]}`}
-          >
-            Leaderboard
-          </h1>
-          <Leaderboard participants={users}></Leaderboard>
-        </article>
+        <Leaderboard participants={users}></Leaderboard>
       </div>
       {isModalOpened && (
         <AddCourseModal

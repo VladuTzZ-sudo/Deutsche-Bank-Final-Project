@@ -5,8 +5,8 @@ import "./NavBar.css";
 import NavbarBtn from "../NavbarBtn/NavbarBtn";
 
 export default function NavBar(props: any) {
-  const navBtns = props.links.map((link: any) => (
-    <NavbarBtn text={link.text} href={link.linkUrl} />
+  const navBtns = props.links.map((link: any, index: any) => (
+    <NavbarBtn text={link.text} href={link.linkUrl} key={index} />
   ));
 
   return (

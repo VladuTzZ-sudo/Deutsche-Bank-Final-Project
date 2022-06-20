@@ -4,6 +4,7 @@
   color: #f4e9ea;
   text-decoration: none;
   font-size: 120%;
+  cursor: pointer;
 }
 
 .navbar-btn:last-child {
