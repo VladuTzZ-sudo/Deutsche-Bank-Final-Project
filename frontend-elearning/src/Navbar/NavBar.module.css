@@ -1,19 +1,22 @@
 .navbar {
-	background-color: #212529;
-	width: 100%;
+  background-color: #212529;
+  width: 100%;
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .nav-left-part {
-	color: #f4e9ea !important;
-	text-decoration: none;
-	font-size: 2.5rem;
+  color: #f4e9ea !important;
+  text-decoration: none;
+  font-size: 2.5rem;
 }
 
 .navbar-right {
-	display: flex;
-	justify-content: right;
+  display: flex;
+  justify-content: right;
 }
 
 .navbar-left {
-	margin: 10px 0 10px 50px !important;
+  margin: 10px 0 10px 50px !important;
 }
