@@ -3,7 +3,8 @@
 	margin-right: 20px;
 	color: #f4e9ea;
 	text-decoration: none;
-	font-size: 1.5rem;
+	font-size: 120%;
+	cursor: pointer;
 }
 
 .navbar-btn:last-child {

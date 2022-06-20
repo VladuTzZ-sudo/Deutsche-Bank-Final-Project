@@ -9,8 +9,8 @@ interface ListProps {
 }
 
 const CoursesList: FC<ListProps> = (props) => {
-  const courses: JSX.Element[] = props.courses.map((course) => (
-    <li key={course.title}>
+  const courses: JSX.Element[] = props.courses.map((course, index) => (
+    <li key={index}>
       <CourseCard color="#b3bae5" course={course}></CourseCard>
     </li>
   ));
