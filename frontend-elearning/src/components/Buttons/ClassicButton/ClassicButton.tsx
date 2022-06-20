@@ -2,7 +2,7 @@ import { FC } from "react";
 import styles from "./ClassicButton.module.css";
 
 interface ButtonProps {
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler;
   className?: string;
   children?: React.ReactNode;
 }

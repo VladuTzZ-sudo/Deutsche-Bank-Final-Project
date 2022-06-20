@@ -12,7 +12,7 @@ const Leaderboard: FC<LeaderboardProps> = (props) => {
   const awardsIcons: IconDefinition[] = [faStar, faStar, faStar];
 
   const participants: JSX.Element[] = props.participants.map((user, index) => (
-    <li className={styles["list__participant"]}>
+    <li className={styles["list__participant"]} key={index}>
       {index < awardsIcons.length ? (
         <FontAwesomeIcon
           className={styles["list__icon"]}

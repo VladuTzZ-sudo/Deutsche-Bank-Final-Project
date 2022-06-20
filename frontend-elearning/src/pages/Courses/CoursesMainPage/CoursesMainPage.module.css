@@ -38,6 +38,7 @@
 
 .header--primary {
   font-size: 3.2rem;
+  font-weight: 600;
 }
 
 .btn-add {
@@ -53,10 +54,18 @@
   font-size: 1.8rem;
 }
 
+.btn__text {
+  font-size: 1.6rem;
+}
+
 .justify-self--center {
   justify-self: center;
 }
 
 .align-self--center {
   align-self: center;
+}
+
+.modal {
+  min-width: 30rem;
 }

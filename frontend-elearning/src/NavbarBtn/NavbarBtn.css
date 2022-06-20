@@ -1,0 +1,15 @@
+.navbar-btn {
+  margin-left: 20px;
+  margin-right: 20px;
+  color: #f4e9ea;
+  text-decoration: none;
+  font-size: 120%;
+}
+
+.navbar-btn:last-child {
+  margin-right: 50px;
+}
+
+.navbar-btn:hover {
+  color: #f4e9ea;
+}
