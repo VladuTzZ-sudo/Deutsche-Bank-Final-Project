@@ -11,12 +11,6 @@ import CourseDetailPage from "./pages/Courses/CourseDetailPage/CourseDetailPage"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 export default function App() {
   return (
-    //<QuizzPlay></QuizzPlay>
-    //<div className="App"><RegisterPage/></div>
-    //<QuizzListen></QuizzListen>
-    //<LoginPage></LoginPage>
-    //<RegisterPage></RegisterPage>
-    //<MainPage />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
