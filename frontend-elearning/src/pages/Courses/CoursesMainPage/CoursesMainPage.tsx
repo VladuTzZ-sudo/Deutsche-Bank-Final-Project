@@ -18,126 +18,129 @@ import CustomNavLink from "../../../models/CustomNavLink";
 import { Roles } from "../../../Constants/Constants";
 
 const CoursesMainPage: FC = () => {
-  const courses: Course[] = [
-    {
-      icon: faDisplay,
-      title: "Machine Learning1",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      icon: faDisplay,
-      title: "Machine Learning2",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      icon: faDisplay,
-      title: "Machine Learning3",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      icon: faDisplay,
-      title: "Machine Learning4",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-  ];
+	const courses: Course[] = [
+		{
+			icon: faDisplay,
+			title: "Machine Learning1",
+			description: "This content is intended to guide developers new to ML",
+			progress: 0.3,
+		},
+		{
+			icon: faDisplay,
+			title: "Machine Learning2",
+			description: "This content is intended to guide developers new to ML",
+			progress: 0.3,
+		},
+		{
+			icon: faDisplay,
+			title: "Machine Learning3",
+			description: "This content is intended to guide developers new to ML",
+			progress: 0.3,
+		},
+		{
+			icon: faDisplay,
+			title: "Machine Learning4",
+			description: "This content is intended to guide developers new to ML",
+			progress: 0.3,
+		},
+	];
 
-  const users: UserScore[] = [
-    { name: "David Simpson", score: 789 },
-    { name: "David Simpson", score: 150 },
-    { name: "David Simpson", score: 6 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-  ];
+	const users: UserScore[] = [
+		{ name: "David Simpson", score: 789 },
+		{ name: "David Simpson", score: 150 },
+		{ name: "David Simpson", score: 6 },
+		{ name: "David Simpson", score: 2 },
+		{ name: "David Simpson", score: 2 },
+		{ name: "David Simpson", score: 2 },
+		{ name: "David Simpson", score: 2 },
+		{ name: "David Simpson", score: 2 },
+		{ name: "David Simpson", score: 2 },
+		{ name: "David Simpson", score: 2 },
+	];
 
-  const studentLinks: CustomNavLink[] = [
-    { text: "s1", href: "asd" },
-    { text: "s2", href: "asd" },
-    { text: "s3", href: "asd" },
-    { text: "s4", href: "asd" },
-  ];
+	const studentLinks: CustomNavLink[] = [
+		{ text: "Listing courses", href: "#" },
+		{ text: "Show leaderboard", href: "#" },
+		{ text: "Show notes", href: "#" },
+		{ text: "Create note", href: "#" },
+		{ text: "Quiz results", href: "#" },
+		{ text: "Log out", href: "/" },
+	];
 
-  const teacherLinks: CustomNavLink[] = [
-    { text: "t1", href: "asd" },
-    { text: "t2", href: "asd" },
-    { text: "t3", href: "asd" },
-    { text: "t4", href: "asd" },
-  ];
+	const teacherLinks: CustomNavLink[] = [
+		{ text: "Add courses", href: "#" },
+		{ text: "Listing courses", href: "#" },
+		{ text: "Show leaderboard", href: "#" },
+		{ text: "Quiz results", href: "#" },
+		{ text: "Log out", href: "/" },
+	];
 
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const [loggedUser, setLoggedUser]: [
-    UserAuth,
-    React.Dispatch<React.SetStateAction<UserAuth>>
-  ] = useState({
-    name: "",
-    role: "",
-    token: "",
-  });
+	const [isModalOpened, setIsModalOpened] = useState(false);
+	const [loggedUser, setLoggedUser]: [
+		UserAuth,
+		React.Dispatch<React.SetStateAction<UserAuth>>
+	] = useState({
+		name: "",
+		role: "",
+		token: "",
+	});
 
-  const location: Location = useLocation();
+	const location: Location = useLocation();
 
-  useEffect(() => {
-    setLoggedUser(location.state as UserAuth);
-  }, []);
+	useEffect(() => {
+		setLoggedUser(location.state as UserAuth);
+	}, []);
 
-  const openModal = (): void => {
-    setIsModalOpened(true);
-  };
+	const openModal = (): void => {
+		setIsModalOpened(true);
+	};
 
-  const closeModal = (): void => {
-    setIsModalOpened(false);
-  };
+	const closeModal = (): void => {
+		setIsModalOpened(false);
+	};
 
-  return (
-    <React.Fragment>
-      <NavBar
-        links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
-      ></NavBar>
-      <div
-        className={`${styles["container"]} ${styles["grid"]} ${styles["grid-3-cols"]}`}
-      >
-        <div className={`${styles["courses-btns"]}`}>
-          <h1
-            className={`${styles["header--primary"]} ${styles["align-self--center"]}`}
-          >
-            Courses
-          </h1>
-          {loggedUser.role !== Roles.TEACHER ? null : (
-            <ClassicButton
-              className={`${styles["btn-add"]}`}
-              onClick={openModal}
-            >
-              <FontAwesomeIcon
-                className={styles["btn__icon"]}
-                icon={faBookOpen}
-              />
-              <span className={styles["btn__text"]}>ADD COURSE</span>
-            </ClassicButton>
-          )}
-        </div>
-        <h1 className={`${styles["header--primary"]}`}>Leaderboard</h1>
-        <CoursesList
-          className={`${styles["courses__list"]}`}
-          courses={courses}
-        ></CoursesList>
-        <Leaderboard participants={users}></Leaderboard>
-      </div>
-      {isModalOpened && (
-        <AddCourseModal
-          onClose={closeModal}
-          className={styles["modal"]}
-        ></AddCourseModal>
-      )}
-    </React.Fragment>
-  );
+	return (
+		<React.Fragment>
+			<NavBar
+				links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
+			></NavBar>
+			<div
+				className={`${styles["container"]} ${styles["grid"]} ${styles["grid-3-cols"]}`}
+			>
+				<div className={`${styles["courses-btns"]}`}>
+					<h1
+						className={`${styles["header--primary"]} ${styles["align-self--center"]}`}
+					>
+						Courses
+					</h1>
+					{loggedUser.role !== Roles.TEACHER ? null : (
+						<ClassicButton
+							className={`${styles["btn-add"]}`}
+							onClick={openModal}
+						>
+							<FontAwesomeIcon
+								className={styles["btn__icon"]}
+								icon={faBookOpen}
+							/>
+							<span className={styles["btn__text"]}>ADD COURSE</span>
+						</ClassicButton>
+					)}
+				</div>
+				<h1 className={`${styles["header--primary"]}`}>Leaderboard</h1>
+				<CoursesList
+					className={`${styles["courses__list"]}`}
+					courses={courses}
+				></CoursesList>
+				<Leaderboard participants={users}></Leaderboard>
+			</div>
+			{isModalOpened && (
+				<AddCourseModal
+					onClose={closeModal}
+					className={styles["modal"]}
+				></AddCourseModal>
+			)}
+		</React.Fragment>
+	);
 };
 
 export default CoursesMainPage;

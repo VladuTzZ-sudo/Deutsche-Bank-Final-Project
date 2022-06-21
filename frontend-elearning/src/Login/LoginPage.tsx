@@ -25,12 +25,10 @@ export default function LoginPage({}: Props) {
 	function gotToNextPage(data: toTransfer) {
 		if (data.role === "student") {
 			alert("You will go to the student page!");
+			navigate("/student", { state: data });
 		} else if (data.role === "teacher") {
 			alert("You will go to the teacher page!");
-		}
-
-		if (data.role === "student" || data.role === "teacher") {
-			navigate("/student", { state: data });
+			navigate("/teacher", { state: data });
 		}
 	}
 	function sendCredentials() {
