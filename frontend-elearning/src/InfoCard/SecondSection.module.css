@@ -1,5 +1,5 @@
 .second-section {
-  background-color: #ecb390;
+  background-color: #a15158;
   padding-bottom: 70px;
   width: 100%;
 }
@@ -16,7 +16,7 @@
 .info-title-second-section {
   margin-top: 100px;
   margin-bottom: 80px;
-  font-size: 300%;
+  font-size: 4rem;
   color: #f4e9ea;
 }
 
@@ -30,9 +30,14 @@
 
 .col-title {
   margin-bottom: 50px;
+  font-size: 3rem;
 }
 
 .row-container {
   display: flex;
   justify-content: center;
+}
+
+.col-text {
+  font-size: 2.5rem !important;
 }

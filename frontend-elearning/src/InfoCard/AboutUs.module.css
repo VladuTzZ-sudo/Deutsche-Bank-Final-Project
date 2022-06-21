@@ -1,0 +1,70 @@
+.info-title-about-section {
+  color: #f4e9ea !important;
+  margin: 100px auto 50px auto !important;
+  font-size: 4rem !important;
+  text-align: center;
+}
+
+.card-footer {
+  background-color: #51a172 !important;
+  border-top: 0px !important;
+  font-size: 2rem;
+}
+
+.btn-linkedin {
+  font-size: 4rem !important;
+}
+
+#card-icon {
+  font-size: 3rem;
+}
+.card-title {
+  font-size: 3rem !important;
+  margin-bottom: 20px;
+}
+
+.about-us {
+  background-color: #51a172;
+  font-family: "PT Sans", sans-serif !important;
+  color: #f4e9ea !important;
+}
+
+.spacing-image {
+  margin-left: -50px;
+  margin-right: 20px;
+}
+
+.aboutus-text {
+  margin-bottom: 110px;
+  color: #f4e9ea !important;
+  font-size: 2.5rem !important;
+  text-align: center;
+}
+
+.img-responsive {
+  width: 251px;
+  height: 251px;
+  border-radius: 50%;
+  margin-right: 50px !important;
+}
+
+.spacing-rows {
+  margin: 70px 100px;
+}
+
+.spacing-column {
+  margin: 20px 30px;
+}
+
+.card-description {
+  text-align: justify;
+  font-size: 1.6rem !important;
+}
+
+/* .spacing-right {
+  margin-right: 100px !important;
+} */
+/* 
+.spacing-left{
+    margin-left: 100px !important;
+} */

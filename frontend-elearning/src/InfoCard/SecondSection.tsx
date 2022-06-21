@@ -1,26 +1,26 @@
 import React from "react";
-import "./SecondSection.css";
+import styles from "./SecondSection.module.css";
 
 export default function SecondSection() {
   return (
-    <div className="second-section">
-      <div className="container-center">
-        <h1 className="info-title-second-section">Modules</h1>
+    <div className={styles["second-section"]}>
+      <div className={styles["container-center"]}>
+        <h1 className={styles["info-title-second-section"]}>Modules</h1>
       </div>
-      <div className="row-container">
-        <div className="col col-text-align">
-          <h2 className="col-title">Teacher:</h2>
-          <h4>Upload courses</h4>
-          <h4>Add new quiz</h4>
-          <h4>Report module</h4>
-          <h4>Notification module</h4>
+      <div className={styles["row-container"]}>
+        <div className={`col ${styles["col-text-align"]}`}>
+          <h2 className={styles["col-title"]}>Teacher:</h2>
+          <h4 className={styles["col-text"]}>Upload courses</h4>
+          <h4 className={styles["col-text"]}>Add new quiz</h4>
+          <h4 className={styles["col-text"]}>Report module</h4>
+          <h4 className={styles["col-text"]}>Notification module</h4>
         </div>
-        <div className="col col-text-align">
-          <h2 className="col-title">Student:</h2>
-          <h4>Take a quiz</h4>
-          <h4>Personal page</h4>
-          <h4>Report module</h4>
-          <h4>Upload notes</h4>
+        <div className={`col ${styles["col-text-align"]}`}>
+          <h2 className={styles["col-title"]}>Student:</h2>
+          <h4 className={styles["col-text"]}>Take a quiz</h4>
+          <h4 className={styles["col-text"]}>Personal page</h4>
+          <h4 className={styles["col-text"]}>Report module</h4>
+          <h4 className={styles["col-text"]}>Upload notes</h4>
         </div>
       </div>
     </div>
