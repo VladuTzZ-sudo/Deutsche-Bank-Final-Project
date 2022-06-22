@@ -5,6 +5,7 @@
 
 .content {
   padding: 1rem;
+  border-radius: 1.4rem;
 }
 
 .overlay {
@@ -15,13 +16,23 @@
   outline: 0.2rem dashed #929bcd;
   border-radius: 1.4rem;
   outline-offset: -0.5rem;
+  background-color: rgba(7, 0, 0, 0.137);
 }
 
 .data-container {
   display: flex;
-  column-gap: 2rem;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
 .data__card {
   width: 16rem;
+}
+
+.data__upload {
+  display: flex;
+  justify-content: center;
+  opacity: 0.7;
+  outline: 0.2rem dashed #929bcd;
+  outline-offset: -0.5rem;
 }

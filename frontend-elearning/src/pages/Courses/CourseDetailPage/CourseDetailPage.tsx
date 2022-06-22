@@ -5,6 +5,20 @@ import styles from "./CourseDetailPage.module.css";
 import "../global.css";
 import ModalContainer from "../../../components/Modals/ModalContainer/ModalContainer";
 import { useParams } from "react-router-dom";
+import NavBar from "../../../Navbar/NavBar";
+import CustomNavLink from "../../../models/CustomNavLink";
+import filesTypeValidator from "../../../Services/Validation/Validator";
+import { ACCEPTED_FILE_TYPES } from "../../../Constants/Constants";
+
+// WILL BE REPLACED WITH OUTLET
+const studentLinks: CustomNavLink[] = [
+  { text: "Listing courses", href: "#" },
+  { text: "Show leaderboard", href: "#" },
+  { text: "Show notes", href: "#" },
+  { text: "Create note", href: "#" },
+  { text: "Quiz results", href: "#" },
+  { text: "Log out", href: "/" },
+];
 
 const CourseDetailPage: FC = () => {
   const cardImage =
@@ -22,7 +36,13 @@ const CourseDetailPage: FC = () => {
     setIsModalOpened(false);
   };
 
-  const files = ["sad", "sad", "sad", "sad"];
+  const files = [
+    { title: "File1", type: "" },
+    { title: "File2", type: "" },
+    { title: "File3", type: "" },
+    { title: "File4", type: "" },
+    { title: "File5", type: "" },
+  ];
 
   const mockData = {
     title: "",
@@ -30,18 +50,26 @@ const CourseDetailPage: FC = () => {
     icon: "",
   };
 
+  const teacherFilesValidator = (file: File) => {
+    return filesTypeValidator(file, ACCEPTED_FILE_TYPES.TEACHER);
+  };
+
   return (
     <React.Fragment>
-      <DataCard
-        dataInfo={mockData}
-        className={styles["data-container"]}
-        onClick={openModal}
-      ></DataCard>
+      <NavBar links={studentLinks}></NavBar>
+      <div className={styles["container"]}>
+        <DataCard
+          dataInfo={mockData}
+          className={styles["data-container"]}
+          onClick={openModal}
+        ></DataCard>
+      </div>
       {isModalOpened && (
         <ModalContainer onClose={closeModal}>
           <DragFiles
-            className={styles["drag-container"]}
+            className={`${styles["container"]} ${styles["drag-container"]}`}
             data={files}
+            validator={teacherFilesValidator}
           ></DragFiles>
         </ModalContainer>
       )}
