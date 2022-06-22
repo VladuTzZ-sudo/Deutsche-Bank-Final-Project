@@ -20,24 +20,28 @@ import { Roles } from "../../../Constants/Constants";
 const CoursesMainPage: FC = () => {
   const courses: Course[] = [
     {
+      id: 1,
       icon: faDisplay,
       title: "Machine Learning1",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
+      id: 2,
       icon: faDisplay,
       title: "Machine Learning2",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
+      id: 3,
       icon: faDisplay,
       title: "Machine Learning3",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
+      id: 4,
       icon: faDisplay,
       title: "Machine Learning4",
       description: "This content is intended to guide developers new to ML",
