@@ -23,13 +23,13 @@ export default function LoginPage({}: Props) {
   });
 
   function gotToNextPage(data: toTransfer) {
-    if (data.role === "STUDENT") {
+    if (data.role === "student") {
       alert("You will go to the student page!");
-    } else if (data.role === "TEACHER") {
+    } else if (data.role === "teacher") {
       alert("You will go to the teacher page!");
     }
 
-    if (data.role === "STUDENT" || data.role === "TEACHER") {
+    if (data.role === "student" || data.role === "teacher") {
       navigate("/student", { state: data });
     }
   }

@@ -20,6 +20,7 @@ export default function App() {
 				<Route path="/registerPage" element={<RegisterPage />}></Route>
 
 				<Route path="/student" element={<CoursesMainPage />}></Route>
+				<Route path="/teacher" element={<CoursesMainPage />}></Route>
 
 				<Route path="/play" element={<QuizzPlay></QuizzPlay>}></Route>
 

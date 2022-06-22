@@ -59,17 +59,20 @@ const CoursesMainPage: FC = () => {
   ];
 
   const studentLinks: CustomNavLink[] = [
-    { text: "s1", href: "asd" },
-    { text: "s2", href: "asd" },
-    { text: "s3", href: "asd" },
-    { text: "s4", href: "asd" },
+    { text: "Listing courses", href: "#" },
+    { text: "Show leaderboard", href: "#" },
+    { text: "Show notes", href: "#" },
+    { text: "Create note", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/" },
   ];
 
   const teacherLinks: CustomNavLink[] = [
-    { text: "t1", href: "asd" },
-    { text: "t2", href: "asd" },
-    { text: "t3", href: "asd" },
-    { text: "t4", href: "asd" },
+    { text: "Add courses", href: "#" },
+    { text: "Listing courses", href: "#" },
+    { text: "Show leaderboard", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/" },
   ];
 
   const [isModalOpened, setIsModalOpened] = useState(false);
