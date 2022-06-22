@@ -96,6 +96,10 @@ const CoursesMainPage: FC = () => {
     setIsModalOpened(false);
   };
 
+  const cardClickHandler = (e: any, course: Course) => {
+    console.log(course);
+  };
+
   return (
     <React.Fragment>
       <NavBar
@@ -126,6 +130,7 @@ const CoursesMainPage: FC = () => {
         <h1 className={`${styles["header--primary"]}`}>Leaderboard</h1>
         <CoursesList
           className={`${styles["courses__list"]}`}
+          onCardClick={cardClickHandler}
           courses={courses}
         ></CoursesList>
         <Leaderboard participants={users}></Leaderboard>

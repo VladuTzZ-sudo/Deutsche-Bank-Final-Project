@@ -7,6 +7,7 @@ import Course from "../../../models/Course";
 interface CardProps {
   color: string;
   course: Course;
+  onClick: (e: React.MouseEvent, course: Course) => void;
   className?: string;
   children?: React.ReactNode;
 }
@@ -22,7 +23,13 @@ const CourseCard: FC<CardProps> = (props) => {
   return (
     <div className={`${styles["card"]} ${props.className}`}>
       <div className={styles["card__background"]} style={borderColor}></div>
-      <div style={color} className={styles["card__content"]}>
+      <div
+        style={color}
+        className={styles["card__content"]}
+        onClick={(e: React.MouseEvent<HTMLElement>) => {
+          props.onClick(e, props.course);
+        }}
+      >
         <FontAwesomeIcon
           className={styles["card__icon"]}
           icon={props.course.icon}
