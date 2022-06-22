@@ -9,7 +9,7 @@ import UserScore from "../../../models/UserScore";
 import ClassicButton from "../../../components/Buttons/ClassicButton/ClassicButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddCourseModal from "../../../components/Modals/AddCourseModal/AddCourseModal";
-import { useLocation, Location } from "react-router-dom";
+import { useLocation, Location, useNavigate } from "react-router-dom";
 import UserAuth from "../../../models/UserAuth";
 import { useJwt } from "react-jwt";
 import Jwt from "../../../models/Jwt";
@@ -90,6 +90,7 @@ const CoursesMainPage: FC = () => {
   });
 
   const location: Location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoggedUser(location.state as UserAuth);
@@ -104,7 +105,8 @@ const CoursesMainPage: FC = () => {
   };
 
   const cardClickHandler = (e: any, course: Course) => {
-    console.log(course);
+    // TODO: Authorization
+    navigate(`/courses/${course.id}`, { state: location.state });
   };
 
   return (
