@@ -1,8 +1,13 @@
 .drag-container {
   background-color: #e8e9f0;
-  width: 70vw;
+  max-width: 130rem;
 }
 
 .data-container {
   width: 16rem;
+}
+
+.container {
+  max-width: 130rem;
+  margin: 0 auto;
 }

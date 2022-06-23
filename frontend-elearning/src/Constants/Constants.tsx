@@ -1,6 +1,11 @@
 enum Roles {
-  STUDENT = "STUDENT",
-  TEACHER = "TEACHER",
+  STUDENT = "student",
+  TEACHER = "teacher",
 }
 
-export { Roles };
+const ACCEPTED_FILE_TYPES = {
+  STUDENT: [],
+  TEACHER: ["image/png"],
+};
+
+export { Roles, ACCEPTED_FILE_TYPES };

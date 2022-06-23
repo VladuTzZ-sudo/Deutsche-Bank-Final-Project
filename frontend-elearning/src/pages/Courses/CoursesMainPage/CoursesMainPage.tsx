@@ -9,7 +9,7 @@ import UserScore from "../../../models/UserScore";
 import ClassicButton from "../../../components/Buttons/ClassicButton/ClassicButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddCourseModal from "../../../components/Modals/AddCourseModal/AddCourseModal";
-import { useLocation, Location } from "react-router-dom";
+import { useLocation, Location, useNavigate } from "react-router-dom";
 import UserAuth from "../../../models/UserAuth";
 import { useJwt } from "react-jwt";
 import Jwt from "../../../models/Jwt";
@@ -20,24 +20,28 @@ import { Roles } from "../../../Constants/Constants";
 const CoursesMainPage: FC = () => {
   const courses: Course[] = [
     {
+      id: 1,
       icon: faDisplay,
       title: "Machine Learning1",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
+      id: 2,
       icon: faDisplay,
       title: "Machine Learning2",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
+      id: 3,
       icon: faDisplay,
       title: "Machine Learning3",
       description: "This content is intended to guide developers new to ML",
       progress: 0.3,
     },
     {
+      id: 4,
       icon: faDisplay,
       title: "Machine Learning4",
       description: "This content is intended to guide developers new to ML",
@@ -59,17 +63,20 @@ const CoursesMainPage: FC = () => {
   ];
 
   const studentLinks: CustomNavLink[] = [
-    { text: "s1", href: "asd" },
-    { text: "s2", href: "asd" },
-    { text: "s3", href: "asd" },
-    { text: "s4", href: "asd" },
+    { text: "Listing courses", href: "#" },
+    { text: "Show leaderboard", href: "#" },
+    { text: "Show notes", href: "#" },
+    { text: "Create note", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/" },
   ];
 
   const teacherLinks: CustomNavLink[] = [
-    { text: "t1", href: "asd" },
-    { text: "t2", href: "asd" },
-    { text: "t3", href: "asd" },
-    { text: "t4", href: "asd" },
+    { text: "Add courses", href: "#" },
+    { text: "Listing courses", href: "#" },
+    { text: "Show leaderboard", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/" },
   ];
 
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -83,6 +90,7 @@ const CoursesMainPage: FC = () => {
   });
 
   const location: Location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoggedUser(location.state as UserAuth);
@@ -94,6 +102,11 @@ const CoursesMainPage: FC = () => {
 
   const closeModal = (): void => {
     setIsModalOpened(false);
+  };
+
+  const cardClickHandler = (e: any, course: Course) => {
+    // TODO: Authorization
+    navigate(`/courses/${course.id}`, { state: location.state });
   };
 
   return (
@@ -126,6 +139,7 @@ const CoursesMainPage: FC = () => {
         <h1 className={`${styles["header--primary"]}`}>Leaderboard</h1>
         <CoursesList
           className={`${styles["courses__list"]}`}
+          onCardClick={cardClickHandler}
           courses={courses}
         ></CoursesList>
         <Leaderboard participants={users}></Leaderboard>
