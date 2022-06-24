@@ -30,7 +30,7 @@ export default function LoginPage({}: Props) {
     }
 
     if (data.role === "student" || data.role === "teacher") {
-      navigate("/student", { state: data });
+      navigate("/courses", { state: data });
     }
   }
   function sendCredentials() {

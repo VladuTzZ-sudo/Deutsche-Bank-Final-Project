@@ -1,4 +1,7 @@
-import { faDisplay } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDisplay,
+  faHeartCircleCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import Course from "../../../models/Course/Course";
 import CourseAPI from "../../../models/Course/CourseAPI";
 

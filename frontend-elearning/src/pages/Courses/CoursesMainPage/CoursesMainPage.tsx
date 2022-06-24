@@ -70,6 +70,7 @@ const CoursesMainPage: FC = () => {
 
   useEffect(() => {
     setLoggedUser(location.state as UserAuth);
+    console.log(location.state);
   }, []);
 
   const openModal = (): void => {
@@ -87,8 +88,26 @@ const CoursesMainPage: FC = () => {
 
   const onLogout = () => {};
 
+  const test = () => {
+    fetch("http://localhost:8080/courses", {
+      method: "GET", // or 'PUT'
+      headers: {
+        "Content-Type": "text/plain",
+      },
+      body: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzdHVkZW50IiwiaXNzIjoid3d3LmdvYWxkaWdnZXJzLmNvbSIsInN1YiI6IjE6SmFjayJ9.WGTheVFv1Wk4YT6kI5icdsdjhtbg93mbG9kLKcizTnc",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <React.Fragment>
+      <button onClick={test}>sal</button>
       <NavBar
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
