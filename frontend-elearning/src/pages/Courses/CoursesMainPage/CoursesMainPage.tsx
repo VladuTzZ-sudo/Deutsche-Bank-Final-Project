@@ -16,18 +16,28 @@ import Jwt from "../../../models/Jwt";
 import NavBar from "../../../Navbar/NavBar";
 import CustomNavLink from "../../../models/CustomNavLink";
 import { Roles } from "../../../Constants/Constants";
-import getCourses from "../../../Repositories/Course/CourseRepository";
+import CourseRepository from "../../../Repositories/Course/CourseRepository";
+import { CourseService } from "../../../Services/Validation/Course/CourseService";
+import CourseAddDTO from "../../../models/Course/CourseAddDTO";
 
 const CoursesMainPage: FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [loggedUser, setLoggedUser]: [
+    UserAuth,
+    React.Dispatch<React.SetStateAction<UserAuth>>
+  ] = useState({
+    name: "",
+    role: "",
+    token: "",
+  });
+
+  const location: Location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const init = async () => {
-      const courses: Course[] = await getCourses();
-      setCourses(courses);
-    };
-
-    init();
+    getCourses();
+    setLoggedUser(location.state as UserAuth);
   }, []);
 
   const users: UserScore[] = [
@@ -43,36 +53,6 @@ const CoursesMainPage: FC = () => {
     { name: "David Simpson", score: 2 },
   ];
 
-  const studentLinks: CustomNavLink[] = [
-    { text: "Show notes", href: "#" },
-    { text: "Quiz results", href: "#" },
-    { text: "Log out", href: "/" },
-  ];
-
-  const teacherLinks: CustomNavLink[] = [
-    { text: "Listing courses", href: "#" },
-    { text: "Quiz results", href: "#" },
-    { text: "Log out", href: "/" },
-  ];
-
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const [loggedUser, setLoggedUser]: [
-    UserAuth,
-    React.Dispatch<React.SetStateAction<UserAuth>>
-  ] = useState({
-    name: "",
-    role: "",
-    token: "",
-  });
-
-  const location: Location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setLoggedUser(location.state as UserAuth);
-    console.log(location.state);
-  }, []);
-
   const openModal = (): void => {
     setIsModalOpened(true);
   };
@@ -81,33 +61,48 @@ const CoursesMainPage: FC = () => {
     setIsModalOpened(false);
   };
 
-  const cardClickHandler = (e: any, course: Course) => {
+  const cardClickHandler = (e: any, course: Course): void => {
     // TODO: Authorization
     navigate(`/courses/${course.id}`, { state: location.state });
   };
 
-  const onLogout = () => {};
-
-  const test = () => {
-    fetch("http://localhost:8080/courses", {
-      method: "GET", // or 'PUT'
-      headers: {
-        "Content-Type": "text/plain",
-      },
-      body: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzdHVkZW50IiwiaXNzIjoid3d3LmdvYWxkaWdnZXJzLmNvbSIsInN1YiI6IjE6SmFjayJ9.WGTheVFv1Wk4YT6kI5icdsdjhtbg93mbG9kLKcizTnc",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  const getCourses = async () => {
+    const courses: Course[] = await CourseRepository.getCourses(
+      (location.state as UserAuth).token
+    );
+    setCourses(courses);
   };
+
+  const onLogout = () => {
+    sessionStorage.removeItem("isAuth");
+    navigate(`/loginPage`, {});
+    // TODO: delete navigation history
+  };
+
+  const onAddCourse = async (title: string, description: string) => {
+    const addedCourse: CourseAddDTO = await CourseService.addCourse({
+      name: title,
+      description: description,
+    });
+
+    getCourses();
+    // TODO: Exceptions + Validations
+  };
+
+  const studentLinks: CustomNavLink[] = [
+    { text: "Show notes", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
+
+  const teacherLinks: CustomNavLink[] = [
+    { text: "Listing courses", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
 
   return (
     <React.Fragment>
-      <button onClick={test}>sal</button>
       <NavBar
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
@@ -145,6 +140,7 @@ const CoursesMainPage: FC = () => {
         <AddCourseModal
           onClose={closeModal}
           className={styles["modal"]}
+          onSave={onAddCourse}
         ></AddCourseModal>
       )}
     </React.Fragment>

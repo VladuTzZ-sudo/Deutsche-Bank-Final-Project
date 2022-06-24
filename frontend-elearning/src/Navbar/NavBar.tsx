@@ -3,7 +3,12 @@ import NavbarBtn from "../NavbarBtn/NavbarBtn";
 
 export default function NavBar(props: any) {
   const navBtns = props.links.map((link: any, index: number) => (
-    <NavbarBtn text={link.text} href={link.linkUrl} key={index} />
+    <NavbarBtn
+      text={link.text}
+      href={link.linkUrl}
+      key={index}
+      onClick={link.onClick}
+    />
   ));
 
   return (

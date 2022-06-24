@@ -32,7 +32,7 @@ const CourseCard: FC<CardProps> = (props) => {
         }}
       >
         <FontAwesomeIcon className={styles["card__icon"]} icon={faDisplay} />
-        <h3 className={styles["card__title"]}>{props.course.title}</h3>
+        <h3 className={styles["card__title"]}>{props.course.name}</h3>
         <p className={styles["card__description"]}>
           {props.course.description}
         </p>
