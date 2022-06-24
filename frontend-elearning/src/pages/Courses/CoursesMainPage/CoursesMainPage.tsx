@@ -1,7 +1,7 @@
 import { faDisplay, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import React, { FC, useEffect, useState } from "react";
 import CoursesList from "../../../components/Courses/CoursesList/CoursesList";
-import Course from "../../../models/Course";
+import Course from "../../../models/Course/Course";
 import "../global.css";
 import styles from "./CoursesMainPage.module.css";
 import Leaderboard from "../../../components/Leaderboard/Leaderboard";
@@ -16,38 +16,19 @@ import Jwt from "../../../models/Jwt";
 import NavBar from "../../../Navbar/NavBar";
 import CustomNavLink from "../../../models/CustomNavLink";
 import { Roles } from "../../../Constants/Constants";
+import getCourses from "../../../Repositories/Course/CourseRepository";
 
 const CoursesMainPage: FC = () => {
-  const courses: Course[] = [
-    {
-      id: 1,
-      icon: faDisplay,
-      title: "Machine Learning1",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      id: 2,
-      icon: faDisplay,
-      title: "Machine Learning2",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      id: 3,
-      icon: faDisplay,
-      title: "Machine Learning3",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      id: 4,
-      icon: faDisplay,
-      title: "Machine Learning4",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-  ];
+  const [courses, setCourses] = useState<Course[]>([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const courses: Course[] = await getCourses();
+      setCourses(courses);
+    };
+
+    init();
+  }, []);
 
   const users: UserScore[] = [
     { name: "David Simpson", score: 789 },
@@ -63,18 +44,13 @@ const CoursesMainPage: FC = () => {
   ];
 
   const studentLinks: CustomNavLink[] = [
-    { text: "Listing courses", href: "#" },
-    { text: "Show leaderboard", href: "#" },
     { text: "Show notes", href: "#" },
-    { text: "Create note", href: "#" },
     { text: "Quiz results", href: "#" },
     { text: "Log out", href: "/" },
   ];
 
   const teacherLinks: CustomNavLink[] = [
-    { text: "Add courses", href: "#" },
     { text: "Listing courses", href: "#" },
-    { text: "Show leaderboard", href: "#" },
     { text: "Quiz results", href: "#" },
     { text: "Log out", href: "/" },
   ];
@@ -109,6 +85,8 @@ const CoursesMainPage: FC = () => {
     navigate(`/courses/${course.id}`, { state: location.state });
   };
 
+  const onLogout = () => {};
+
   return (
     <React.Fragment>
       <NavBar
@@ -140,7 +118,7 @@ const CoursesMainPage: FC = () => {
         <CoursesList
           className={`${styles["courses__list"]}`}
           onCardClick={cardClickHandler}
-          courses={courses}
+          courses={courses!}
         ></CoursesList>
         <Leaderboard participants={users}></Leaderboard>
       </div>

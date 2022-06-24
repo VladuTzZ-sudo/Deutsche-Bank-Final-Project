@@ -2,7 +2,7 @@ import React, { Dispatch, FC, SetStateAction } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./CardV2.module.css";
 import "../../../index.css";
-import Course from "../../../models/Course";
+import Course from "../../../models/Course/Course";
 import Setting from "../../../models/Setting";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 

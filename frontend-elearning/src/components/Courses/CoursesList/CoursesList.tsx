@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Course from "../../../models/Course";
+import Course from "../../../models/Course/Course";
 import CourseCard from "../Card/CourseCard";
 import styles from "./CoursesList.module.css";
 
