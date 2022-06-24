@@ -8,34 +8,38 @@ import QuizzListen from "./QuizzListen/QuizzListen";
 import RegisterPage from "./Register/RegisterPage";
 import MainPage from "./MainPage/MainPage";
 import CourseDetailPage from "./pages/Courses/CourseDetailPage/CourseDetailPage";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigate, BrowserRouter, Route, Routes } from "react-router-dom";
 import QuizzMaker from "./QuizzMaker/QuizzMaker";
 
+import PrivateRoute from "./PrivateRouteFolder/PrivateRoute";
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />}></Route>
-        <Route path="/loginPage" element={<LoginPage />}></Route>
-        <Route path="/registerPage" element={<RegisterPage />}></Route>
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<MainPage />}></Route>
+				<Route path="/loginPage" element={<LoginPage />}></Route>
+				<Route path="/registerPage" element={<RegisterPage />}></Route>
 
-        <Route path="/student" element={<CoursesMainPage />}></Route>
-        <Route path="/teacher" element={<CoursesMainPage />}></Route>
-        <Route path="/courses/:id" element={<CourseDetailPage />}></Route>
+				<Route element={<PrivateRoute />}>
+					<Route path="/mainPage" element={<CoursesMainPage />}></Route>
+					<Route path="/courses/:id" element={<CourseDetailPage />}></Route>
+				</Route>
 
-        <Route path="/play" element={<QuizzPlay></QuizzPlay>}></Route>
+				<Route path="/play" element={<QuizzPlay></QuizzPlay>}></Route>
 
-        <Route path="/listen" element={<QuizzListen></QuizzListen>}></Route>
+				<Route path="/listen" element={<QuizzListen></QuizzListen>}></Route>
 
-        <Route path="/makeQuizz" element={<QuizzMaker></QuizzMaker>}></Route>
-        {/* <QuizzMaker></QuizzMaker>
+				<Route path="/makeQuizz" element={<QuizzMaker></QuizzMaker>}></Route>
+
+				<Route path="*" element={<Navigate to="/loginPage" />}></Route>
+				{/* <QuizzMaker></QuizzMaker>
       <QuizzPlay></QuizzPlay>
       //<div className="App"><RegisterPage/></div>
       <QuizzListen></QuizzListen>
       //<LoginPage></LoginPage>
       //<RegisterPage></RegisterPage>
       <CoursesMainPage></CoursesMainPage></> */}
-      </Routes>
-    </BrowserRouter>
-  );
+			</Routes>
+		</BrowserRouter>
+	);
 }
