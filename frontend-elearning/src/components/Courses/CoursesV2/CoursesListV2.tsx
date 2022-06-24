@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import Course from "../../../models/Course";
+import Course from "../../../models/Course/Course";
 import Setting from "../../../models/Setting";
 import CardV2 from "../CardV2/CardV2";
 import styles from "./CoursesList.module.css";
