@@ -1,6 +1,6 @@
 import Course from "../../models/Course/Course";
 import CourseGetDTO from "../../models/Course/CourseGetDTO";
-import { CourseService } from "../../Services/Validation/Course/CourseService";
+import { CourseService } from "../../Services/Course/CourseService";
 
 // TODO: Exceptions
 const CourseRepository = {

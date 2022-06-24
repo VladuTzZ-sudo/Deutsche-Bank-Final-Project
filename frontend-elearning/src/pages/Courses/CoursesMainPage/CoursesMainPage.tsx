@@ -17,7 +17,7 @@ import NavBar from "../../../Navbar/NavBar";
 import CustomNavLink from "../../../models/CustomNavLink";
 import { Roles } from "../../../Constants/Constants";
 import CourseRepository from "../../../Repositories/Course/CourseRepository";
-import { CourseService } from "../../../Services/Validation/Course/CourseService";
+import { CourseService } from "../../../Services/Course/CourseService";
 import CourseAddDTO from "../../../models/Course/CourseAddDTO";
 
 const CoursesMainPage: FC = () => {
@@ -80,10 +80,13 @@ const CoursesMainPage: FC = () => {
   };
 
   const onAddCourse = async (title: string, description: string) => {
-    const addedCourse: CourseAddDTO = await CourseService.addCourse({
-      name: title,
-      description: description,
-    });
+    const addedCourse: CourseAddDTO = await CourseService.addCourse(
+      {
+        name: title,
+        description: description,
+      },
+      loggedUser.token
+    );
 
     getCourses();
     // TODO: Exceptions + Validations

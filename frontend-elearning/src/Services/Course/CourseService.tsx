@@ -2,10 +2,10 @@ import {
   faDisplay,
   faHeartCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { API_URLS } from "../../../Constants/Constants";
-import Course from "../../../models/Course/Course";
-import CourseAddDTO from "../../../models/Course/CourseAddDTO";
-import CourseGetDTO from "../../../models/Course/CourseGetDTO";
+import { API_URLS } from "../../Constants/Constants";
+import Course from "../../models/Course/Course";
+import CourseAddDTO from "../../models/Course/CourseAddDTO";
+import CourseGetDTO from "../../models/Course/CourseGetDTO";
 
 const CourseService = {
   getCourses: async (authToken: string): Promise<CourseGetDTO[]> => {
@@ -54,9 +54,31 @@ const CourseService = {
     }
   },
 
-  addCourse: async (course: CourseAddDTO): Promise<CourseAddDTO> => {
-    console.log("added");
-    return course;
+  // TODO: Exception handling
+  addCourse: async (
+    course: CourseAddDTO,
+    authToken: string
+  ): Promise<CourseAddDTO> => {
+    console.log(course);
+
+    try {
+      const addResponse = await fetch(API_URLS.ADD_COURSE, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(course),
+      });
+
+      console.log("course added");
+
+      return course;
+    } catch (e) {
+      console.log(e);
+      return course;
+    }
   },
 };
 
