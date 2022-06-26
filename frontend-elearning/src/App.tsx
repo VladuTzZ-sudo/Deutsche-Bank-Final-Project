@@ -12,6 +12,7 @@ import { Navigate, BrowserRouter, Route, Routes } from "react-router-dom";
 import QuizzMaker from "./QuizzMaker/QuizzMaker";
 
 import PrivateRoute from "./PrivateRouteFolder/PrivateRoute";
+import QuizzMakerAlex from "./QuizzMakerAlex/QuizzMakerAlex";
 export default function App() {
   return (
     <BrowserRouter>
@@ -30,6 +31,11 @@ export default function App() {
         <Route path="/listen" element={<QuizzListen></QuizzListen>}></Route>
 
         <Route path="/makeQuizz" element={<QuizzMaker></QuizzMaker>}></Route>
+
+        <Route
+          path="/quizzMaker"
+          element={<QuizzMakerAlex></QuizzMakerAlex>}
+        ></Route>
 
         <Route path="*" element={<Navigate to="/loginPage" />}></Route>
         {/* <QuizzMaker></QuizzMaker>
