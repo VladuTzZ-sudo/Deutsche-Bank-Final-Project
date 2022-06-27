@@ -130,6 +130,13 @@ export default function LoginPage() {
             handleSubmit();
           }}
         ></Button>
+
+          <Button
+          text="Go back!!"
+          func={() => {
+           navigate("/");
+          }}
+        ></Button>
       </div>
     </div>
   );

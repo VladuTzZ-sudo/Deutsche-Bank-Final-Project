@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import LoginPage from "./Login/LoginPage";
 import QuizzPlay from "./QuizPlay/QuizzPlay";
 import CoursesMainPage from "./pages/Courses/CoursesMainPage/CoursesMainPage";
-import QuizzListen from "./QuizzListen/QuizzListen";
+import QuizzListen from "./QuizzFinishedPage/QuizzFinishedPage";
 import RegisterPage from "./Register/RegisterPage";
 import MainPage from "./MainPage/MainPage";
 import CourseDetailPage from "./pages/Courses/CourseDetailPage/CourseDetailPage";
@@ -13,6 +13,8 @@ import QuizzMaker from "./QuizzMaker/QuizzMaker";
 
 import PrivateRoute from "./PrivateRouteFolder/PrivateRoute";
 import QuizzMakerAlex from "./QuizzMakerAlex/QuizzMakerAlex";
+import QuizzFinishedPage from "./QuizzFinishedPage/QuizzFinishedPage";
+import QuizStartPage from "./QuizStartPage/QuizStartPage";
 export default function App() {
   return (
     <BrowserRouter>
@@ -28,7 +30,8 @@ export default function App() {
 
         <Route path="/play" element={<QuizzPlay></QuizzPlay>}></Route>
 
-        <Route path="/listen" element={<QuizzListen></QuizzListen>}></Route>
+        <Route path="/quizzFinishedPage" element={<QuizzFinishedPage></QuizzFinishedPage>}></Route>
+        <Route path="/quizzStartPage" element={<QuizStartPage></QuizStartPage>}></Route>
 
         <Route path="/makeQuizz" element={<QuizzMaker></QuizzMaker>}></Route>
 

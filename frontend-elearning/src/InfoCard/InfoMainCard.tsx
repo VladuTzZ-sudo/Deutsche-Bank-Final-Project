@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./InfoMainCard.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function InfoMainCard() {
+  let navigate = useNavigate();
   return (
     <div className={styles["text-part"]}>
       <div className={styles["container-center"]}>
@@ -17,7 +19,9 @@ export default function InfoMainCard() {
       <div id="join-text-id" className={styles["container-center"]}>
         <h4 className={styles["join-text"]}>Are you interested?</h4>
       </div>
-      <button className={styles["join-btn"]}>Join Us</button>
+      <button onClick={()=> {
+        navigate("/registerPage");
+      }} className={styles["join-btn"]}>Yes!</button>
     </div>
   );
 }

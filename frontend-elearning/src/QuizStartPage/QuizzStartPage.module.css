@@ -3,7 +3,7 @@
     background-color: #c1c2c7;
 }
 
-.page {
+.page {height: 90vh;
     margin: 10px 10px 10px 10px;
     background-color: white;
     padding: 10px;
@@ -60,6 +60,7 @@
 
 .text--normal {
     padding-left: 0px;
+    font-size: 15px;
 }
 
 .text--normal__attempt {
@@ -69,10 +70,13 @@
 
 .text--normal__principal {
     padding-left: 20px;
+    font-size: 15px;
 }
 
 .paragraph {
     padding-left: 20px;
+    width: 90vw;
+    text-align: left;
 }
 
 .div--must-description {
@@ -89,6 +93,7 @@
 }
 
 .div--dynamic-info {
+    font-size: 15px;
     height: auto;
     margin: 10px 0px 0px 0;
     display: flex;
