@@ -17,7 +17,7 @@
 .list__icon {
   font-size: 2rem;
   justify-self: center;
-  color: #b3bae5;
+  color: #726abc;
 }
 
 .list__decimal-style {
@@ -49,6 +49,6 @@
 }
 
 .list__score:first-of-type {
-  color: #a1a7ce;
+  color: #726abc;
   font-weight: 600;
 }

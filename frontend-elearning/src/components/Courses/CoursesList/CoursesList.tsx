@@ -13,7 +13,7 @@ const CoursesList: FC<ListProps> = (props) => {
   const courses: JSX.Element[] = props.courses.map((course, index) => (
     <li key={index}>
       <CourseCard
-        color="#b3bae5"
+        color="#726abc"
         course={course}
         onClick={props.onCardClick}
       ></CourseCard>

@@ -1,7 +1,7 @@
 .card {
   display: inline-block;
   position: relative;
-  color: #3a2e39;
+  color: #fff;
 }
 
 .card__background {
@@ -25,6 +25,8 @@
   border-radius: 1.4rem;
   transition: 0.2s ease-in-out;
   cursor: pointer;
+  background-image: url("/public/assets/data-images/blue_abstract.png");
+  background-size: cover;
 }
 
 .card__content:hover {
@@ -46,7 +48,7 @@
 }
 
 .card__delimiter {
-  background-color: #3a2e39;
+  background-color: #b3bae5;
   width: 100%;
   height: 0.05rem;
   opacity: 0.5;
@@ -71,6 +73,6 @@
 }
 
 .card__progress-fill {
-  background-color: #9d979c;
+  background-color: #b3bae5;
   height: 100%;
 }
