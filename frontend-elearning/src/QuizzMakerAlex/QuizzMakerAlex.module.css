@@ -44,3 +44,19 @@
   font-size: 2rem;
   font-family: "PT Sans", sans-serif;
 }
+
+.input-due {
+  margin-left: 20px;
+}
+
+.input-duration {
+  margin-left: 20px;
+}
+
+.input-title {
+  margin-left: 20px;
+}
+
+.input-details {
+  margin-left: 20px;
+}
