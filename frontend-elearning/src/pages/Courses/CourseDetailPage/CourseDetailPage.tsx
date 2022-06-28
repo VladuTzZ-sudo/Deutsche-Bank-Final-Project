@@ -1,36 +1,81 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import DataCard from "../../../components/DataCard/DataCard";
 import DragFiles from "../../../components/DragFiles/DragFiles";
 import styles from "./CourseDetailPage.module.css";
 import "../global.css";
 import ModalContainer from "../../../components/Modals/ModalContainer/ModalContainer";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  Location,
+} from "react-router-dom";
 import NavBar from "../../../Navbar/NavBar";
 import CustomNavLink from "../../../models/CustomNavLink";
 import filesTypeValidator from "../../../Services/Validation/Validator";
-import { ACCEPTED_FILE_TYPES } from "../../../Constants/Constants";
+import { ACCEPTED_FILE_TYPES, Roles } from "../../../Constants/Constants";
 import SectionCard from "../../../components/Courses/SectionCard/SectionCard";
-import Section from "../../../models/Course/Section";
+import Section from "../../../models/Course/Section/Section";
 import SectionsList from "../../../components/Courses/SectionsList/SectionsList";
+import UserAuth from "../../../models/UserAuth";
+import { CourseService } from "../../../Services/Course/CourseService";
+import CourseRepository from "../../../Repositories/Course/CourseRepository";
+import ClassicButton from "../../../components/Buttons/ClassicButton/ClassicButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
+import AddCourseModal from "../../../components/Modals/AddCourseModal/AddCourseModal";
+import SectionAddDTO from "../../../models/Course/Section/SectionAddDTO";
 
 const CourseDetailPage: FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const location: Location = useLocation();
 
-  const cardImage =
-    process.env.PUBLIC_URL + "/assets/data-images/folder-blue-icon.png";
+  const [loggedUser, setLoggedUser]: [
+    UserAuth,
+    React.Dispatch<React.SetStateAction<UserAuth>>
+  ] = useState({
+    name: "",
+    role: "",
+    token: "",
+  });
+  const [isFileModalOpened, setIsFileModalOpened] = useState(false);
+  const [isSectionModalOpened, setIsSectionModalOpened] = useState(false);
+  const [sections, setSections] = useState<Section[]>([]);
 
-  const [isModalOpened, setIsModalOpened] = useState(false);
+  useEffect(() => {
+    setLoggedUser(location.state as UserAuth);
+    getSections();
+  }, []);
 
-  const openModal = () => {
-    setIsModalOpened(true);
-    console.log(
-      process.env.PUBLIC_URL + "/assets/data-images/folder-blue-icon.png"
-    );
+  const openFileModal = () => {
+    setIsFileModalOpened(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpened(false);
+  const closeFileModal = () => {
+    setIsFileModalOpened(false);
+  };
+
+  const openSectionModal = () => {
+    setIsSectionModalOpened(true);
+  };
+
+  const closeSectionModal = () => {
+    setIsSectionModalOpened(false);
+  };
+
+  const getSections = async () => {
+    const sections = await CourseRepository.getSections(
+      +id!,
+      (location.state as UserAuth).token
+    );
+
+    const sectionsClickable = sections.map((section) => {
+      section.onImageClick = openFileModal;
+      return section;
+    });
+
+    setSections(sectionsClickable);
   };
 
   const files = [
@@ -40,14 +85,6 @@ const CourseDetailPage: FC = () => {
     { title: "File4", type: "" },
     { title: "File5", type: "" },
   ];
-
-  const sectionMock: Section = {
-    completed: true,
-    title: "A brief introduction to JavaScript",
-    description:
-      "Any computer and OS will work — Windows, macOS or Linux. We will set up your text editor the course.",
-    onImageClick: openModal,
-  };
 
   const onLogout = () => {
     sessionStorage.removeItem("isAuth");
@@ -62,29 +99,77 @@ const CourseDetailPage: FC = () => {
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 
-  const sectionsMock = [sectionMock, sectionMock, sectionMock];
+  const teacherLinks: CustomNavLink[] = [
+    { text: "Listing courses", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
 
   const teacherFilesValidator = (file: File) => {
     return filesTypeValidator(file, ACCEPTED_FILE_TYPES.TEACHER);
   };
 
+  const onAddSection = async (title: string, description: string) => {
+    const addedCourse: SectionAddDTO = await CourseService.addSection(
+      +id!,
+      {
+        title: title,
+      },
+      loggedUser.token
+    );
+
+    getSections();
+    // TODO: Exceptions + Validations
+    console.log(title, description);
+  };
+
   return (
     <React.Fragment>
-      <NavBar links={studentLinks}></NavBar>
+      <NavBar
+        links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
+      ></NavBar>
       <div className={styles["container"]}>
+        {loggedUser.role === Roles.TEACHER ? (
+          <ClassicButton
+            className={`${styles["btn-add"]}`}
+            onClick={openSectionModal}
+          >
+            <FontAwesomeIcon
+              className={styles["btn__icon"]}
+              icon={faBookOpenReader}
+            />
+            <span className={styles["btn__text"]}>ADD SECTION</span>
+          </ClassicButton>
+        ) : null}
         <SectionsList
-          className={styles["sections"]}
-          sections={sectionsMock}
+          sections={
+            loggedUser.role === Roles.TEACHER
+              ? sections
+              : sections.map((section) => {
+                  if (!section.quiz) {
+                    section.buttonText = "";
+                  }
+                  return section;
+                })
+          }
         ></SectionsList>
       </div>
-      {isModalOpened && (
-        <ModalContainer onClose={closeModal}>
+      {isFileModalOpened && (
+        <ModalContainer onClose={closeFileModal}>
           <DragFiles
             className={`${styles["container"]} ${styles["drag-container"]}`}
             data={files}
             validator={teacherFilesValidator}
           ></DragFiles>
         </ModalContainer>
+      )}
+      {isSectionModalOpened && (
+        <AddCourseModal
+          title="ADD SECTION"
+          onClose={closeSectionModal}
+          className={styles["modal"]}
+          onSave={onAddSection}
+        ></AddCourseModal>
       )}
     </React.Fragment>
   );

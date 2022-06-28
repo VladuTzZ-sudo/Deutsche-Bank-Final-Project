@@ -10,8 +10,29 @@
 .container {
   max-width: 130rem;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  row-gap: 5rem;
+  margin-top: 2.6rem;
 }
 
-.sections {
-  margin-top: 5rem;
+/* ADD SECTION BUTTON */
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #000;
+}
+
+.btn__icon {
+  font-size: 1.8rem;
+}
+
+.btn__text {
+  font-size: 1.6rem;
+}
+
+.modal {
+  min-width: 30rem;
 }

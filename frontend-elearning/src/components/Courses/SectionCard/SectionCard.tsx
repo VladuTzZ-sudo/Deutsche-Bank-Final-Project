@@ -4,7 +4,7 @@ import styles from "./SectionCard.module.css";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ClassicButton from "../../Buttons/ClassicButton/ClassicButton";
 import React from "react";
-import Section from "../../../models/Course/Section";
+import Section from "../../../models/Course/Section/Section";
 import ReverseHoverButton from "../../Buttons/ReverseHover/ReverseHoverButton";
 
 interface CardProps {
@@ -22,13 +22,19 @@ const SectionCard: FC<CardProps> = (props) => {
             {props.section.description}
           </p>
         </div>
-        <ReverseHoverButton className={styles["btn"]}>
-          <span className={styles["btn__text"]}>Take the quiz</span>
-          <FontAwesomeIcon
-            className={styles["btn__icon"]}
-            icon={faArrowRight}
-          />
-        </ReverseHoverButton>
+        {props.section.buttonText ? (
+          <ReverseHoverButton className={styles["btn"]}>
+            <span className={styles["btn__text"]}>
+              {props.section.buttonText}
+            </span>
+            {props.section.buttonIcon ? (
+              <FontAwesomeIcon
+                className={styles["btn__icon"]}
+                icon={props.section.buttonIcon}
+              />
+            ) : null}
+          </ReverseHoverButton>
+        ) : null}
       </div>
       <button
         className={styles["section__image"]}

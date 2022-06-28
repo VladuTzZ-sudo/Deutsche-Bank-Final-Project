@@ -141,6 +141,7 @@ const CoursesMainPage: FC = () => {
       </div>
       {isModalOpened && (
         <AddCourseModal
+          title="ADD COURSE"
           onClose={closeModal}
           className={styles["modal"]}
           onSave={onAddCourse}
