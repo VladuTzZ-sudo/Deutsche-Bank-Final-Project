@@ -19,3 +19,7 @@
   max-width: 100%;
   height: auto;
 }
+
+.section__content {
+  width: 100%;
+}

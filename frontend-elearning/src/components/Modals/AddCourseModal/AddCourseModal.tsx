@@ -8,6 +8,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import ModalContainer from "../ModalContainer/ModalContainer";
 
 interface ModalProps {
+  title: string;
   className?: string;
   onClose?: React.MouseEventHandler;
   onSave?: (title: string, description: string) => void;
@@ -36,7 +37,7 @@ const AddCourseModal: FC<ModalProps> = (props) => {
     <ModalContainer onClose={props.onClose}>
       <div className={`${styles["modal__content"]} ${props.className}`}>
         <div className={styles["title"]}>
-          <span>ADD COURSE</span>{" "}
+          <span>{props.title}</span>{" "}
           <FontAwesomeIcon
             className={styles["btn-close"]}
             icon={faClose}
@@ -46,12 +47,12 @@ const AddCourseModal: FC<ModalProps> = (props) => {
         <div className={styles["form-container"]}>
           <UnderlinedInput
             className={styles["input"]}
-            placeholder="Course Title"
+            placeholder="Title"
             onChange={onTitleChange}
           ></UnderlinedInput>
           <UnderlinedInput
             className={styles["input"]}
-            placeholder="Course Description"
+            placeholder="Description"
             onChange={onDescriptionChange}
           ></UnderlinedInput>
           <ClassicButton onClick={onSaveHandler} className={styles["btn-save"]}>

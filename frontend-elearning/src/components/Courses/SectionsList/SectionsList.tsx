@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Section from "../../../models/Course/Section";
+import Section from "../../../models/Course/Section/Section";
 import SectionCard from "../SectionCard/SectionCard";
 import styles from "./SectionsList.module.css";
 
@@ -21,7 +21,10 @@ const SectionsList: FC<ListProps> = (props) => {
           }
         />
       </div>
-      <SectionCard section={section}></SectionCard>
+      <SectionCard
+        className={styles["section__content"]}
+        section={section}
+      ></SectionCard>
     </li>
   ));
 

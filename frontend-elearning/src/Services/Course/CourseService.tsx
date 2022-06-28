@@ -6,36 +6,11 @@ import { API_URLS } from "../../Constants/Constants";
 import Course from "../../models/Course/Course";
 import CourseAddDTO from "../../models/Course/CourseAddDTO";
 import CourseGetDTO from "../../models/Course/CourseGetDTO";
+import SectionAddDTO from "../../models/Course/Section/SectionAddDTO";
+import SectionGetDTO from "../../models/Course/Section/SectionGetDTO";
 
 const CourseService = {
   getCourses: async (authToken: string): Promise<CourseGetDTO[]> => {
-    // const courses: CourseAPI[] = [
-    //   {
-    //     id: 1,
-    //     title: "Machine Learning1",
-    //     description: "This content is intended to guide developers new to ML",
-    //     teacherName: "",
-    //   },
-    //   {
-    //     id: 2,
-    //     title: "Machine Learning2",
-    //     description: "This content is intended to guide developers new to ML",
-    //     teacherName: "",
-    //   },
-    //   {
-    //     id: 3,
-    //     title: "Machine Learning3",
-    //     description: "This content is intended to guide developers new to ML",
-    //     teacherName: "",
-    //   },
-    //   {
-    //     id: 4,
-    //     title: "Machine Learning4",
-    //     description: "This content is intended to guide developers new to ML",
-    //     teacherName: "",
-    //   },
-    // ];
-
     // TODO: Exceptions
     try {
       const coursesResponse = await fetch(API_URLS.GET_COURSES, {
@@ -78,6 +53,62 @@ const CourseService = {
     } catch (e) {
       console.log(e);
       return course;
+    }
+  },
+
+  getSections: async (
+    courseId: number,
+    authToken: string
+  ): Promise<SectionGetDTO[]> => {
+    // TODO: Exceptions
+    try {
+      const sectionsResponse = await fetch(
+        `${API_URLS.GET_COURSES}/${courseId}/sections`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      const sections = (await sectionsResponse.json()) as SectionGetDTO[];
+
+      return sections;
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  },
+
+  // TODO: Exception handling
+  addSection: async (
+    courseId: number,
+    section: SectionAddDTO,
+    authToken: string
+  ): Promise<SectionAddDTO> => {
+    console.log(section);
+
+    try {
+      const addResponse = await fetch(
+        `${API_URLS.GET_COURSES}/${courseId}/sections`,
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify(section),
+        }
+      );
+
+      console.log("section added");
+
+      return section;
+    } catch (e) {
+      console.log(e);
+      return section;
     }
   },
 };

@@ -24,8 +24,7 @@
 .section__details {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: 2rem;
+  justify-content: space-between;
 }
 
 .section__text {
