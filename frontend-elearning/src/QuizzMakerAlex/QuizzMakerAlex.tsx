@@ -37,8 +37,40 @@ export default function QuizzMakerAlex() {
           <div className={styles["quizz-title"]}>
             <label className={styles["title-label"]}>
               Quizz Title:
-              <br />
-              <input type="text" name="quizzTitle" />
+              <input
+                className={styles["input-title"]}
+                type="text"
+                name="quizzTitle"
+              />
+            </label>
+          </div>
+          {/* dasd */}
+          <div className={styles["quizz-title"]}>
+            <label className={styles["title-label"]}>
+              Duration:
+              <input
+                className={styles["input-duration"]}
+                type="text"
+                name="duration"
+              />
+            </label>
+          </div>
+          {/* dasd */}
+          <div className={styles["quizz-title"]}>
+            <label className={styles["title-label"]}>
+              Due:
+              <input className={styles["input-due"]} type="text" name="due" />
+            </label>
+          </div>
+          {/* dasd */}
+          <div className={styles["quizz-title"]}>
+            <label className={styles["title-label"]}>
+              Details:
+              <input
+                className={styles["input-details"]}
+                type="text"
+                name="details"
+              />
             </label>
           </div>
           {questionList}

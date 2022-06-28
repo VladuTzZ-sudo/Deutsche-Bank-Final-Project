@@ -12,14 +12,14 @@ export default function Answer(props: any) {
           className={styles["radio-btn-left"]}
           type="radio"
           value="True"
-          name="boolean"
+          name={props.letter}
         />{" "}
         True
         <input
           className={styles["radio-btn-right"]}
           type="radio"
           value="False"
-          name="boolean"
+          name={props.letter}
         />{" "}
         False
       </label>
