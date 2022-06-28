@@ -15,6 +15,7 @@ import PrivateRoute from "./PrivateRouteFolder/PrivateRoute";
 import QuizzMakerAlex from "./QuizzMakerAlex/QuizzMakerAlex";
 import QuizzFinishedPage from "./QuizzFinishedPage/QuizzFinishedPage";
 import QuizStartPage from "./QuizStartPage/QuizStartPage";
+import QuizLiveTimer from "./QuizLiveTimer/QuizLiveTimer";
 export default function App() {
   return (
     <BrowserRouter>
@@ -39,7 +40,7 @@ export default function App() {
           path="/quizzMaker"
           element={<QuizzMakerAlex></QuizzMakerAlex>}
         ></Route>
-
+        <Route path="/quizLiveTimer" element={<QuizLiveTimer closedDate={new Date("Jun 28, 2022 20:30:00")} duration={20}/>}></Route>
         <Route path="*" element={<Navigate to="/loginPage" />}></Route>
         {/* <QuizzMaker></QuizzMaker>
       <QuizzPlay></QuizzPlay>
