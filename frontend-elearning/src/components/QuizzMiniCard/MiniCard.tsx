@@ -5,16 +5,16 @@ interface MiniCardProps {
   onClick?: React.MouseEventHandler;
   className?: string;
   children?: React.ReactNode;
+  number: number;
 }
 
 const MiniCard: FC<MiniCardProps> = (props) => {
   return (
     <div className={`${styles["button"]}`}>
       <div className={`${styles["upperButton"]}`}>
-        1
       </div>
       <div className={`${styles["lowerButton"]}`}>
-        2
+        {props.number}
       </div>
     </div>
   );
