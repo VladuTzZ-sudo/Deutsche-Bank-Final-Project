@@ -4,32 +4,29 @@ import DragFiles from "../../../components/DragFiles/DragFiles";
 import styles from "./CourseDetailPage.module.css";
 import "../global.css";
 import ModalContainer from "../../../components/Modals/ModalContainer/ModalContainer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../../../Navbar/NavBar";
 import CustomNavLink from "../../../models/CustomNavLink";
 import filesTypeValidator from "../../../Services/Validation/Validator";
 import { ACCEPTED_FILE_TYPES } from "../../../Constants/Constants";
-
-// WILL BE REPLACED WITH OUTLET
-const studentLinks: CustomNavLink[] = [
-  { text: "Listing courses", href: "#" },
-  { text: "Show leaderboard", href: "#" },
-  { text: "Show notes", href: "#" },
-  { text: "Create note", href: "#" },
-  { text: "Quiz results", href: "#" },
-  { text: "Log out", href: "/" },
-];
+import SectionCard from "../../../components/Courses/SectionCard/SectionCard";
+import Section from "../../../models/Course/Section";
+import SectionsList from "../../../components/Courses/SectionsList/SectionsList";
 
 const CourseDetailPage: FC = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const cardImage =
     process.env.PUBLIC_URL + "/assets/data-images/folder-blue-icon.png";
 
   const [isModalOpened, setIsModalOpened] = useState(false);
 
-  const { id } = useParams();
-
   const openModal = () => {
     setIsModalOpened(true);
+    console.log(
+      process.env.PUBLIC_URL + "/assets/data-images/folder-blue-icon.png"
+    );
   };
 
   const closeModal = () => {
@@ -44,11 +41,28 @@ const CourseDetailPage: FC = () => {
     { title: "File5", type: "" },
   ];
 
-  const mockData = {
-    title: "",
-    date: null,
-    icon: "",
+  const sectionMock: Section = {
+    completed: true,
+    title: "A brief introduction to JavaScript",
+    description:
+      "Any computer and OS will work — Windows, macOS or Linux. We will set up your text editor the course.",
+    onImageClick: openModal,
   };
+
+  const onLogout = () => {
+    sessionStorage.removeItem("isAuth");
+    navigate(`/loginPage`, {});
+    // TODO: delete navigation history
+  };
+
+  // WILL BE REPLACED WITH OUTLET
+  const studentLinks: CustomNavLink[] = [
+    { text: "Show notes", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
+
+  const sectionsMock = [sectionMock, sectionMock, sectionMock];
 
   const teacherFilesValidator = (file: File) => {
     return filesTypeValidator(file, ACCEPTED_FILE_TYPES.TEACHER);
@@ -58,11 +72,10 @@ const CourseDetailPage: FC = () => {
     <React.Fragment>
       <NavBar links={studentLinks}></NavBar>
       <div className={styles["container"]}>
-        <DataCard
-          dataInfo={mockData}
-          className={styles["data-container"]}
-          onClick={openModal}
-        ></DataCard>
+        <SectionsList
+          className={styles["sections"]}
+          sections={sectionsMock}
+        ></SectionsList>
       </div>
       {isModalOpened && (
         <ModalContainer onClose={closeModal}>

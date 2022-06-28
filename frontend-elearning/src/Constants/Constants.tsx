@@ -8,4 +8,9 @@ const ACCEPTED_FILE_TYPES = {
   TEACHER: ["image/png"],
 };
 
-export { Roles, ACCEPTED_FILE_TYPES };
+const API_URLS = {
+  GET_COURSES: "http://localhost:8080/courses",
+  ADD_COURSE: "http://localhost:8080/courses", // restricted to teacher
+};
+
+export { Roles, ACCEPTED_FILE_TYPES, API_URLS };

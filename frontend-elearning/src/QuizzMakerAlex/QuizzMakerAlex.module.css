@@ -1,0 +1,46 @@
+#qm-title {
+  text-align: center;
+  font-family: "PT Sans", sans-serif;
+  font-size: 3.5rem !important;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.addBtnDiv {
+  text-align: center;
+  font-family: "PT Sans", sans-serif;
+}
+
+.submit-btn {
+  text-align: center;
+  font-family: "PT Sans", sans-serif;
+  margin-top: 30px;
+}
+
+.addQuestionBtn {
+  font-size: 2rem;
+  background-color: #3da7ed;
+  padding: 5px 60px 5px 60px;
+  border-radius: 28px;
+  color: #f4e9ea;
+}
+
+.big-div {
+  border: 1px solid black;
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+
+.blankDiv {
+  height: 16vh;
+}
+
+.quizz-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.title-label {
+  font-size: 2rem;
+  font-family: "PT Sans", sans-serif;
+}

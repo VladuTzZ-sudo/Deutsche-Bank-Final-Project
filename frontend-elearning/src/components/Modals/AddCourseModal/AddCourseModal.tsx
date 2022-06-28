@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { ChangeEvent, FC, useRef, useState } from "react";
 import ClassicButton from "../../Buttons/ClassicButton/ClassicButton";
 import ReactDOM from "react-dom";
 import UnderlinedInput from "../../Inputs/UnderlinedInput";
@@ -10,9 +10,28 @@ import ModalContainer from "../ModalContainer/ModalContainer";
 interface ModalProps {
   className?: string;
   onClose?: React.MouseEventHandler;
+  onSave?: (title: string, description: string) => void;
 }
 
 const AddCourseModal: FC<ModalProps> = (props) => {
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+
+  const onSaveHandler = (e: React.MouseEvent): void => {
+    if (props.onSave) {
+      props.onSave(title, description);
+      props.onClose?.(e);
+    }
+  };
+
+  const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const onDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
+  };
+
   return (
     <ModalContainer onClose={props.onClose}>
       <div className={`${styles["modal__content"]} ${props.className}`}>
@@ -28,12 +47,14 @@ const AddCourseModal: FC<ModalProps> = (props) => {
           <UnderlinedInput
             className={styles["input"]}
             placeholder="Course Title"
+            onChange={onTitleChange}
           ></UnderlinedInput>
           <UnderlinedInput
             className={styles["input"]}
             placeholder="Course Description"
+            onChange={onDescriptionChange}
           ></UnderlinedInput>
-          <ClassicButton onClick={() => {}} className={styles["btn-save"]}>
+          <ClassicButton onClick={onSaveHandler} className={styles["btn-save"]}>
             Send
           </ClassicButton>
         </div>

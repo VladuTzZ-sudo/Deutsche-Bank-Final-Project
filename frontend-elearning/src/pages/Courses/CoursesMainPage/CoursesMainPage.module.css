@@ -96,4 +96,5 @@
   justify-content: space-between;
   align-content: space-between;
   grid-column: span 2/3;
+  gap: 3rem;
 }

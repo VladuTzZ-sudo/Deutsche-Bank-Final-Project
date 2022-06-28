@@ -2,7 +2,8 @@ import React, { FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./CourseCard.module.css";
 import "../../../index.css";
-import Course from "../../../models/Course";
+import Course from "../../../models/Course/Course";
+import { faDisplay } from "@fortawesome/free-solid-svg-icons";
 
 interface CardProps {
   color: string;
@@ -30,11 +31,8 @@ const CourseCard: FC<CardProps> = (props) => {
           props.onClick(e, props.course);
         }}
       >
-        <FontAwesomeIcon
-          className={styles["card__icon"]}
-          icon={props.course.icon}
-        />
-        <h3 className={styles["card__title"]}>{props.course.title}</h3>
+        <FontAwesomeIcon className={styles["card__icon"]} icon={faDisplay} />
+        <h3 className={styles["card__title"]}>{props.course.name}</h3>
         <p className={styles["card__description"]}>
           {props.course.description}
         </p>

@@ -1,7 +1,7 @@
 import { faDisplay, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import React, { FC, useEffect, useState } from "react";
 import CoursesList from "../../../components/Courses/CoursesList/CoursesList";
-import Course from "../../../models/Course";
+import Course from "../../../models/Course/Course";
 import "../global.css";
 import styles from "./CoursesMainPage.module.css";
 import Leaderboard from "../../../components/Leaderboard/Leaderboard";
@@ -16,69 +16,12 @@ import Jwt from "../../../models/Jwt";
 import NavBar from "../../../Navbar/NavBar";
 import CustomNavLink from "../../../models/CustomNavLink";
 import { Roles } from "../../../Constants/Constants";
+import CourseRepository from "../../../Repositories/Course/CourseRepository";
+import { CourseService } from "../../../Services/Course/CourseService";
+import CourseAddDTO from "../../../models/Course/CourseAddDTO";
 
 const CoursesMainPage: FC = () => {
-  const courses: Course[] = [
-    {
-      id: 1,
-      icon: faDisplay,
-      title: "Machine Learning1",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      id: 2,
-      icon: faDisplay,
-      title: "Machine Learning2",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      id: 3,
-      icon: faDisplay,
-      title: "Machine Learning3",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-    {
-      id: 4,
-      icon: faDisplay,
-      title: "Machine Learning4",
-      description: "This content is intended to guide developers new to ML",
-      progress: 0.3,
-    },
-  ];
-
-  const users: UserScore[] = [
-    { name: "David Simpson", score: 789 },
-    { name: "David Simpson", score: 150 },
-    { name: "David Simpson", score: 6 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-  ];
-
-  const studentLinks: CustomNavLink[] = [
-    { text: "Listing courses", href: "#" },
-    { text: "Show leaderboard", href: "#" },
-    { text: "Show notes", href: "#" },
-    { text: "Create note", href: "#" },
-    { text: "Quiz results", href: "#" },
-    { text: "Log out", href: "/" },
-  ];
-
-  const teacherLinks: CustomNavLink[] = [
-    { text: "Add courses", href: "#" },
-    { text: "Listing courses", href: "#" },
-    { text: "Show leaderboard", href: "#" },
-    { text: "Quiz results", href: "#" },
-    { text: "Log out", href: "/" },
-  ];
-
+  const [courses, setCourses] = useState<Course[]>([]);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [loggedUser, setLoggedUser]: [
     UserAuth,
@@ -93,8 +36,22 @@ const CoursesMainPage: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    getCourses();
     setLoggedUser(location.state as UserAuth);
   }, []);
+
+  const users: UserScore[] = [
+    { name: "David Simpson", score: 789 },
+    { name: "David Simpson", score: 150 },
+    { name: "David Simpson", score: 6 },
+    { name: "David Simpson", score: 2 },
+    { name: "David Simpson", score: 2 },
+    { name: "David Simpson", score: 2 },
+    { name: "David Simpson", score: 2 },
+    { name: "David Simpson", score: 2 },
+    { name: "David Simpson", score: 2 },
+    { name: "David Simpson", score: 2 },
+  ];
 
   const openModal = (): void => {
     setIsModalOpened(true);
@@ -104,10 +61,48 @@ const CoursesMainPage: FC = () => {
     setIsModalOpened(false);
   };
 
-  const cardClickHandler = (e: any, course: Course) => {
+  const cardClickHandler = (e: any, course: Course): void => {
     // TODO: Authorization
     navigate(`/courses/${course.id}`, { state: location.state });
   };
+
+  const getCourses = async () => {
+    const courses: Course[] = await CourseRepository.getCourses(
+      (location.state as UserAuth).token
+    );
+    setCourses(courses);
+  };
+
+  const onLogout = () => {
+    sessionStorage.removeItem("isAuth");
+    navigate(`/loginPage`, {});
+    // TODO: delete navigation history
+  };
+
+  const onAddCourse = async (title: string, description: string) => {
+    const addedCourse: CourseAddDTO = await CourseService.addCourse(
+      {
+        name: title,
+        description: description,
+      },
+      loggedUser.token
+    );
+
+    getCourses();
+    // TODO: Exceptions + Validations
+  };
+
+  const studentLinks: CustomNavLink[] = [
+    { text: "Show notes", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
+
+  const teacherLinks: CustomNavLink[] = [
+    { text: "Listing courses", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
 
   return (
     <React.Fragment>
@@ -140,7 +135,7 @@ const CoursesMainPage: FC = () => {
         <CoursesList
           className={`${styles["courses__list"]}`}
           onCardClick={cardClickHandler}
-          courses={courses}
+          courses={courses!}
         ></CoursesList>
         <Leaderboard participants={users}></Leaderboard>
       </div>
@@ -148,6 +143,7 @@ const CoursesMainPage: FC = () => {
         <AddCourseModal
           onClose={closeModal}
           className={styles["modal"]}
+          onSave={onAddCourse}
         ></AddCourseModal>
       )}
     </React.Fragment>

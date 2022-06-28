@@ -14,7 +14,8 @@ type toTransfer = {
   role: string;
 };
 
-export default function LoginPage({}: Props) {
+export default function LoginPage() {
+  sessionStorage.setItem("isAuth", "false");
   let navigate = useNavigate();
 
   const [userInput, setInput] = useState({
@@ -23,14 +24,9 @@ export default function LoginPage({}: Props) {
   });
 
   function gotToNextPage(data: toTransfer) {
-    if (data.role === "student") {
-      alert("You will go to the student page!");
-    } else if (data.role === "teacher") {
-      alert("You will go to the teacher page!");
-    }
-
     if (data.role === "student" || data.role === "teacher") {
-      navigate("/student", { state: data });
+      sessionStorage.setItem("isAuth", "true");
+      navigate("/mainPage", { state: data });
     }
   }
   function sendCredentials() {
@@ -132,6 +128,13 @@ export default function LoginPage({}: Props) {
           text="Sign in"
           func={() => {
             handleSubmit();
+          }}
+        ></Button>
+
+          <Button
+          text="Go back!!"
+          func={() => {
+           navigate("/");
           }}
         ></Button>
       </div>

@@ -1,0 +1,21 @@
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5rem;
+}
+
+.section {
+  display: flex;
+  align-items: center;
+  column-gap: 6rem;
+}
+
+.section__image {
+  width: 6rem;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+}
