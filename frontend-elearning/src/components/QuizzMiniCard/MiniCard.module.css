@@ -60,12 +60,12 @@
 }
 
 
-.button:hover{
+/* .button:hover{
   font-weight: bold;
   background-color: white;
-  color: #125dff;
+  color: blueviolet;
   border:1px;
   border-style: solid;
-  border-color: #125dff;
+  border-color: blueviolet;
   opacity: 1;
-}
+} */

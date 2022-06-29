@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './QuizzPlay.module.css';
 import Button from '../Button/Button';
 import Footer from '../Footer/Footer';
@@ -8,6 +8,14 @@ import AnswerQuestion from '../components/AnswerQuizz/AnswerQuestion';
 import QuestionInfo from '../components/QuestionInfo/QuestionInfo';
 import QuestionQuizz from '../components/QuestionQuizz/QuestionQuizz';
 import { JsxEmit, textSpanContainsTextSpan } from 'typescript';
+import {
+    useLocation,
+    useNavigate,
+    useParams,
+    Location,
+} from "react-router-dom";
+import QuizzRepository from '../Repositories/Quizz/QuizzRepository';
+import UserAuth from '../models/UserAuth';
 
 type Props = {}
 
@@ -15,25 +23,27 @@ const onClick = (questionNumber: number, answerNumber: number) => {
     console.log("OPA, adevarat", questionNumber, answerNumber);
 };
 
-interface QuestionQuizzProps {
+export interface QuestionQuizzProps {
+    id?: string;
     onClick?: React.MouseEventHandler;
     className?: string;
     children?: React.ReactNode;
     answers: React.ReactNode;
     number: number;
     question: string;
-}
+    miniCard: React.ReactNode;
+};
 
-const questions: QuestionQuizzProps[] = [
-    { answers: <></>, number: 1, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-    { answers: <></>, number: 2, question: 'Dezvoltarea pe bază de prototip' },
-    { answers: <></>, number: 3, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-    { answers: <></>, number: 4, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-    { answers: <></>, number: 5, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-    { answers: <></>, number: 6, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-    { answers: <></>, number: 7, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-    { answers: <></>, number: 8, question: 'Diagramele de interactiune se folosesc pentru a modela' }
-];
+// const questions: QuestionQuizzProps[] = [
+//     { answers: <></>, number: 1, question: 'Diagramele de interactiune se folosesc pentru a modela' },
+//     { answers: <></>, number: 2, question: 'Dezvoltarea pe bază de prototip' },
+//     { answers: <></>, number: 3, question: 'Diagramele de interactiune se folosesc pentru a modela' },
+//     { answers: <></>, number: 4, question: 'Diagramele de interactiune se folosesc pentru a modela' },
+//     { answers: <></>, number: 5, question: 'Diagramele de interactiune se folosesc pentru a modela' },
+//     { answers: <></>, number: 6, question: 'Diagramele de interactiune se folosesc pentru a modela' },
+//     { answers: <></>, number: 7, question: 'Diagramele de interactiune se folosesc pentru a modela' },
+//     { answers: <></>, number: 8, question: 'Diagramele de interactiune se folosesc pentru a modela' }
+// ];
 
 type HeaderProps = {
     children: React.ReactNode | React.ReactNode[];
@@ -44,6 +54,31 @@ function Header(props: HeaderProps) {
 }
 
 export default function QuizzListen({ }: Props) {
+    const location: Location = useLocation();
+
+    const [loggedUser, setLoggedUser]: [
+        UserAuth,
+        React.Dispatch<React.SetStateAction<UserAuth>>
+    ] = useState({
+        name: "",
+        role: "",
+        token: "",
+    });
+
+    useEffect(() => {
+        setLoggedUser(location.state as UserAuth);
+        console.log(location, "token");
+        getQuestions();
+    }, []);
+
+    const getQuestions = async () => {
+        const sections = await QuizzRepository.getQuestions(
+            loggedUser.token,
+            "1",
+            "3"
+        );
+    };
+
     const [questionsInfo, setQuestionsInfo] = useState<QuestionQuizzProps[]>(
         [{
             answers: <>
@@ -55,7 +90,10 @@ export default function QuizzListen({ }: Props) {
                     onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
                 <AnswerQuestion questionNumber={1} answerNumber={4}
                     onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
-            </>, number: 1, question: 'Diagramele de interactiune se folosesc pentru a modela'
+            </>, number: 1, question: 'Diagramele de interactiune se folosesc pentru a modela',
+            miniCard: <>
+                <MiniCard number={1}></MiniCard>
+            </>
         },
         {
             answers: <>
@@ -67,7 +105,10 @@ export default function QuizzListen({ }: Props) {
                     onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
                 <AnswerQuestion questionNumber={2} answerNumber={4}
                     onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
-            </>, number: 2, question: 'Dezvoltarea pe bază de prototip'
+            </>, number: 2, question: 'Dezvoltarea pe bază de prototip',
+            miniCard: <>
+                <MiniCard number={2}></MiniCard>
+            </>
         },
         {
             answers: <>
@@ -79,7 +120,10 @@ export default function QuizzListen({ }: Props) {
                     onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
                 <AnswerQuestion questionNumber={3} answerNumber={4}
                     onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
-            </>, number: 3, question: 'Diagramele de interactiune se folosesc pentru a modela'
+            </>, number: 3, question: 'Diagramele de interactiune se folosesc pentru a modela',
+            miniCard: <>
+                <MiniCard number={3}></MiniCard>
+            </>
         },
         {
             answers: <>
@@ -91,7 +135,10 @@ export default function QuizzListen({ }: Props) {
                     onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
                 <AnswerQuestion questionNumber={4} answerNumber={4}
                     onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
-            </>, number: 4, question: 'Diagramele de interactiune se folosesc pentru a modela'
+            </>, number: 4, question: 'Diagramele de interactiune se folosesc pentru a modela',
+            miniCard: <>
+                <MiniCard number={4}></MiniCard>
+            </>
         },
         {
             answers: <>
@@ -103,7 +150,10 @@ export default function QuizzListen({ }: Props) {
                     onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
                 <AnswerQuestion questionNumber={5} answerNumber={4}
                     onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
-            </>, number: 5, question: 'Diagramele de interactiune se folosesc pentru a modela'
+            </>, number: 5, question: 'Diagramele de interactiune se folosesc pentru a modela',
+            miniCard: <>
+                <MiniCard number={5}></MiniCard>
+            </>
         },
         {
             answers: <>
@@ -115,7 +165,10 @@ export default function QuizzListen({ }: Props) {
                     onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
                 <AnswerQuestion questionNumber={6} answerNumber={4}
                     onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
-            </>, number: 6, question: 'Diagramele de interactiune se folosesc pentru a modela'
+            </>, number: 6, question: 'Diagramele de interactiune se folosesc pentru a modela',
+            miniCard: <>
+                <MiniCard number={6}></MiniCard>
+            </>
         },
         {
             answers: <>
@@ -127,7 +180,10 @@ export default function QuizzListen({ }: Props) {
                     onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
                 <AnswerQuestion questionNumber={7} answerNumber={4}
                     onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
-            </>, number: 7, question: 'Diagramele de interactiune se folosesc pentru a modela'
+            </>, number: 7, question: 'Diagramele de interactiune se folosesc pentru a modela',
+            miniCard: <>
+                <MiniCard number={7}></MiniCard>
+            </>
         },
         {
             answers: <>
@@ -139,13 +195,23 @@ export default function QuizzListen({ }: Props) {
                     onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
                 <AnswerQuestion questionNumber={8} answerNumber={4}
                     onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
-            </>, number: 8, question: 'Diagramele de interactiune se folosesc pentru a modela'
+            </>, number: 8, question: 'Diagramele de interactiune se folosesc pentru a modela',
+            miniCard: <>
+                <MiniCard number={8}></MiniCard>
+            </>
         }]
     );
 
     const list = questionsInfo.map((question: QuestionQuizzProps) => {
-        <QuestionQuizz question={question.question} number={question.number} answers={question.answers} />
+        <QuestionQuizz id={question.number.toString()} question={question.question} number={question.number} answers={question.answers} />
     });
+
+    const ref = useRef<HTMLDivElement>(null);
+
+    const handleClick = () => {
+        console.log("AOCOCOCO");
+        ref.current?.scrollIntoView({ behavior: 'smooth' });
+    }
 
     return (
         <div>
@@ -159,24 +225,22 @@ export default function QuizzListen({ }: Props) {
                     <div className={`${styles["div--all--questions"]}`}>
 
                         {questionsInfo.map((question: QuestionQuizzProps) =>
-                            <QuestionQuizz question={question.question} number={question.number} answers={question.answers}></QuestionQuizz>
+                            <div id={`${question.number}`}>
+                                <QuestionQuizz id={question.number.toString()} question={question.question} number={question.number} answers={question.answers}></QuestionQuizz>
+                            </div>
                         )}
 
                         <div className={`${styles["elemFlexCenter"]}`}>
                             <Button text='Submit' func={() => { handleSubmit() }} type='1' />
                         </div>
+
                     </div>
-                    <div className={`${styles["div--squareNumbers"]}`}>
+                    <div className={`${styles["div--squareNumbers2"]}`}>
                         <span className={`${styles["text--subtitle"]}`}>Quiz Navigation</span>
                         <div className={`${styles["container-buttons"]}`}>
-                            <MiniCard number={1}></MiniCard>
-                            <MiniCard number={2}></MiniCard>
-                            <MiniCard number={3}></MiniCard>
-                            <MiniCard number={4}></MiniCard>
-                            <MiniCard number={5}></MiniCard>
-                            <MiniCard number={6}></MiniCard>
-                            <MiniCard number={7}></MiniCard>
-                            <MiniCard number={8}></MiniCard>
+                            {questionsInfo.map((question: QuestionQuizzProps) =>
+                                <a href={`#${question.number}`}>{question.miniCard}</a>
+                            )}
                         </div>
 
                         <span onClick={handleSubmit} className={`${styles["paragraph_quiz--navaigation"]}`}>Finish attempt</span>

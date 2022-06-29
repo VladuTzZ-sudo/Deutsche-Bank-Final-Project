@@ -123,6 +123,11 @@ const CourseDetailPage: FC = () => {
     console.log(title, description);
   };
 
+
+  const buttonNavi = (e: any): void => {
+    navigate(`/play`, { state: location.state });
+  };
+
   return (
     <React.Fragment>
       <NavBar
@@ -171,8 +176,12 @@ const CourseDetailPage: FC = () => {
           onSave={onAddSection}
         ></AddCourseModal>
       )}
+      <button onClick={buttonNavi}>
+        mamamam
+      </button>
     </React.Fragment>
   );
 };
+
 
 export default CourseDetailPage;
