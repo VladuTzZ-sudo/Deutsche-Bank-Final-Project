@@ -4,6 +4,7 @@ import QuestionInfo from "../QuestionInfo/QuestionInfo";
 import styles from "./QuestionQuizz.module.css";
 
 interface QuestionQuizzProps {
+  id?: string;
   onClick?: React.MouseEventHandler;
   className?: string;
   children?: React.ReactNode;

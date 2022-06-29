@@ -10,7 +10,7 @@ interface MiniCardProps {
 
 const MiniCard: FC<MiniCardProps> = (props) => {
   return (
-    <div className={`${styles["button"]}`}>
+    <div onClick={props.onClick} className={`${styles["button"]}`}>
       <div className={`${styles["upperButton"]}`}>
       </div>
       <div className={`${styles["lowerButton"]}`}>

@@ -221,6 +221,37 @@
     padding-left: 15px;
 }
 
+.div--squareNumbers2 {
+    flex: 1.6;
+    height: fit-content;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    position: sticky;
+    top: 20px;
+
+    background-color: white;
+    margin: 0px 0px 0px 0;
+    border-radius: 2px;
+    border: 1px solid #c1c2c7;
+    box-sizing: border-box;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+}
+
+a:hover {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+}
+
 .div--squareNumbers {
     flex: 1.6;
     height: fit-content;
