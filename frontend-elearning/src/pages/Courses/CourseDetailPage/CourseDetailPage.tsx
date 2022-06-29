@@ -5,10 +5,10 @@ import styles from "./CourseDetailPage.module.css";
 import "../global.css";
 import ModalContainer from "../../../components/Modals/ModalContainer/ModalContainer";
 import {
-  useLocation,
-  useNavigate,
-  useParams,
-  Location,
+	useLocation,
+	useNavigate,
+	useParams,
+	Location,
 } from "react-router-dom";
 import NavBar from "../../../Navbar/NavBar";
 import CustomNavLink from "../../../models/CustomNavLink";
@@ -28,206 +28,208 @@ import SectionAddDTO from "../../../models/Course/Section/SectionAddDTO";
 import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const CourseDetailPage: FC = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const location: Location = useLocation();
+	const navigate = useNavigate();
+	const { id } = useParams();
+	const location: Location = useLocation();
 
-  const [loggedUser, setLoggedUser]: [
-    UserAuth,
-    React.Dispatch<React.SetStateAction<UserAuth>>
-  ] = useState({
-    name: "",
-    role: "",
-    token: "",
-  });
-  const [isFileModalOpened, setIsFileModalOpened] = useState(false);
-  const [isSectionModalOpened, setIsSectionModalOpened] = useState(false);
-  const [sections, setSections] = useState<Section[]>([]);
+	const [loggedUser, setLoggedUser]: [
+		UserAuth,
+		React.Dispatch<React.SetStateAction<UserAuth>>
+	] = useState({
+		name: "",
+		role: "",
+		token: "",
+	});
+	const [isFileModalOpened, setIsFileModalOpened] = useState(false);
+	const [isSectionModalOpened, setIsSectionModalOpened] = useState(false);
+	const [sections, setSections] = useState<Section[]>([]);
 
-  useEffect(() => {
-    setLoggedUser(location.state as UserAuth);
-    getSections();
-  }, []);
+	useEffect(() => {
+		setLoggedUser(location.state as UserAuth);
+		getSections();
+	}, []);
 
-  const openFileModal = () => {
-    setIsFileModalOpened(true);
-  };
+	const openFileModal = () => {
+		setIsFileModalOpened(true);
+	};
 
-  const closeFileModal = () => {
-    setIsFileModalOpened(false);
-  };
+	const closeFileModal = () => {
+		setIsFileModalOpened(false);
+	};
 
-  const openSectionModal = () => {
-    setIsSectionModalOpened(true);
-  };
+	const openSectionModal = () => {
+		setIsSectionModalOpened(true);
+	};
 
-  const closeSectionModal = () => {
-    setIsSectionModalOpened(false);
-  };
+	const closeSectionModal = () => {
+		setIsSectionModalOpened(false);
+	};
 
-  const goToAddQuiz = (sectionId: number) => {
-    navigate(`/quizzMaker`, { state: { loggedUser, sectionId } });
-  };
+	const goToAddQuiz = (sectionId: number) => {
+		navigate(`/quizzMaker`, { state: { loggedUser, sectionId } });
+	};
 
-  const goToViewQuiz = (quizId: number) => {
-    navigate(`/quizzFinishedPage`, { state: { loggedUser, quizId } });
-  };
+	const goToViewQuiz = (quizId: number) => {
+		navigate(`/quizzFinishedPage`, { state: { loggedUser, quizId } });
+	};
 
-  const goToTakeQuiz = (quizId: number) => {
-    navigate(`/quizzStartPage`, { state: { loggedUser, quizId } });
-  };
+	const goToTakeQuiz = (sectionId: number, courseId: number) => {
+		navigate(`/quizzStartPage`, {
+			state: {
+				credentials: location.state,
+				sectionId: sectionId,
+				courseId: courseId,
+			},
+		});
+	};
 
-  const goToQuizResults = (quizId: number) => {
-    // TODO pagina profesori
-  };
+	const goToQuizResults = (quizId: number) => {
+		// TODO pagina profesori
+	};
 
-  const getSections = async () => {
-    const sections = await CourseRepository.getSections(
-      +id!,
-      (location.state as UserAuth).token
-    );
+	const getSections = async () => {
+		const sections = await CourseRepository.getSections(
+			+id!,
+			(location.state as UserAuth).token
+		);
 
-    let sectionsClickable: Section[] = [];
+		let sectionsClickable: Section[] = [];
 
-    if ((location.state as UserAuth).role === Roles.TEACHER) {
-      sectionsClickable = sections.map((section) => {
-        section.buttonText = section.quiz
-          ? "Check quiz results !"
-          : "Add a quiz !";
-        section.buttonIcon = section.quiz ? faArrowRight : faPlus;
-        section.onButtonClick = section.quiz
-          ? () => {
-              goToQuizResults(section.quiz!.id);
-            }
-          : () => {
-              goToAddQuiz(section.id!);
-            };
-        section.completed = section.quiz ? false : true;
-        section.onImageClick = openFileModal;
-        return section;
-      });
-    } else {
-      sectionsClickable = sections.map((section) => {
-        section.buttonText = section.quiz ? "Take the quiz !" : "";
-        section.buttonIcon = section.quiz ? faArrowRight : faPlus;
-        section.onButtonClick = section.quiz
-          ? () => {
-              goToTakeQuiz(section.quiz!.id);
-            }
-          : () => {};
-        section.completed = section.quiz ? false : true;
-        section.onImageClick = openFileModal;
-        return section;
-      });
-    }
+		if ((location.state as UserAuth).role === Roles.TEACHER) {
+			sectionsClickable = sections.map((section) => {
+				section.buttonText = section.quiz
+					? "Check quiz results !"
+					: "Add a quiz !";
+				section.buttonIcon = section.quiz ? faArrowRight : faPlus;
+				section.onButtonClick = section.quiz
+					? () => {
+							goToQuizResults(section.quiz!.id);
+					  }
+					: () => {
+							goToAddQuiz(section.id!);
+					  };
+				section.completed = section.quiz ? false : true;
+				section.onImageClick = openFileModal;
+				return section;
+			});
+		} else {
+			sectionsClickable = sections.map((section) => {
+				section.buttonText = section.quiz ? "Take the quiz !" : "";
+				section.buttonIcon = section.quiz ? faArrowRight : faPlus;
+				section.onButtonClick = section.quiz
+					? () => {
+							goToTakeQuiz(section.id!, +id!);
+					  }
+					: () => {};
+				section.completed = section.quiz ? false : true;
+				section.onImageClick = openFileModal;
+				return section;
+			});
+		}
 
-    setSections(sectionsClickable);
-  };
+		setSections(sectionsClickable);
+	};
 
-  const files = [
-    { title: "File1", type: "" },
-    { title: "File2", type: "" },
-    { title: "File3", type: "" },
-    { title: "File4", type: "" },
-    { title: "File5", type: "" },
-  ];
+	const files = [
+		{ title: "File1", type: "" },
+		{ title: "File2", type: "" },
+		{ title: "File3", type: "" },
+		{ title: "File4", type: "" },
+		{ title: "File5", type: "" },
+	];
 
-  const onLogout = () => {
-    sessionStorage.removeItem("isAuth");
-    navigate(`/loginPage`, {});
-    // TODO: delete navigation history
-  };
+	const onLogout = () => {
+		sessionStorage.removeItem("isAuth");
+		navigate(`/loginPage`, {});
+		// TODO: delete navigation history
+	};
 
-  // WILL BE REPLACED WITH OUTLET
-  const studentLinks: CustomNavLink[] = [
-    { text: "Show notes", href: "#" },
-    { text: "Quiz results", href: "#" },
-    { text: "Log out", href: "/", onClick: onLogout },
-  ];
+	// WILL BE REPLACED WITH OUTLET
+	const studentLinks: CustomNavLink[] = [
+		{ text: "Show notes", href: "#" },
+		{ text: "Quiz results", href: "#" },
+		{ text: "Log out", href: "/", onClick: onLogout },
+	];
 
-  const teacherLinks: CustomNavLink[] = [
-    { text: "Listing courses", href: "#" },
-    { text: "Quiz results", href: "#" },
-    { text: "Log out", href: "/", onClick: onLogout },
-  ];
+	const teacherLinks: CustomNavLink[] = [
+		{ text: "Listing courses", href: "#" },
+		{ text: "Quiz results", href: "#" },
+		{ text: "Log out", href: "/", onClick: onLogout },
+	];
 
-  const teacherFilesValidator = (file: File) => {
-    return filesTypeValidator(file, ACCEPTED_FILE_TYPES.TEACHER);
-  };
+	const teacherFilesValidator = (file: File) => {
+		return filesTypeValidator(file, ACCEPTED_FILE_TYPES.TEACHER);
+	};
 
-  const onAddSection = async (title: string, description: string) => {
-    const addedCourse: SectionAddDTO = await CourseService.addSection(
-      +id!,
-      {
-        title: title,
-      },
-      loggedUser.token
-    );
+	const onAddSection = async (title: string, description: string) => {
+		const addedCourse: SectionAddDTO = await CourseService.addSection(
+			+id!,
+			{
+				title: title,
+			},
+			loggedUser.token
+		);
 
-    getSections();
-    // TODO: Exceptions + Validations
-    console.log(title, description);
-  };
+		getSections();
+		// TODO: Exceptions + Validations
+		console.log(title, description);
+	};
 
+	const buttonNavi = (e: any): void => {
+		navigate(`/play`, { state: location.state });
+	};
 
-  const buttonNavi = (e: any): void => {
-    navigate(`/play`, { state: location.state });
-  };
-
-  return (
-    <React.Fragment>
-      <NavBar
-        links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
-      ></NavBar>
-      <div className={styles["container"]}>
-        {loggedUser.role === Roles.TEACHER ? (
-          <ClassicButton
-            className={`${styles["btn-add"]}`}
-            onClick={openSectionModal}
-          >
-            <FontAwesomeIcon
-              className={styles["btn__icon"]}
-              icon={faBookOpenReader}
-            />
-            <span className={styles["btn__text"]}>ADD SECTION</span>
-          </ClassicButton>
-        ) : null}
-        <SectionsList
-          sections={
-            loggedUser.role === Roles.TEACHER
-              ? sections
-              : sections.map((section) => {
-                  if (!section.quiz) {
-                    section.buttonText = "";
-                  }
-                  return section;
-                })
-          }
-        ></SectionsList>
-      </div>
-      {isFileModalOpened && (
-        <ModalContainer onClose={closeFileModal}>
-          <DragFiles
-            className={`${styles["container"]} ${styles["drag-container"]}`}
-            data={files}
-            validator={teacherFilesValidator}
-          ></DragFiles>
-        </ModalContainer>
-      )}
-      {isSectionModalOpened && (
-        <AddCourseModal
-          title="ADD SECTION"
-          onClose={closeSectionModal}
-          className={styles["modal"]}
-          onSave={onAddSection}
-        ></AddCourseModal>
-      )}
-      <button onClick={buttonNavi}>
-        mamamam
-      </button>
-    </React.Fragment>
-  );
+	return (
+		<React.Fragment>
+			<NavBar
+				links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
+			></NavBar>
+			<div className={styles["container"]}>
+				{loggedUser.role === Roles.TEACHER ? (
+					<ClassicButton
+						className={`${styles["btn-add"]}`}
+						onClick={openSectionModal}
+					>
+						<FontAwesomeIcon
+							className={styles["btn__icon"]}
+							icon={faBookOpenReader}
+						/>
+						<span className={styles["btn__text"]}>ADD SECTION</span>
+					</ClassicButton>
+				) : null}
+				<SectionsList
+					sections={
+						loggedUser.role === Roles.TEACHER
+							? sections
+							: sections.map((section) => {
+									if (!section.quiz) {
+										section.buttonText = "";
+									}
+									return section;
+							  })
+					}
+				></SectionsList>
+			</div>
+			{isFileModalOpened && (
+				<ModalContainer onClose={closeFileModal}>
+					<DragFiles
+						className={`${styles["container"]} ${styles["drag-container"]}`}
+						data={files}
+						validator={teacherFilesValidator}
+					></DragFiles>
+				</ModalContainer>
+			)}
+			{isSectionModalOpened && (
+				<AddCourseModal
+					title="ADD SECTION"
+					onClose={closeSectionModal}
+					className={styles["modal"]}
+					onSave={onAddSection}
+				></AddCourseModal>
+			)}
+			<button onClick={buttonNavi}>mamamam</button>
+		</React.Fragment>
+	);
 };
-
 
 export default CourseDetailPage;
