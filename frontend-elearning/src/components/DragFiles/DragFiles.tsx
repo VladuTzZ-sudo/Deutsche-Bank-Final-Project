@@ -122,10 +122,10 @@ const DragFiles: FC<DragFilesProps> = (props) => {
       <div className={`${styles["content"]}`}>
         <div className={styles["data-container"]}>
           {files}
-          <DataCard
+          {/* <DataCard
             dataInfo={uploadCard}
             className={`${styles["data__card"]} ${styles["data__upload"]}`}
-          ></DataCard>
+          ></DataCard> */}
         </div>
       </div>
       {isDragging && <div className={styles["overlay"]} ref={overlayRef}></div>}

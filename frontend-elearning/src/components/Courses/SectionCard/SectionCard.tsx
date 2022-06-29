@@ -23,7 +23,10 @@ const SectionCard: FC<CardProps> = (props) => {
           </p>
         </div>
         {props.section.buttonText ? (
-          <ReverseHoverButton className={styles["btn"]}>
+          <ReverseHoverButton
+            className={styles["btn"]}
+            onClick={props.section.onButtonClick}
+          >
             <span className={styles["btn__text"]}>
               {props.section.buttonText}
             </span>

@@ -3,7 +3,6 @@ import CourseGetDTO from "../../models/Course/CourseGetDTO";
 import Section from "../../models/Course/Section/Section";
 import SectionGetDTO from "../../models/Course/Section/SectionGetDTO";
 import { CourseService } from "../../Services/Course/CourseService";
-import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // TODO: Exceptions
 const CourseRepository = {
@@ -36,9 +35,6 @@ const CourseRepository = {
       section.description =
         "Any computer and OS will work — Windows, macOS or Linux. We will set up your text editor the course.";
       section.completed = true;
-      section.buttonText = section.quiz ? "Take the quiz !" : "Add a quiz !";
-      section.buttonIcon = section.quiz ? faArrowRight : faPlus;
-      section.completed = section.quiz ? false : true;
       sections.push(section);
     }
 

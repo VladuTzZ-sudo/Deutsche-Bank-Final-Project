@@ -25,6 +25,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
 import AddCourseModal from "../../../components/Modals/AddCourseModal/AddCourseModal";
 import SectionAddDTO from "../../../models/Course/Section/SectionAddDTO";
+import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const CourseDetailPage: FC = () => {
   const navigate = useNavigate();
@@ -64,16 +65,61 @@ const CourseDetailPage: FC = () => {
     setIsSectionModalOpened(false);
   };
 
+  const goToAddQuiz = (sectionId: number) => {
+    navigate(`/quizzMaker`, { state: { loggedUser, sectionId } });
+  };
+
+  const goToViewQuiz = (quizId: number) => {
+    navigate(`/quizzFinishedPage`, { state: { loggedUser, quizId } });
+  };
+
+  const goToTakeQuiz = (quizId: number) => {
+    navigate(`/quizzStartPage`, { state: { loggedUser, quizId } });
+  };
+
+  const goToQuizResults = (quizId: number) => {
+    // TODO pagina profesori
+  };
+
   const getSections = async () => {
     const sections = await CourseRepository.getSections(
       +id!,
       (location.state as UserAuth).token
     );
 
-    const sectionsClickable = sections.map((section) => {
-      section.onImageClick = openFileModal;
-      return section;
-    });
+    let sectionsClickable: Section[] = [];
+
+    if ((location.state as UserAuth).role === Roles.TEACHER) {
+      sectionsClickable = sections.map((section) => {
+        section.buttonText = section.quiz
+          ? "Check quiz results !"
+          : "Add a quiz !";
+        section.buttonIcon = section.quiz ? faArrowRight : faPlus;
+        section.onButtonClick = section.quiz
+          ? () => {
+              goToQuizResults(section.quiz!.id);
+            }
+          : () => {
+              goToAddQuiz(section.id!);
+            };
+        section.completed = section.quiz ? false : true;
+        section.onImageClick = openFileModal;
+        return section;
+      });
+    } else {
+      sectionsClickable = sections.map((section) => {
+        section.buttonText = section.quiz ? "Take the quiz !" : "";
+        section.buttonIcon = section.quiz ? faArrowRight : faPlus;
+        section.onButtonClick = section.quiz
+          ? () => {
+              goToTakeQuiz(section.quiz!.id);
+            }
+          : () => {};
+        section.completed = section.quiz ? false : true;
+        section.onImageClick = openFileModal;
+        return section;
+      });
+    }
 
     setSections(sectionsClickable);
   };
