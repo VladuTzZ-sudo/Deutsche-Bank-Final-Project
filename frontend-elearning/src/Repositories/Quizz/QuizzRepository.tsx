@@ -13,6 +13,7 @@ import {
 import MiniCard from "../../components/QuizzMiniCard/MiniCard";
 import AnswerQuestion from "../../components/AnswerQuizz/AnswerQuestion";
 import { QuestionQuizzProps } from "../../QuizPlay/QuizzPlay";
+import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const onClick = (questionNumber: number, answerNumber: number) => {
 	console.log("OPA, adevarat", questionNumber, answerNumber);
@@ -21,6 +22,21 @@ const onClick = (questionNumber: number, answerNumber: number) => {
 		answerNumber.toString()
 	);
 };
+
+function scrollTo(name: string) {
+  scroller.scrollTo(name, {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart'
+  })
+}
+
+const clickCard = (number: number) => {
+  console.log("AKI");
+  scrollTo(number.toString());
+}
+
+
 // TODO: Exceptions
 const QuizzRepository = {
 	getQuestions: async (
@@ -77,7 +93,7 @@ const QuizzRepository = {
 				answers: answers,
 				miniCard: (
 					<>
-						<MiniCard number={apiQuestion.id}></MiniCard>
+						<MiniCard onClick={clickCard} number={apiQuestion.id}></MiniCard>
 					</>
 				),
 			} as QuestionQuizzProps;
