@@ -6,9 +6,9 @@ import { CourseService } from "../../Services/Course/CourseService";
 import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import QuizzQuestions from "../../models/Quiz/QuizQuestions";
 import {
-	AnswerQuestionDTO,
-	QuizzGetDTO,
-	QuizzPlayService,
+  AnswerQuestionDTO,
+  QuizzGetDTO,
+  QuizzPlayService,
 } from "../../Services/QuizzPlayService/QuizzPlayService";
 import MiniCard from "../../components/QuizzMiniCard/MiniCard";
 import AnswerQuestion from "../../components/AnswerQuizz/AnswerQuestion";
@@ -16,18 +16,36 @@ import { QuestionQuizzProps } from "../../QuizPlay/QuizzPlay";
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const onClick = (questionNumber: number, answerNumber: number) => {
-	console.log("OPA, adevarat", questionNumber, answerNumber);
-	window.sessionStorage.setItem(
-		questionNumber.toString(),
-		answerNumber.toString()
-	);
+  var raspunsIntrebare = questionNumber.toString();
+
+  window.sessionStorage.setItem(
+  	questionNumber.toString(),
+  	answerNumber.toString()
+  );
+
+  let haha = window.sessionStorage.getItem("answers");
+  if (haha == null) {
+    window.sessionStorage.setItem(
+      "answers",
+      raspunsIntrebare
+    );
+  } else {
+    if (haha.indexOf(raspunsIntrebare) == -1) {
+
+      raspunsIntrebare += "-" + haha;
+      window.sessionStorage.setItem(
+        "answers",
+        raspunsIntrebare
+      );
+    }
+  }
 };
 
 function scrollTo(name: string) {
   scroller.scrollTo(name, {
-      duration: 800,
-      delay: 0,
-      smooth: 'easeInOutQuart'
+    duration: 800,
+    delay: 0,
+    smooth: 'easeInOutQuart'
   })
 }
 
@@ -39,72 +57,72 @@ const clickCard = (number: number) => {
 
 // TODO: Exceptions
 const QuizzRepository = {
-	getQuestions: async (
-		authToken: string,
-		courseId: string,
-		sectionId: string
-	): Promise<QuestionQuizzProps[]> => {
-		const apiQuestions: QuizzGetDTO[] = await QuizzPlayService.getQuestions(
-			authToken,
-			courseId,
-			sectionId
-		);
+  getQuestions: async (
+    authToken: string,
+    courseId: string,
+    sectionId: string
+  ): Promise<QuestionQuizzProps[]> => {
+    const apiQuestions: QuizzGetDTO[] = await QuizzPlayService.getQuestions(
+      authToken,
+      courseId,
+      sectionId
+    );
 
-		if (apiQuestions.length > 0 && typeof apiQuestions !== "undefined") {
-			apiQuestions.sort((a: QuizzGetDTO, b: QuizzGetDTO) => {
-				if (typeof a.id !== "undefined" && typeof b.id !== "undefined") {
-					return a.id - b.id;
-				} else {
-					return 0;
-				}
-			});
-		}
+    if (apiQuestions.length > 0 && typeof apiQuestions !== "undefined") {
+      apiQuestions.sort((a: QuizzGetDTO, b: QuizzGetDTO) => {
+        if (typeof a.id !== "undefined" && typeof b.id !== "undefined") {
+          return a.id - b.id;
+        } else {
+          return 0;
+        }
+      });
+    }
 
-		console.log(apiQuestions, "mama");
+    console.log(apiQuestions, "mama");
 
-		const questions: QuestionQuizzProps[] = [];
+    const questions: QuestionQuizzProps[] = [];
 
-		for (let apiQuestion of apiQuestions) {
-			const answers: React.ReactNode = (
-				<>
-					{apiQuestion.answers.map((ans: AnswerQuestionDTO) => (
-						<AnswerQuestion
-							questionNumber={apiQuestion.id}
-							answerNumber={ans.id}
-							onClick={onClick}
-							answer={ans.answerContent}
-						></AnswerQuestion>
-					))}
-				</>
-			);
+    for (let apiQuestion of apiQuestions) {
+      const answers: React.ReactNode = (
+        <>
+          {apiQuestion.answers.map((ans: AnswerQuestionDTO) => (
+            <AnswerQuestion
+              questionNumber={apiQuestion.id}
+              answerNumber={ans.id}
+              onClick={onClick}
+              answer={ans.answerContent}
+            ></AnswerQuestion>
+          ))}
+        </>
+      );
 
-			// for (let answer of apiQuestion.answers) {
-			//   const answerNode: React.ReactNode = <AnswerQuestion questionNumber={apiQuestion.id} answerNumber={answer.id}
-			//     onClick={onClick} answer={answer.answerContent}></AnswerQuestion>
+      // for (let answer of apiQuestion.answers) {
+      //   const answerNode: React.ReactNode = <AnswerQuestion questionNumber={apiQuestion.id} answerNumber={answer.id}
+      //     onClick={onClick} answer={answer.answerContent}></AnswerQuestion>
 
-			//     answers.props = answerNode;
-			//   // answers.props.push(answerNode);
-			// }
+      //     answers.props = answerNode;
+      //   // answers.props.push(answerNode);
+      // }
 
-			const question: QuestionQuizzProps = {
-				id: apiQuestion.id.toString(),
-				number: apiQuestion.id,
-				question: apiQuestion.contentQuestion,
-				answers: answers,
-				miniCard: (
-					<>
-						<MiniCard onClick={clickCard} number={apiQuestion.id}></MiniCard>
-					</>
-				),
-			} as QuestionQuizzProps;
+      const question: QuestionQuizzProps = {
+        id: apiQuestion.id.toString(),
+        number: apiQuestion.id,
+        question: apiQuestion.contentQuestion,
+        answers: answers,
+        miniCard: (
+          <>
+            <MiniCard onClick={clickCard} number={apiQuestion.id}></MiniCard>
+          </>
+        ),
+      } as QuestionQuizzProps;
 
-			questions.push(question);
-		}
+      questions.push(question);
+    }
 
-		console.log("REZULTATE", questions);
+    console.log("REZULTATE", questions);
 
-		return questions;
-	},
+    return questions;
+  },
 };
 
 export default QuizzRepository;

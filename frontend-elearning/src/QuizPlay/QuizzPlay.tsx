@@ -36,32 +36,10 @@ export interface QuestionQuizzProps {
     miniCard: React.ReactNode;
 }
 
-// const questions: QuestionQuizzProps[] = [
-//     { answers: <></>, number: 1, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-//     { answers: <></>, number: 2, question: 'Dezvoltarea pe bază de prototip' },
-//     { answers: <></>, number: 3, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-//     { answers: <></>, number: 4, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-//     { answers: <></>, number: 5, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-//     { answers: <></>, number: 6, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-//     { answers: <></>, number: 7, question: 'Diagramele de interactiune se folosesc pentru a modela' },
-//     { answers: <></>, number: 8, question: 'Diagramele de interactiune se folosesc pentru a modela' }
-// ];
-
 type HeaderProps = {
     children: React.ReactNode | React.ReactNode[];
 };
 
-function Header(props: HeaderProps) {
-    return <div>{props.children}</div>;
-}
-
-function scrollTo(name: string) {
-    scroller.scrollTo(name, {
-        duration: 800,
-        delay: 0,
-        smooth: 'easeInOutQuart'
-    })
-}
 
 export default function QuizzListen({ }: Props) {
     const location: Location = useLocation();
@@ -87,16 +65,6 @@ export default function QuizzListen({ }: Props) {
             (location.state as any).courseId,
             (location.state as any).sectionId
         );
-
-        // if (sections.length > 0 && typeof sections !== 'undefined') {
-        //     sections.sort((a: QuestionQuizzProps, b: QuestionQuizzProps) => {
-        //         if (typeof a.id !== 'undefined' && typeof b.id !== 'undefined') {
-        //             return a.id - b.id;
-        //         }
-        //     });
-        // }
-
-        // // sections.sort(function(a, b){return parseInt(a.id)-parseInt(b.id)});
 
         setQuestionsOk(sections);
     };
@@ -158,14 +126,14 @@ export default function QuizzListen({ }: Props) {
                     <div className={`${styles["div--all--questions"]}`}>
                         {qustionsOk.map((question: QuestionQuizzProps) => (
                             <Element name={question.number.toString()}>
-                            <div id={`${question.number}`}>
-                                <QuestionQuizz
-                                    id={question.number.toString()}
-                                    question={question.question}
-                                    number={question.number}
-                                    answers={question.answers}
-                                ></QuestionQuizz>
-                            </div>
+                                <div id={`${question.number}`}>
+                                    <QuestionQuizz
+                                        id={question.number.toString()}
+                                        question={question.question}
+                                        number={question.number}
+                                        answers={question.answers}
+                                    ></QuestionQuizz>
+                                </div>
                             </Element>
                         ))}
 
@@ -204,6 +172,11 @@ export default function QuizzListen({ }: Props) {
 }
 
 function handleSubmit() {
-    console.log("mamamam");
-    scrollTo('caca');
+    let answers = window.sessionStorage.getItem("answers")?.split('-');
+    if (typeof answers !== "undefined") {
+        for (let i of answers) {
+            let sol = window.sessionStorage.getItem(i.toString());
+            console.log("intrebare - ", i, "raspuns -", sol);
+        }
+    }
 }
