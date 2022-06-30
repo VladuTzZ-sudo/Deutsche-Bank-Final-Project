@@ -196,6 +196,11 @@
     padding-top: 10px;
     padding-left: 20px;
     font-size: 15px;
+    width: fit-content;
+}
+
+.span-finish {
+    cursor: pointer;
 }
 
 .answer_special {

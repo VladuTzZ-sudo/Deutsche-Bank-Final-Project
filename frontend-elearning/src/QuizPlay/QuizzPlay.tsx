@@ -161,7 +161,7 @@ export default function QuizzListen({ }: Props) {
 
                         <span
                             onClick={handleSubmit}
-                            className={`${styles["paragraph_quiz--navaigation"]}`}>
+                            className={`${styles["paragraph_quiz--navaigation"]} ${styles["span-finish"]}`}>
                             Finish attempt
                         </span>
                     </div>
