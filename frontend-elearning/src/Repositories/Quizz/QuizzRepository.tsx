@@ -60,7 +60,8 @@ const QuizzRepository = {
   getQuestions: async (
     authToken: string,
     courseId: string,
-    sectionId: string
+    sectionId: string,
+    mode?: number,
   ): Promise<QuestionQuizzProps[]> => {
     const apiQuestions: QuizzGetDTO[] = await QuizzPlayService.getQuestions(
       authToken,
@@ -91,6 +92,8 @@ const QuizzRepository = {
               answerNumber={ans.id}
               onClick={onClick}
               answer={ans.answerContent}
+              validation={ans.validation}
+              mode={mode}
             ></AnswerQuestion>
           ))}
         </>
@@ -111,7 +114,7 @@ const QuizzRepository = {
         answers: answers,
         miniCard: (
           <>
-            <MiniCard onClick={clickCard} number={apiQuestion.id}></MiniCard>
+            <MiniCard onClick={clickCard} number={apiQuestion.id} mode={mode} ></MiniCard>
           </>
         ),
       } as QuestionQuizzProps;

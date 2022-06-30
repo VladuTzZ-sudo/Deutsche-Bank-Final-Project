@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./QuizzPlay.module.css";
+import styles from "./QuizzReviewStudent.module.css";
 import Button from "../Button/Button";
 import Footer from "../Footer/Footer";
 import MiniCard from "../components/QuizzMiniCard/MiniCard";
@@ -36,12 +36,7 @@ export interface QuestionQuizzProps {
     miniCard: React.ReactNode;
 }
 
-type HeaderProps = {
-    children: React.ReactNode | React.ReactNode[];
-};
-
-
-export default function QuizzListen({ }: Props) {
+export default function QuizzReview({ }: Props) {
     const location: Location = useLocation();
 
     const [loggedUser, setLoggedUser]: [
@@ -63,7 +58,8 @@ export default function QuizzListen({ }: Props) {
         let sections: QuestionQuizzProps[] = await QuizzRepository.getQuestions(
             (location.state as any).generalState.credentials.token,
             (location.state as any).courseId,
-            (location.state as any).sectionId
+            (location.state as any).sectionId,
+            2
         );
 
         setQuestionsOk(sections);
@@ -136,6 +132,7 @@ export default function QuizzListen({ }: Props) {
                                         question={question.question}
                                         number={question.number}
                                         answers={question.answers}
+                                        mode = {2}
                                     ></QuestionQuizz>
                                 </div>
                             </Element>
@@ -144,7 +141,7 @@ export default function QuizzListen({ }: Props) {
                         <div className={`${styles["elemFlexCenter"]}`}>
                             <Element name="Submit">
                                 <Button
-                                    text="Submit"
+                                    text="Back"
                                     func={() => {
                                         handleSubmit();
                                     }}
@@ -166,7 +163,7 @@ export default function QuizzListen({ }: Props) {
                         <span
                             onClick={handleSubmit}
                             className={`${styles["paragraph_quiz--navaigation"]} ${styles["span-finish"]}`}>
-                            Finish attempt
+                            Back
                         </span>
                     </div>
                 </div>

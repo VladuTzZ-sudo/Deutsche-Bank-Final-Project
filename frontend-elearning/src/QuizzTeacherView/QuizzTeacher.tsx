@@ -36,11 +36,6 @@ export interface QuestionQuizzProps {
     miniCard: React.ReactNode;
 }
 
-type HeaderProps = {
-    children: React.ReactNode | React.ReactNode[];
-};
-
-
 export default function QuizzTeacher({ }: Props) {
     const location: Location = useLocation();
 
@@ -63,7 +58,8 @@ export default function QuizzTeacher({ }: Props) {
         let sections: QuestionQuizzProps[] = await QuizzRepository.getQuestions(
             (location.state as any).generalState.credentials.token,
             (location.state as any).courseId,
-            (location.state as any).sectionId
+            (location.state as any).sectionId,
+            1
         );
 
         setQuestionsOk(sections);
@@ -78,24 +74,28 @@ export default function QuizzTeacher({ }: Props) {
                         answerNumber={1}
                         onClick={onClick}
                         answer="I have a bike"
+                        validation={true}
                     ></AnswerQuestion>
                     <AnswerQuestion
                         questionNumber={1}
                         answerNumber={2}
                         onClick={onClick}
                         answer="Incurajează implicarea clientului în procesul de dezvoltare."
+                        validation={false}
                     ></AnswerQuestion>
                     <AnswerQuestion
                         questionNumber={1}
                         answerNumber={3}
                         onClick={onClick}
                         answer="Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării."
+                        validation={false}
                     ></AnswerQuestion>
                     <AnswerQuestion
                         questionNumber={1}
                         answerNumber={4}
                         onClick={onClick}
                         answer="Acesta este raspunsul meu ahahah."
+                        validation={false}
                     ></AnswerQuestion>
                 </>
             ),
@@ -132,6 +132,7 @@ export default function QuizzTeacher({ }: Props) {
                                         question={question.question}
                                         number={question.number}
                                         answers={question.answers}
+                                        mode = {1}
                                     ></QuestionQuizz>
                                 </div>
                             </Element>
@@ -140,7 +141,7 @@ export default function QuizzTeacher({ }: Props) {
                         <div className={`${styles["elemFlexCenter"]}`}>
                             <Element name="Submit">
                                 <Button
-                                    text="Submit"
+                                    text="Back"
                                     func={() => {
                                         handleSubmit();
                                     }}
@@ -162,7 +163,7 @@ export default function QuizzTeacher({ }: Props) {
                         <span
                             onClick={handleSubmit}
                             className={`${styles["paragraph_quiz--navaigation"]} ${styles["span-finish"]}`}>
-                            Finish attempt
+                            Back
                         </span>
                     </div>
                 </div>

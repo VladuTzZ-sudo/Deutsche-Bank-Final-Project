@@ -17,6 +17,7 @@ import QuizzFinishedPage from "./QuizzFinishedPage/QuizzFinishedPage";
 import QuizStartPage from "./QuizStartPage/QuizStartPage";
 import QuizLiveTimer from "./QuizLiveTimer/QuizLiveTimer";
 import QuizzTeacher from "./QuizzTeacherView/QuizzTeacher";
+import QuizzReview from "./QuizzReviewStudent/QuizzReviewStudent";
 export default function App() {
 	return (
 		<BrowserRouter>
@@ -32,6 +33,7 @@ export default function App() {
 
 				<Route path="/playQuizz" element={<QuizzPlay></QuizzPlay>}></Route>
 				<Route path="/teacherQuizz" element={<QuizzTeacher></QuizzTeacher>}></Route>
+				<Route path="/reviewQuizz" element={<QuizzReview></QuizzReview>}></Route>
 
 				<Route
 					path="/quizzFinishedPage"

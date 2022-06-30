@@ -13,3 +13,13 @@
 .texxt {
   padding-left: 10px;
 }
+
+.texxt-ok {
+  padding-left: 10px;
+  color: green;
+}
+
+.texxt-wrong {
+  padding-left: 10px;
+  color: red;
+}
