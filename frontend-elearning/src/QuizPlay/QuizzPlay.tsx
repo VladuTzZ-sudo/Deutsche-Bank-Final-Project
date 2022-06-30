@@ -53,7 +53,7 @@ function Header(props: HeaderProps) {
     return <div>{props.children}</div>;
 }
 
-export default function QuizzListen({ }: Props) {
+export default function QuizPlay({ }: Props) {
     const location: Location = useLocation();
 
     const [loggedUser, setLoggedUser]: [

@@ -16,6 +16,7 @@ import QuizzMakerAlex from "./QuizzMakerAlex/QuizzMakerAlex";
 import QuizzFinishedPage from "./QuizzFinishedPage/QuizzFinishedPage";
 import QuizStartPage from "./QuizStartPage/QuizStartPage";
 import QuizLiveTimer from "./QuizLiveTimer/QuizLiveTimer";
+import QuizzTeacher from "./QuizzTeacherView/QuizzTeacher";
 export default function App() {
 	return (
 		<BrowserRouter>
@@ -30,6 +31,8 @@ export default function App() {
 				</Route>
 
 				<Route path="/play" element={<QuizzPlay></QuizzPlay>}></Route>
+				<Route path="/teacherQuizz" element={<QuizzTeacher></QuizzTeacher>}></Route>
+
 
 				<Route
 					path="/quizzFinishedPage"
