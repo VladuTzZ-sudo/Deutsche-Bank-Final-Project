@@ -29,7 +29,7 @@ export default function App() {
 					<Route path="/courses/:id" element={<CourseDetailPage />}></Route>
 				</Route>
 
-				<Route path="/play" element={<QuizzPlay></QuizzPlay>}></Route>
+				<Route path="/playQuizz" element={<QuizzPlay></QuizzPlay>}></Route>
 
 				<Route
 					path="/quizzFinishedPage"
