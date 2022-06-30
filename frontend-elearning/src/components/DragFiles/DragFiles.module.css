@@ -32,14 +32,26 @@
 .data__card:hover {
   outline: 0.2rem dashed #726abc;
   outline-offset: 0.5rem;
-  animation: outline-dashing 0.5s linear 0s infinite alternate;
+  animation: outline-dashing 0.5s linear 1s normal;
 }
 
 @keyframes outline-dashing {
-  from {
+  /* from {
     outline-style: dashed;
   }
   to {
+    outline-style: solid;
+  } */
+  0% {
+    outline-style: dashed;
+  }
+  25% {
+    outline-style: solid;
+  }
+  50% {
+    outline-style: dashed;
+  }
+  100% {
     outline-style: solid;
   }
 }

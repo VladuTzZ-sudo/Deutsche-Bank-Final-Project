@@ -32,8 +32,7 @@ const CourseRepository = {
       const section: Section = apiSection as unknown as Section;
 
       //TODO: actual values
-      section.description =
-        "Any computer and OS will work — Windows, macOS or Linux. We will set up your text editor the course.";
+
       section.completed = true;
       sections.push(section);
     }

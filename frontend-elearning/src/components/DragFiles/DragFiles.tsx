@@ -19,6 +19,7 @@ interface DragFilesProps {
   onDragLeave?: DragEventHandler;
   onDragOver?: DragEventHandler;
   onDrop?: DragEventHandler;
+  onFilesSent?: (files: FileList) => void;
   validator?: (file: File) => boolean;
   className?: string;
 }
@@ -71,11 +72,13 @@ const DragFiles: FC<DragFilesProps> = (props) => {
 
       for (let file of files) {
         if (props.validator === undefined ? true : props.validator(file)) {
-          validFiles.push({ title: file.name, type: file.type });
+          const fileSplitted = files[0].name.split(".");
+          const extension = fileSplitted[fileSplitted.length - 1];
+          validFiles.push({ title: file.name, type: extension });
         }
       }
 
-      console.log(validFiles);
+      props.onFilesSent?.(files);
 
       setDataItems((prev: FileData[]) => {
         return [...prev, ...validFiles];

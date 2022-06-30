@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import DataCard from "../../../components/DataCard/DataCard";
 import DragFiles from "../../../components/DragFiles/DragFiles";
 import styles from "./CourseDetailPage.module.css";
@@ -26,6 +26,8 @@ import { faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
 import AddCourseModal from "../../../components/Modals/AddCourseModal/AddCourseModal";
 import SectionAddDTO from "../../../models/Course/Section/SectionAddDTO";
 import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
+import CircleProgress from "../../../components/CircleProgress/CircleProgress";
+import userEvent from "@testing-library/user-event";
 
 const CourseDetailPage: FC = () => {
   const navigate = useNavigate();
@@ -43,6 +45,7 @@ const CourseDetailPage: FC = () => {
   const [isFileModalOpened, setIsFileModalOpened] = useState(false);
   const [isSectionModalOpened, setIsSectionModalOpened] = useState(false);
   const [sections, setSections] = useState<Section[]>([]);
+  const downloadRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     setLoggedUser(location.state as UserAuth);
@@ -166,19 +169,80 @@ const CourseDetailPage: FC = () => {
 
     getSections();
     // TODO: Exceptions + Validations
-    console.log(title, description);
   };
-
 
   const buttonNavi = (e: any): void => {
     navigate(`/play`, { state: location.state });
   };
+
+  const sendFile = async (files: FileList) => {
+    const formData = new FormData();
+
+    for (let file of files) {
+      formData.append("files", file);
+    }
+
+    try {
+      const fileResponse = await fetch("http://localhost:8080/upload", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          Authorization: `Bearer ${loggedUser.token}`,
+        },
+        body: formData,
+      });
+
+      console.log("file added " + files[0].name);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getFile = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    try {
+      const fileResponse = await fetch("http://localhost:8080/files/a.docx", {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          Authorization: `Bearer ${loggedUser.token}`,
+        },
+      });
+
+      const fileData = await fileResponse.blob();
+      const url = window.URL.createObjectURL(fileData);
+      downloadRef.current!.href = url;
+      downloadRef.current!.download = "a.docx";
+      downloadRef.current!.click();
+
+      console.log("file added");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // const url = window.URL.createObjectURL(blob);
+  // const a = document.createElement('a');
+  // a.style.display = 'none';
+  // a.href = url;
+  // // the filename you want
+  // a.download = filename;
+  // document.body.appendChild(a);
+  // a.click();
+  // document.body.removeChild(a);
+  // window.URL.revokeObjectURL(url);
 
   return (
     <React.Fragment>
       <NavBar
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
+      <a ref={downloadRef} href="">
+        download
+      </a>
+      <button onClick={getFile}>aasd</button>
+      <CircleProgress></CircleProgress>
       <div className={styles["container"]}>
         {loggedUser.role === Roles.TEACHER ? (
           <ClassicButton
@@ -211,6 +275,7 @@ const CourseDetailPage: FC = () => {
             className={`${styles["container"]} ${styles["drag-container"]}`}
             data={files}
             validator={teacherFilesValidator}
+            onFilesSent={sendFile}
           ></DragFiles>
         </ModalContainer>
       )}
@@ -222,12 +287,9 @@ const CourseDetailPage: FC = () => {
           onSave={onAddSection}
         ></AddCourseModal>
       )}
-      <button onClick={buttonNavi}>
-        mamamam
-      </button>
+      <button onClick={buttonNavi}>mamamam</button>
     </React.Fragment>
   );
 };
-
 
 export default CourseDetailPage;
