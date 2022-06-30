@@ -89,14 +89,22 @@ export default function QuizStartPage({}: Props) {
 							<Button
 								text="Attempt quizz"
 								func={() => {
-									navigate("/playQuizz", {
-										state: {
-											generalState: location.state,
-											subjectTitle: quizInfo.subjectTitle,
-											sectionTitle: quizInfo.sectionTitle,
-											courseId: (location.state as any).courseId,
-											sectionId: (location.state as any).sectionId,
-										},
+									// navigate("/playQuizz", {
+									// 	state: {
+									// 		generalState: location.state,
+									// 		subjectTitle: quizInfo.subjectTitle,
+									// 		sectionTitle: quizInfo.sectionTitle,
+									// 		courseId: (location.state as any).courseId,
+									// 		sectionId: (location.state as any).sectionId,  AM MODIFICAT PT PROFESOR CA NU PUTEAM LUCRA
+									// 	},
+									navigate("/teacherQuizz", {
+											state: {
+												generalState: location.state,
+												subjectTitle: quizInfo.subjectTitle,
+												sectionTitle: quizInfo.sectionTitle,
+												courseId: (location.state as any).courseId,
+												sectionId: (location.state as any).sectionId,
+											}
 									});
 								}}
 								type="1"

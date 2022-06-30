@@ -31,6 +31,7 @@ export default function App() {
 				</Route>
 
 				<Route path="/playQuizz" element={<QuizzPlay></QuizzPlay>}></Route>
+				<Route path="/teacherQuizz" element={<QuizzTeacher></QuizzTeacher>}></Route>
 
 				<Route
 					path="/quizzFinishedPage"

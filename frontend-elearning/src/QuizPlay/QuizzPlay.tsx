@@ -138,13 +138,15 @@ export default function QuizzListen({ }: Props) {
                         ))}
 
                         <div className={`${styles["elemFlexCenter"]}`}>
-                            <Button
-                                text="Submit"
-                                func={() => {
-                                    handleSubmit();
-                                }}
-                                type="1"
-                            />
+                            <Element name="Submit">
+                                <Button
+                                    text="Submit"
+                                    func={() => {
+                                        handleSubmit();
+                                    }}
+                                    type="1"
+                                />
+                            </Element>
                         </div>
                     </div>
                     <div className={`${styles["div--squareNumbers2"]}`}>
@@ -159,8 +161,7 @@ export default function QuizzListen({ }: Props) {
 
                         <span
                             onClick={handleSubmit}
-                            className={`${styles["paragraph_quiz--navaigation"]}`}
-                        >
+                            className={`${styles["paragraph_quiz--navaigation"]}`}>
                             Finish attempt
                         </span>
                     </div>
@@ -172,6 +173,8 @@ export default function QuizzListen({ }: Props) {
 }
 
 function handleSubmit() {
+    scrollTo("Submit");
+
     let answers = window.sessionStorage.getItem("answers")?.split('-');
     if (typeof answers !== "undefined") {
         for (let i of answers) {
@@ -179,4 +182,12 @@ function handleSubmit() {
             console.log("intrebare - ", i, "raspuns -", sol);
         }
     }
+}
+
+function scrollTo(name: string) {
+    scroller.scrollTo(name, {
+        duration: 800,
+        delay: 0,
+        smooth: 'easeInOutQuart'
+    })
 }
