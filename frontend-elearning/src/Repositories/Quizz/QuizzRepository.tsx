@@ -5,25 +5,56 @@ import SectionGetDTO from "../../models/Course/Section/SectionGetDTO";
 import { CourseService } from "../../Services/Course/CourseService";
 import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import QuizzQuestions from "../../models/Quiz/QuizQuestions";
-import { QuizzGetDTO, QuizzPlayService } from "../../Services/QuizzPlayService/QuizzPlayService";
+import { AnswerQuestionDTO, QuizzGetDTO, QuizzPlayService } from "../../Services/QuizzPlayService/QuizzPlayService";
+import MiniCard from "../../components/QuizzMiniCard/MiniCard";
+import AnswerQuestion from "../../components/AnswerQuizz/AnswerQuestion";
+import { QuestionQuizzProps } from "../../QuizPlay/QuizzPlay";
 
+const onClick = (questionNumber: number, answerNumber: number) => {
+  console.log("OPA, adevarat", questionNumber, answerNumber);
+};
 // TODO: Exceptions
 const QuizzRepository = {
-  getQuestions: async (authToken: string, courseId: string, sectionId: string): Promise<QuizzQuestions[]> => {
-    
+  getQuestions: async (authToken: string, courseId: string, sectionId: string): Promise<QuestionQuizzProps[]> => {
+
     const apiQuestions: QuizzGetDTO[] = await QuizzPlayService.getQuestions(
       authToken, courseId, sectionId);
-      
-    console.log(apiQuestions, "mama");
-    
-    const questions: QuizzQuestions[] = [];
 
-    // for (let apiQuestion of apiQuestions) {
-    //   console.log("AICI");
-    //   //const question: QuizzQuestions = apiQuestion as unknown as QuizzQuestions;
-    //   // course.progress = 0.2;
-    //   //questions.push(question);
-    // }
+    console.log(apiQuestions, "mama");
+
+    const questions: QuestionQuizzProps[] = [];
+
+    for (let apiQuestion of apiQuestions) {
+      const answers: React.ReactNode = 
+      <>
+        {apiQuestion.answers.map((ans: AnswerQuestionDTO) =>
+                                <AnswerQuestion questionNumber={apiQuestion.id} answerNumber={ans.id}
+                                onClick={onClick} answer={ans.answerContent}></AnswerQuestion>
+                            )}
+      </>
+
+      // for (let answer of apiQuestion.answers) {
+      //   const answerNode: React.ReactNode = <AnswerQuestion questionNumber={apiQuestion.id} answerNumber={answer.id}
+      //     onClick={onClick} answer={answer.answerContent}></AnswerQuestion>
+
+      //     answers.props = answerNode;
+      //   // answers.props.push(answerNode);
+      // }
+
+      const question: QuestionQuizzProps = {
+        id: apiQuestion.id.toString(),
+        number: apiQuestion.id,
+        question: apiQuestion.contentQuestion,
+        answers: answers,
+        miniCard: <>
+          <MiniCard number={apiQuestion.id}></MiniCard>
+        </>
+      } as QuestionQuizzProps;
+
+      questions.push(question);
+    }
+
+    console.log("REZULTATE", questions);
 
     return questions;
   }

@@ -72,12 +72,40 @@ export default function QuizzListen({ }: Props) {
     }, []);
 
     const getQuestions = async () => {
-        const sections = await QuizzRepository.getQuestions(
+        let sections: QuestionQuizzProps[] = await QuizzRepository.getQuestions(
             loggedUser.token,
             "1",
-            "3"
+            "1"
         );
+
+        // if (sections.length > 0 && typeof sections !== 'undefined') {
+        //     sections.sort((a: QuestionQuizzProps, b: QuestionQuizzProps) => {
+        //         if (typeof a.id !== 'undefined' && typeof b.id !== 'undefined') {
+        //             return a.id - b.id;
+        //         }
+        //     });
+        // }
+
+        // // sections.sort(function(a, b){return parseInt(a.id)-parseInt(b.id)});
+
+        setQuestionsOk(sections);
     };
+
+    const [qustionsOk, setQuestionsOk] = useState<QuestionQuizzProps[]>([{
+        answers: <>
+            <AnswerQuestion questionNumber={1} answerNumber={1}
+                onClick={onClick} answer='I have a bike'></AnswerQuestion>
+            <AnswerQuestion questionNumber={1} answerNumber={2}
+                onClick={onClick} answer='Incurajează implicarea clientului în procesul de dezvoltare.'></AnswerQuestion>
+            <AnswerQuestion questionNumber={1} answerNumber={3}
+                onClick={onClick} answer='Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării.'></AnswerQuestion>
+            <AnswerQuestion questionNumber={1} answerNumber={4}
+                onClick={onClick} answer='Acesta este raspunsul meu ahahah.'></AnswerQuestion>
+        </>, number: 1, question: 'Diagramele de interactiune se folosesc pentru a modela',
+        miniCard: <>
+            <MiniCard number={1}></MiniCard>
+        </>
+    }]);
 
     const [questionsInfo, setQuestionsInfo] = useState<QuestionQuizzProps[]>(
         [{
@@ -202,7 +230,7 @@ export default function QuizzListen({ }: Props) {
         }]
     );
 
-    const list = questionsInfo.map((question: QuestionQuizzProps) => {
+    const list = qustionsOk.map((question: QuestionQuizzProps) => {
         <QuestionQuizz id={question.number.toString()} question={question.question} number={question.number} answers={question.answers} />
     });
 
@@ -224,7 +252,7 @@ export default function QuizzListen({ }: Props) {
                 <div className={`${styles["div--quizz"]}`}>
                     <div className={`${styles["div--all--questions"]}`}>
 
-                        {questionsInfo.map((question: QuestionQuizzProps) =>
+                        {qustionsOk.map((question: QuestionQuizzProps) =>
                             <div id={`${question.number}`}>
                                 <QuestionQuizz id={question.number.toString()} question={question.question} number={question.number} answers={question.answers}></QuestionQuizz>
                             </div>
@@ -238,7 +266,7 @@ export default function QuizzListen({ }: Props) {
                     <div className={`${styles["div--squareNumbers2"]}`}>
                         <span className={`${styles["text--subtitle"]}`}>Quiz Navigation</span>
                         <div className={`${styles["container-buttons"]}`}>
-                            {questionsInfo.map((question: QuestionQuizzProps) =>
+                            {qustionsOk.map((question: QuestionQuizzProps) =>
                                 <a href={`#${question.number}`}>{question.miniCard}</a>
                             )}
                         </div>
