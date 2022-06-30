@@ -172,7 +172,7 @@ const CourseDetailPage: FC = () => {
   };
 
   const buttonNavi = (e: any): void => {
-    navigate(`/play`, { state: location.state });
+    navigate(`/teacherQuizz`, { state: location.state });
   };
 
   const sendFile = async (files: FileList) => {

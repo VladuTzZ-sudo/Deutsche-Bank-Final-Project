@@ -16,6 +16,8 @@ import QuizzMakerAlex from "./QuizzMakerAlex/QuizzMakerAlex";
 import QuizzFinishedPage from "./QuizzFinishedPage/QuizzFinishedPage";
 import QuizStartPage from "./QuizStartPage/QuizStartPage";
 import QuizLiveTimer from "./QuizLiveTimer/QuizLiveTimer";
+import QuizzTeacher from "./QuizzTeacherView/QuizzTeacher";
+import QuizzReview from "./QuizzReviewStudent/QuizzReviewStudent";
 import QuizResultsPage from "./pages/Quiz/QuizResultsPage";
 export default function App() {
   return (
@@ -30,7 +32,15 @@ export default function App() {
           <Route path="/courses/:id" element={<CourseDetailPage />}></Route>
         </Route>
 
-        <Route path="/play" element={<QuizzPlay></QuizzPlay>}></Route>
+        <Route path="/playQuizz" element={<QuizzPlay></QuizzPlay>}></Route>
+        <Route
+          path="/teacherQuizz"
+          element={<QuizzTeacher></QuizzTeacher>}
+        ></Route>
+        <Route
+          path="/reviewQuizz"
+          element={<QuizzReview></QuizzReview>}
+        ></Route>
 
         <Route
           path="/quizzFinishedPage"
