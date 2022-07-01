@@ -1,96 +1,414 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import FooterMain from "../FooterMain/FooterMain";
 import NavBar from "../Navbar/NavBar";
-import Question from "./QuizComponents/Question";
 import styles from "./QuizzMakerAlex.module.css";
 
 export default function QuizzMakerAlex() {
-  const [questionList, setQuestionList] = useState([]);
-  const [count, setCount] = useState(1);
-
   const navLinks = [
     { text: "Login", linkUrl: "/loginPage" },
     { text: "Register", linkUrl: "/registerPage" },
   ];
 
-  function onAddBtnClick(event: any) {
-    setQuestionList(
-      (questionList as any).concat(
-        <Question key={questionList.length} count={count} />
-      )
-    );
-    setCount(count + 1);
-  }
+  const [quizz, setQuizz] = useState<any>({
+    quizzTitle: "",
+    duration: "",
+    due: "",
+    details: "",
+    questions: [],
+  });
 
-  function onAddBtnSubmit(event: any) {
-    console.log(questionList);
-    setQuestionList([]);
-    setCount(1);
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
+    setQuizz((prevState: any) => ({
+      ...prevState,
+      [(event.target as HTMLInputElement).id]: (
+        event.target as HTMLInputElement
+      ).value,
+    }));
+  };
+
+  function onQuestionChange(
+    event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLInputElement>
+  ) {}
+
+  function onSubmit(event: any) {
+    event.preventDefault();
+    console.log(quizz);
   }
 
   return (
     <div>
       <NavBar links={navLinks} />
-      <div className={"container"}>
-        <div id={styles["qm-title"]}>Create a Quizz</div>
-        <div className={styles["big-div"]}>
-          <div className={styles["quizz-title"]}>
-            <label className={styles["title-label"]}>
+      <div className="container">
+        <h1 className={styles["title"]}>Quizz Maker</h1>
+        <form>
+          <div className={styles["quizz-inputs"]}>
+            <label>
               Quizz Title:
-              <input
-                className={styles["input-title"]}
-                type="text"
-                name="quizzTitle"
-              />
+              <input onChange={handleChange} type="text" id="quizzTitle" />
             </label>
           </div>
-          {/* dasd */}
-          <div className={styles["quizz-title"]}>
-            <label className={styles["title-label"]}>
+          <div className={styles["quizz-inputs"]}>
+            <label>
               Duration:
-              <input
-                className={styles["input-duration"]}
-                type="text"
-                name="duration"
-              />
+              <input onChange={handleChange} type="text" id="duration" />
             </label>
           </div>
-          {/* dasd */}
-          <div className={styles["quizz-title"]}>
-            <label className={styles["title-label"]}>
+          <div className={styles["quizz-inputs"]}>
+            <label>
               Due:
-              <input className={styles["input-due"]} type="text" name="due" />
+              <input onChange={handleChange} type="datetime-local" id="due" />
             </label>
           </div>
-          {/* dasd */}
-          <div className={styles["quizz-title"]}>
-            <label className={styles["title-label"]}>
+          <div className={styles["quizz-inputs"]}>
+            <label>
               Details:
-              <input
-                className={styles["input-details"]}
-                type="text"
-                name="details"
-              />
+              <input onChange={handleChange} type="text" id="details" />
             </label>
           </div>
-          {questionList}
-          <div className={styles["addBtnDiv"]}>
-            <button
-              className={styles["addQuestionBtn"]}
-              onClick={onAddBtnClick}
-            >
-              Add Question
-            </button>
+          <div className={`${styles["quizz-inputs"]} ${styles["borderDiv"]}`}>
+            {/* Question 1 */}
+            <div className={styles["question-borderDiv"]}>
+              <label>
+                Question no.1:
+                <input onChange={onQuestionChange} type="text" id="question1" />
+              </label>
+              <div className={styles["answer-text"]}>
+                <label>
+                  A.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerAq1text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerAq1value"
+                    name="Question1A"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  B.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerBq1text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerBq1value"
+                    name="Question1B"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  C.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerCq1text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerCq1value"
+                    name="Question1C"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+            </div>
+            {/* Question 2 */}
+            <div className={styles["question-borderDiv"]}>
+              <label>
+                Question no.2:
+                <input onChange={handleChange} type="text" id="question2" />
+              </label>
+              <div className={styles["answer-text"]}>
+                <label>
+                  A.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerAq2text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerAq2value"
+                    name="Question2A"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  B.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerBq2text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerBq2value"
+                    name="Question2B"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  C.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerCq2text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerCq2value"
+                    name="Question2C"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+            </div>
+            {/* Question 3 */}
+            <div className={styles["question-borderDiv"]}>
+              <label>
+                Question no.3:
+                <input onChange={handleChange} type="text" id="question3" />
+              </label>
+              <div className={styles["answer-text"]}>
+                <label>
+                  A.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerAq3text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerAq3value"
+                    name="Question3A"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  B.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerBq3text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerBq3value"
+                    name="Question3B"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  C.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerCq3text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerCq3value"
+                    name="Question3C"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+            </div>
+            {/* Question 4 */}
+            <div className={styles["question-borderDiv"]}>
+              <label>
+                Question no.4:
+                <input onChange={handleChange} type="text" id="question4" />
+              </label>
+              <div className={styles["answer-text"]}>
+                <label>
+                  A.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerAq4text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerAq4value"
+                    name="Question4A"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  B.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerBq4text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerBq4value"
+                    name="Question4B"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  C.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerCq4text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerCq4value"
+                    name="Question4C"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+            </div>
+            {/* Question 5 */}
+            <div className={styles["question-borderDiv"]}>
+              <label>
+                Question no.5:
+                <input onChange={handleChange} type="text" id="question5" />
+              </label>
+              <div className={styles["answer-text"]}>
+                <label>
+                  A.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerAq5text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerAq5value"
+                    name="Question1A"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  B.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerBq5text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerBq5value"
+                    name="Question5B"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+              <div className={styles["answer-text"]}>
+                <label>
+                  C.
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    id="answerCq5text"
+                  />
+                  <br />
+                  <input
+                    className={styles["radio-btn-left"]}
+                    type="radio"
+                    value="true"
+                    id="answerCq5value"
+                    name="Question5C"
+                    onChange={handleChange}
+                  />{" "}
+                  True
+                </label>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className={styles["submit-btn"]}>
-          <button className={styles["addQuestionBtn"]} onClick={onAddBtnSubmit}>
-            Submit
-          </button>
-        </div>
+          <div className={styles["quizz-inputs"]}>
+            <button onClick={onSubmit}>Submit</button>
+          </div>
+        </form>
       </div>
-      <div className={styles["blankDiv"]}></div>
       <FooterMain />
     </div>
   );
