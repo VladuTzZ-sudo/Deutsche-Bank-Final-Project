@@ -86,8 +86,21 @@ const CourseDetailPage: FC = () => {
     });
   };
 
-  const goToQuizResults = (quizId: number) => {
-    // TODO pagina profesori
+  const goToQuizResults = (
+    sectionId: number,
+    courseId: number,
+    quizIsEnded: boolean,
+    quizId: number
+  ) => {
+    navigate(`/teacherQuizz`, {
+      state: {
+        credentials: location.state,
+        sectionId: sectionId,
+        courseId: courseId,
+        quizIsEnded: quizIsEnded,
+        quizId: quizId,
+      },
+    });
   };
 
   const getSections = async () => {
@@ -106,7 +119,12 @@ const CourseDetailPage: FC = () => {
         section.buttonIcon = section.quiz ? faArrowRight : faPlus;
         section.onButtonClick = section.quiz
           ? () => {
-              goToQuizResults(section.quiz!.id);
+              goToQuizResults(
+                section.id!,
+                +id!,
+                section.quiz?.isEnded!,
+                section.quiz!.id
+              );
             }
           : () => {
               goToAddQuiz(section.id!);
@@ -117,13 +135,22 @@ const CourseDetailPage: FC = () => {
       });
     } else {
       sectionsClickable = sections.map((section) => {
-        section.buttonText = section.quiz ? "Take the quiz !" : "";
+        if (section.quiz && !section.quiz.isVisible) {
+          section.buttonText = "";
+        } else if (section.quiz && section.quiz.isEnded) {
+          section.buttonText = "Check quiz results !";
+          section.onButtonClick = () => {
+            goToViewQuiz(section.quiz!.id);
+          };
+        } else if (section.quiz) {
+          section.buttonText = "Take the quiz !";
+          section.onButtonClick = () => {
+            goToTakeQuiz(section.quiz!.id, +id!);
+          };
+        } else {
+          section.buttonText = "";
+        }
         section.buttonIcon = section.quiz ? faArrowRight : faPlus;
-        section.onButtonClick = section.quiz
-          ? () => {
-              goToTakeQuiz(section.quiz!.id, +id!);
-            }
-          : () => {};
         section.completed = section.quiz ? false : true;
         section.onImageClick = openFileModal;
         return section;
@@ -169,6 +196,7 @@ const CourseDetailPage: FC = () => {
       +id!,
       {
         title: title,
+        description,
       },
       loggedUser.token
     );
