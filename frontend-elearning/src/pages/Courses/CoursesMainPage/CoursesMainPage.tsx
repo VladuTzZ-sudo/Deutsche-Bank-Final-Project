@@ -2,7 +2,7 @@ import { faDisplay, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import React, { FC, useEffect, useState } from "react";
 import CoursesList from "../../../components/Courses/CoursesList/CoursesList";
 import Course from "../../../models/Course/Course";
-import "../global.css";
+import "../../global.css";
 import styles from "./CoursesMainPage.module.css";
 import Leaderboard from "../../../components/Leaderboard/Leaderboard";
 import UserScore from "../../../models/UserScore";

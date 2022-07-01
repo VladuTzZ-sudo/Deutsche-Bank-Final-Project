@@ -1,29 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import Chart from "react-apexcharts";
 import { useLocation, useNavigate, Location } from "react-router-dom";
 import CustomNavLink from "../../models/CustomNavLink";
 import NavBar from "../../Navbar/NavBar";
 import styles from "./QuizResultsPage.module.css";
+import "../global.css";
+import UserAuth from "../../models/UserAuth";
 
 const QuizResultsPage = () => {
   const chart1Options = {
     series: [44, 55, 13, 43, 22],
     options: {
       labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200,
-            },
-            legend: {
-              position: "bottom",
-            },
+      chart: {
+        toolbar: {
+          show: true,
+        },
+        events: {
+          dataPointSelection: (
+            event: MouseEvent,
+            chartContext: any,
+            config: any
+          ) => {
+            // console.log(event);
+            // console.log(chartContext);
+            // console.log(config);
+            console.log(config.w.config.labels[config.dataPointIndex]);
+            console.log(config.w.config.series[config.dataPointIndex]);
           },
         },
-      ],
+      },
     },
   };
 
@@ -78,8 +85,21 @@ const QuizResultsPage = () => {
     },
   };
 
+  const [loggedUser, setLoggedUser]: [
+    UserAuth,
+    React.Dispatch<React.SetStateAction<UserAuth>>
+  ] = useState({
+    name: "",
+    role: "",
+    token: "",
+  });
+
   const location: Location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoggedUser(location.state as UserAuth);
+  }, []);
 
   const onLogout = () => {
     sessionStorage.removeItem("isAuth");
@@ -100,23 +120,28 @@ const QuizResultsPage = () => {
   ];
 
   return (
-    <div className={styles["container"]}>
+    <React.Fragment>
       <NavBar links={teacherLinks}></NavBar>
       <div className={styles["content"]}>
-        <ReactApexChart
-          options={chart1Options.options}
-          series={chart1Options.series}
-          type="pie"
-          width={500}
-        />
-        <ReactApexChart
-          options={chart2Options.options}
-          series={chart2Options.series}
-          type="bar"
-          width={500}
-        />
+        <div className={styles["chart"]}>
+          <ReactApexChart
+            options={chart1Options.options}
+            series={chart1Options.series}
+            type="pie"
+            width={500}
+          />
+        </div>
+        <div className={styles["chart"]}>
+          <ReactApexChart
+            options={chart2Options.options}
+            series={chart2Options.series}
+            type="bar"
+            width={500}
+            height={350}
+          />
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

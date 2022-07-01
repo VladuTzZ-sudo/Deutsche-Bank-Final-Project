@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import DataCard from "../../../components/DataCard/DataCard";
 import DragFiles from "../../../components/DragFiles/DragFiles";
 import styles from "./CourseDetailPage.module.css";
-import "../global.css";
+import "../../global.css";
 import ModalContainer from "../../../components/Modals/ModalContainer/ModalContainer";
 import {
   useLocation,
