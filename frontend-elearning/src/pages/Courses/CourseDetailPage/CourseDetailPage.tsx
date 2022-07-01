@@ -76,8 +76,14 @@ const CourseDetailPage: FC = () => {
     navigate(`/quizzFinishedPage`, { state: { loggedUser, quizId } });
   };
 
-  const goToTakeQuiz = (quizId: number) => {
-    navigate(`/quizzStartPage`, { state: { loggedUser, quizId } });
+  const goToTakeQuiz = (sectionId: number, courseId: number) => {
+    navigate(`/quizzStartPage`, {
+      state: {
+        credentials: location.state,
+        sectionId: sectionId,
+        courseId: courseId,
+      },
+    });
   };
 
   const goToQuizResults = (quizId: number) => {
@@ -115,7 +121,7 @@ const CourseDetailPage: FC = () => {
         section.buttonIcon = section.quiz ? faArrowRight : faPlus;
         section.onButtonClick = section.quiz
           ? () => {
-              goToTakeQuiz(section.quiz!.id);
+              goToTakeQuiz(section.quiz!.id, +id!);
             }
           : () => {};
         section.completed = section.quiz ? false : true;
