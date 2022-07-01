@@ -20,6 +20,7 @@ interface DragFilesProps {
   onDragOver?: DragEventHandler;
   onDrop?: DragEventHandler;
   onFilesSent?: (files: FileList) => void;
+  onFileClicked?: (e: any, dataInfo: Data) => void;
   validator?: (file: File) => boolean;
   className?: string;
 }
@@ -74,11 +75,17 @@ const DragFiles: FC<DragFilesProps> = (props) => {
         if (props.validator === undefined ? true : props.validator(file)) {
           const fileSplitted = files[0].name.split(".");
           const extension = fileSplitted[fileSplitted.length - 1];
-          validFiles.push({ title: file.name, type: extension });
+          validFiles.push({
+            name: file.name,
+            type: extension,
+            date: `${file.lastModified}`,
+          });
         }
       }
 
-      props.onFilesSent?.(files);
+      if (files.length !== 0) {
+        props.onFilesSent?.(files);
+      }
 
       setDataItems((prev: FileData[]) => {
         return [...prev, ...validFiles];
@@ -100,13 +107,14 @@ const DragFiles: FC<DragFilesProps> = (props) => {
       process.env.PUBLIC_URL + "/assets/data-images/file-generic-icon.jpg";
 
     const cardInfo: Data = {
-      title: file.title,
+      title: file.name,
       date: new Date(),
       icon: file.type === "" ? folderIcon : fileIcon,
     };
 
     return (
       <DataCard
+        onClick={props.onFileClicked}
         dataInfo={cardInfo}
         className={styles["data__card"]}
         key={index}
@@ -125,10 +133,10 @@ const DragFiles: FC<DragFilesProps> = (props) => {
       <div className={`${styles["content"]}`}>
         <div className={styles["data-container"]}>
           {files}
-          {/* <DataCard
+          <DataCard
             dataInfo={uploadCard}
             className={`${styles["data__card"]} ${styles["data__upload"]}`}
-          ></DataCard> */}
+          ></DataCard>
         </div>
       </div>
       {isDragging && <div className={styles["overlay"]} ref={overlayRef}></div>}

@@ -1,6 +1,8 @@
 .drag-container {
   background-color: #e8e9f0;
   max-width: 130rem;
+  min-width: 16rem;
+  min-height: 16rem;
 }
 
 .data-container {

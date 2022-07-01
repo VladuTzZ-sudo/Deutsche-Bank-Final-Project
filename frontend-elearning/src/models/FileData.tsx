@@ -1,6 +1,7 @@
 interface FileData {
-  title: string;
+  name: string;
   type: string;
+  date: string;
 }
 
 export default FileData;

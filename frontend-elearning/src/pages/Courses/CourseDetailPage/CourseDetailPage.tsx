@@ -5,10 +5,10 @@ import styles from "./CourseDetailPage.module.css";
 import "../../global.css";
 import ModalContainer from "../../../components/Modals/ModalContainer/ModalContainer";
 import {
-	useLocation,
-	useNavigate,
-	useParams,
-	Location,
+  useLocation,
+  useNavigate,
+  useParams,
+  Location,
 } from "react-router-dom";
 import NavBar from "../../../Navbar/NavBar";
 import CustomNavLink from "../../../models/CustomNavLink";
@@ -27,316 +27,314 @@ import AddCourseModal from "../../../components/Modals/AddCourseModal/AddCourseM
 import SectionAddDTO from "../../../models/Course/Section/SectionAddDTO";
 import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import CircleProgress from "../../../components/CircleProgress/CircleProgress";
-import userEvent from "@testing-library/user-event";
+import FileData from "../../../models/FileData";
+import Data from "../../../models/Data";
 
 const CourseDetailPage: FC = () => {
-	const navigate = useNavigate();
-	const { id } = useParams();
-	const location: Location = useLocation();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const location: Location = useLocation();
 
-	const [loggedUser, setLoggedUser]: [
-		UserAuth,
-		React.Dispatch<React.SetStateAction<UserAuth>>
-	] = useState({
-		name: "",
-		role: "",
-		token: "",
-	});
-	const [isFileModalOpened, setIsFileModalOpened] = useState(false);
-	const [isSectionModalOpened, setIsSectionModalOpened] = useState(false);
-	const [sections, setSections] = useState<Section[]>([]);
-	const downloadRef = useRef<HTMLAnchorElement>(null);
+  const [loggedUser, setLoggedUser]: [
+    UserAuth,
+    React.Dispatch<React.SetStateAction<UserAuth>>
+  ] = useState({
+    name: "",
+    role: "",
+    token: "",
+  });
+  const [isFileModalOpened, setIsFileModalOpened] = useState(false);
+  const [isSectionModalOpened, setIsSectionModalOpened] = useState(false);
+  const [sections, setSections] = useState<Section[]>([]);
+  const [files, setFiles] = useState<FileData[]>([]);
+  const downloadRef = useRef<HTMLDivElement>(null);
+  const [focusedSection, setFocusedSection] = useState<number>();
 
-	useEffect(() => {
-		setLoggedUser(location.state as UserAuth);
-		getSections();
-	}, []);
+  useEffect(() => {
+    setLoggedUser(location.state as UserAuth);
+    getSections();
+  }, []);
 
-	const openFileModal = () => {
-		setIsFileModalOpened(true);
-	};
+  const openFileModal = () => {
+    setIsFileModalOpened(true);
+  };
 
-	const closeFileModal = () => {
-		setIsFileModalOpened(false);
-	};
+  const closeFileModal = () => {
+    setIsFileModalOpened(false);
+  };
 
-	const openSectionModal = () => {
-		setIsSectionModalOpened(true);
-	};
+  const openSectionModal = () => {
+    setIsSectionModalOpened(true);
+  };
 
-	const closeSectionModal = () => {
-		setIsSectionModalOpened(false);
-	};
+  const closeSectionModal = () => {
+    setIsSectionModalOpened(false);
+  };
 
-	const goToAddQuiz = (sectionId: number) => {
-		navigate(`/quizzMaker`, { state: { loggedUser, sectionId } });
-	};
+  const goToAddQuiz = (sectionId: number) => {
+    navigate(`/quizzMaker`, { state: { loggedUser, sectionId } });
+  };
 
-	const goToReviewQuizStudent = (
-		sectionId: number,
-		courseId: number,
-		quizIsEnded: boolean,
-		quizId: number
-	) => {
-		navigate(`/quizzFinishedPage`, {
-			state: {
-				credentials: location.state,
-				sectionId: sectionId,
-				courseId: courseId,
-				quizIsEnded: quizIsEnded,
-				quizId: quizId,
-			},
-		});
-	};
+  const goToReviewQuizStudent = (
+    sectionId: number,
+    courseId: number,
+    quizIsEnded: boolean,
+    quizId: number
+  ) => {
+    navigate(`/quizzFinishedPage`, {
+      state: {
+        credentials: location.state,
+        sectionId: sectionId,
+        courseId: courseId,
+        quizIsEnded: quizIsEnded,
+        quizId: quizId,
+      },
+    });
+  };
 
-	const goToTakeQuiz = (sectionId: number, courseId: number) => {
-		navigate(`/quizzStartPage`, {
-			state: {
-				credentials: location.state,
-				sectionId: sectionId,
-				courseId: courseId,
-			},
-		});
-	};
+  const goToTakeQuiz = (sectionId: number, courseId: number) => {
+    navigate(`/quizzStartPage`, {
+      state: {
+        credentials: location.state,
+        sectionId: sectionId,
+        courseId: courseId,
+      },
+    });
+  };
 
-	const goToViewQuizTeacher = (
-		sectionId: number,
-		courseId: number,
-		sectionName: string
-	) => {
-		console.log(location.state);
-		navigate(`/teacherQuizz`, {
-			state: {
-				generalState: { credentials: location.state },
-				subjectTitle: "palceholder!!",
-				sectionTitle: sectionName,
-				courseId: courseId,
-				sectionId: sectionId,
-			},
-		});
-	};
+  const goToViewQuizTeacher = (
+    sectionId: number,
+    courseId: number,
+    sectionName: string
+  ) => {
+    console.log(location.state);
+    navigate(`/teacherQuizz`, {
+      state: {
+        generalState: { credentials: location.state },
+        subjectTitle: "palceholder!!",
+        sectionTitle: sectionName,
+        courseId: courseId,
+        sectionId: sectionId,
+      },
+    });
+  };
 
-	const getSections = async () => {
-		const sections = await CourseRepository.getSections(
-			+id!,
-			(location.state as UserAuth).token
-		);
+  const getFiles = async (courseId: number, sectionId: number) => {
+    const files = await CourseRepository.getFilesBySectionId(
+      courseId,
+      sectionId,
+      (location.state as UserAuth).token
+    );
 
-		let sectionsClickable: Section[] = [];
+    setFiles(files);
 
-		if ((location.state as UserAuth).role === Roles.TEACHER) {
-			sectionsClickable = sections.map((section) => {
-				section.buttonText = section.quiz
-					? "Check quiz results !"
-					: "Add a quiz !";
-				section.buttonIcon = section.quiz ? faArrowRight : faPlus;
-				section.onButtonClick = section.quiz
-					? () => {
-							goToViewQuizTeacher(section.id!, +id!, section.title);
-					  }
-					: () => {
-							goToAddQuiz(section.id!);
-					  };
-				section.completed = section.quiz ? false : true;
-				section.onImageClick = openFileModal;
-				return section;
-			});
-		} else {
-			sectionsClickable = sections.map((section) => {
-				if (section.quiz && !section.quiz.isVisible) {
-					section.buttonText = "";
-				} else if (section.quiz && section.quiz.isEnded) {
-					section.buttonText = "Check quiz results !";
-					section.onButtonClick = () => {
-						goToReviewQuizStudent(
-							section.id!,
-							+id!,
-							section.quiz?.isEnded!,
-							section.quiz!.id
-						);
-					};
-				} else if (section.quiz) {
-					section.buttonText = "Take the quiz !";
-					section.onButtonClick = () => {
-						goToTakeQuiz(section.id!, +id!);
-					};
-				} else {
-					section.buttonText = "";
-				}
-				section.buttonIcon = section.quiz ? faArrowRight : faPlus;
-				section.completed = section.quiz ? false : true;
-				section.onImageClick = openFileModal;
-				return section;
-			});
-		}
+    return files;
+  };
 
-		setSections(sectionsClickable);
-	};
+  const getSections = async () => {
+    const sections = await CourseRepository.getSections(
+      +id!,
+      (location.state as UserAuth).token
+    );
 
-	const files = [
-		{ title: "File1", type: "" },
-		{ title: "File2", type: "" },
-		{ title: "File3", type: "" },
-		{ title: "File4", type: "" },
-		{ title: "File5", type: "" },
-	];
+    let sectionsClickable: Section[] = [];
 
-	const onLogout = () => {
-		sessionStorage.removeItem("isAuth");
-		navigate(`/loginPage`, {});
-		// TODO: delete navigation history
-	};
+    if ((location.state as UserAuth).role === Roles.TEACHER) {
+      sectionsClickable = sections.map((section) => {
+        section.buttonText = section.quiz
+          ? "Check quiz results !"
+          : "Add a quiz !";
+        section.buttonIcon = section.quiz ? faArrowRight : faPlus;
+        section.onButtonClick = section.quiz
+          ? () => {
+              goToViewQuizTeacher(section.id!, +id!, section.title);
+            }
+          : () => {
+              goToAddQuiz(section.id!);
+            };
+        section.completed = section.quiz ? false : true;
+        section.onImageClick = async () => {
+          const files = await getFiles(+id!, section.id!);
+          setFocusedSection(section.id);
+          openFileModal();
+        };
+        return section;
+      });
+    } else {
+      sectionsClickable = sections.map((section) => {
+        if (section.quiz && !section.quiz.isVisible) {
+          section.buttonText = "";
+        } else if (section.quiz && section.quiz.isEnded) {
+          section.buttonText = "Check quiz results !";
+          section.onButtonClick = () => {
+            goToReviewQuizStudent(
+              section.id!,
+              +id!,
+              section.quiz?.isEnded!,
+              section.quiz!.id
+            );
+          };
+        } else if (section.quiz) {
+          section.buttonText = "Take the quiz !";
+          section.onButtonClick = () => {
+            goToTakeQuiz(section.id!, +id!);
+          };
+        } else {
+          section.buttonText = "";
+        }
+        section.buttonIcon = section.quiz ? faArrowRight : faPlus;
+        section.completed = section.quiz ? false : true;
+        section.onImageClick = async () => {
+          const files = await getFiles(+id!, section.id!);
+          setFocusedSection(section.id);
+          openFileModal();
+        };
+        return section;
+      });
+    }
+    setSections(sectionsClickable);
+  };
 
-	// WILL BE REPLACED WITH OUTLET
-	const studentLinks: CustomNavLink[] = [
-		{ text: "Show notes", href: "#" },
-		{ text: "Quiz results", href: "#" },
-		{ text: "Log out", href: "/", onClick: onLogout },
-	];
+  const onLogout = () => {
+    sessionStorage.removeItem("isAuth");
+    navigate(`/loginPage`, {});
+    // TODO: delete navigation history
+  };
 
-	const teacherLinks: CustomNavLink[] = [
-		{ text: "Listing courses", href: "#" },
-		{ text: "Quiz results", href: "#" },
-		{ text: "Log out", href: "/", onClick: onLogout },
-	];
+  // WILL BE REPLACED WITH OUTLET
+  const studentLinks: CustomNavLink[] = [
+    { text: "Show notes", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
 
-	const teacherFilesValidator = (file: File) => {
-		return filesTypeValidator(file, ACCEPTED_FILE_TYPES.TEACHER);
-	};
+  const teacherLinks: CustomNavLink[] = [
+    { text: "Listing courses", href: "#" },
+    { text: "Quiz results", href: "#" },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
 
-	const onAddSection = async (title: string, description: string) => {
-		const addedCourse: SectionAddDTO = await CourseService.addSection(
-			+id!,
-			{
-				title: title,
-				description,
-			},
-			loggedUser.token
-		);
+  const teacherFilesValidator = (file: File) => {
+    return filesTypeValidator(file, ACCEPTED_FILE_TYPES.TEACHER);
+  };
 
-		getSections();
-		// TODO: Exceptions + Validations
-	};
+  const onAddSection = async (title: string, description: string) => {
+    const addedCourse: SectionAddDTO = await CourseService.addSection(
+      +id!,
+      {
+        title: title,
+        description,
+      },
+      loggedUser.token
+    );
 
-	const buttonNavi = (e: any): void => {
-		navigate(`/teacherQuizz`, { state: location.state });
-	};
+    getSections();
+    // TODO: Exceptions + Validations
+  };
 
-	const sendFile = async (files: FileList) => {
-		const formData = new FormData();
+  const buttonNavi = (e: any): void => {
+    navigate(`/teacherQuizz`, { state: location.state });
+  };
 
-		for (let file of files) {
-			formData.append("files", file);
-		}
+  const sendFile = async (files: FileList) => {
+    const formData = new FormData();
 
-		try {
-			const fileResponse = await fetch("http://localhost:8080/upload", {
-				method: "POST",
-				mode: "cors",
-				headers: {
-					Authorization: `Bearer ${loggedUser.token}`,
-				},
-				body: formData,
-			});
+    for (let file of files) {
+      formData.append("files", file);
+    }
 
-			console.log("file added " + files[0].name);
-		} catch (e) {
-			console.log(e);
-		}
-	};
+    try {
+      const fileResponse = await fetch(
+        `http://localhost:8080/courses/${id}/sections/${focusedSection}/upload`,
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            Authorization: `Bearer ${loggedUser.token}`,
+          },
+          body: formData,
+        }
+      );
 
-	const getFile = async (e: React.MouseEvent) => {
-		e.preventDefault();
+      console.log("file added " + files[0].name);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-		try {
-			const fileResponse = await fetch("http://localhost:8080/files/a.docx", {
-				method: "GET",
-				mode: "cors",
-				headers: {
-					Authorization: `Bearer ${loggedUser.token}`,
-				},
-			});
+  const downloadFile = async (e: any, dataInfo: Data) => {
+    e.preventDefault();
 
-			const fileData = await fileResponse.blob();
-			const url = window.URL.createObjectURL(fileData);
-			downloadRef.current!.href = url;
-			downloadRef.current!.download = "a.docx";
-			downloadRef.current!.click();
+    try {
+      const fileResponse = await fetch(
+        `http://localhost:8080/courses/${id}/sections/${focusedSection}/files/${dataInfo.title}`,
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            Authorization: `Bearer ${loggedUser.token}`,
+          },
+        }
+      );
 
-			console.log("file added");
-		} catch (e) {
-			console.log(e);
-		}
-	};
+      const fileData = await fileResponse.blob();
+      const url = window.URL.createObjectURL(fileData);
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.style.display = "none";
+      downloadAnchor.href = url;
+      downloadAnchor.download = dataInfo.title;
+      downloadRef.current?.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadRef.current?.removeChild(downloadAnchor);
+      window.URL.revokeObjectURL(url);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-	// const url = window.URL.createObjectURL(blob);
-	// const a = document.createElement('a');
-	// a.style.display = 'none';
-	// a.href = url;
-	// // the filename you want
-	// a.download = filename;
-	// document.body.appendChild(a);
-	// a.click();
-	// document.body.removeChild(a);
-	// window.URL.revokeObjectURL(url);
-
-	return (
-		<React.Fragment>
-			<NavBar
-				links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
-			></NavBar>
-			<a ref={downloadRef} href="">
-				download
-			</a>
-			<button onClick={getFile}>aasd</button>
-			<CircleProgress></CircleProgress>
-			<div className={styles["container"]}>
-				{loggedUser.role === Roles.TEACHER ? (
-					<ClassicButton
-						className={`${styles["btn-add"]}`}
-						onClick={openSectionModal}
-					>
-						<FontAwesomeIcon
-							className={styles["btn__icon"]}
-							icon={faBookOpenReader}
-						/>
-						<span className={styles["btn__text"]}>ADD SECTION</span>
-					</ClassicButton>
-				) : null}
-				<SectionsList
-					sections={
-						loggedUser.role === Roles.TEACHER
-							? sections
-							: sections.map((section) => {
-									if (!section.quiz) {
-										section.buttonText = "";
-									}
-									return section;
-							  })
-					}
-				></SectionsList>
-			</div>
-			{isFileModalOpened && (
-				<ModalContainer onClose={closeFileModal}>
-					<DragFiles
-						className={`${styles["container"]} ${styles["drag-container"]}`}
-						data={files}
-						validator={teacherFilesValidator}
-						onFilesSent={sendFile}
-					></DragFiles>
-				</ModalContainer>
-			)}
-			{isSectionModalOpened && (
-				<AddCourseModal
-					title="ADD SECTION"
-					onClose={closeSectionModal}
-					className={styles["modal"]}
-					onSave={onAddSection}
-				></AddCourseModal>
-			)}
-			<button onClick={buttonNavi}>mamamam</button>
-		</React.Fragment>
-	);
+  return (
+    <React.Fragment>
+      <NavBar
+        links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
+      ></NavBar>
+      {/* <CircleProgress></CircleProgress> */}
+      <div className={styles["container"]} ref={downloadRef}>
+        {loggedUser.role === Roles.TEACHER ? (
+          <ClassicButton
+            className={`${styles["btn-add"]}`}
+            onClick={openSectionModal}
+          >
+            <FontAwesomeIcon
+              className={styles["btn__icon"]}
+              icon={faBookOpenReader}
+            />
+            <span className={styles["btn__text"]}>ADD SECTION</span>
+          </ClassicButton>
+        ) : null}
+        <SectionsList sections={sections}></SectionsList>
+      </div>
+      {isFileModalOpened && (
+        <ModalContainer onClose={closeFileModal}>
+          <DragFiles
+            className={`${styles["container"]} ${styles["drag-container"]}`}
+            data={files}
+            validator={teacherFilesValidator}
+            onFilesSent={sendFile}
+            onFileClicked={downloadFile}
+          ></DragFiles>
+        </ModalContainer>
+      )}
+      {isSectionModalOpened && (
+        <AddCourseModal
+          title="ADD SECTION"
+          onClose={closeSectionModal}
+          className={styles["modal"]}
+          onSave={onAddSection}
+        ></AddCourseModal>
+      )}
+      <button onClick={buttonNavi}>mamamam</button>
+    </React.Fragment>
+  );
 };
 
 export default CourseDetailPage;
