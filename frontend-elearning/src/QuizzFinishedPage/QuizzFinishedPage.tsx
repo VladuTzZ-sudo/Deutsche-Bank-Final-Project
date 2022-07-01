@@ -2,8 +2,10 @@ import React from "react";
 import styles from "./QuizzListen.module.css";
 import Button from "../Button/Button";
 import Footer from "../Footer/Footer";
-import { useState } from "react";
-
+import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 // Pentru get, ar trebuie sa trimit:
@@ -11,17 +13,48 @@ type Props = {};
 // id quizz
 // acces Token
 export default function QuizzFinishedPage({}: Props) {
+	let location = useLocation();
+	let navigate = useNavigate();
 	const [quizInfo, setQuizInfo] = useState({
 		courseTitle: "Baze de date1",
 		sectionTitle: "Baze de date relationale",
-		quizzTitle: "Verifcare bd relationale",
+		quizTitle: "Verifcare bd relationale",
 		durationQuiz: "20",
 		endDateQuiz: "22-01-2022, 12:40",
 		detailsQuiz: `Chestionarul contine 10 intrebari, 3 variante de raspuns, un singur raspuns corect. Intrebarile se parcurg secvential, fara posibilitate de revenire la intrebarea anterioara. Rezultatul este vizibil dupa inchiderea testului. Timpul de evaluare este de 10 minute. `,
-		submitedDate: "Tuesday, 8 March 2022, 11:38 AM",
+		submittedDate: "Tuesday, 8 March 2022, 11:38 AM",
 		quizMark: 9.0,
-		isQuizEnded: 0,
+		isQuizEnded: 1,
 	});
+
+	function getDataForFinishedQuizPage() {
+		let token = (location.state as any).credentials.token;
+		console.log(location.state);
+		axios
+			.get(
+				"http://localhost:8080/courses/" +
+					(location.state as any).courseId +
+					"/sections/" +
+					(location.state as any).sectionId +
+					"/quiz/" +
+					(location.state as any).quizId +
+					"/takenQuiz",
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+			.then((response) => {
+				setQuizInfo(response.data);
+			})
+			.catch((err) => {
+				alert(err);
+			});
+	}
+	useEffect(() => {
+		getDataForFinishedQuizPage();
+	}, []);
 	return (
 		<div>
 			<div className={`${styles["page"]}`}>
@@ -36,13 +69,13 @@ export default function QuizzFinishedPage({}: Props) {
 				<div className={`${styles["div--incapsulation"]}`}>
 					<div className={`${styles["div--description"]}`}>
 						<span className={`${styles["text--subtitle__principal"]}`}>
-							Quiz title: {quizInfo.quizzTitle}{" "}
+							Quiz title: {quizInfo.quizTitle}{" "}
 						</span>
 						<span className={`${styles["text--normal"]}`}>
 							Duration: {quizInfo.durationQuiz} minutes
 						</span>
 						<span className={`${styles["text--normal"]}`}>
-							Closed: {quizInfo.endDateQuiz}
+							Closed: {new Date(quizInfo.endDateQuiz).toString()}
 						</span>
 					</div>
 					<div className={`${styles["div--must-description"]}`}>
@@ -62,13 +95,16 @@ export default function QuizzFinishedPage({}: Props) {
 							</span>
 							<div className={`${styles["div--dynamic-table_up"]}`}>
 								<li className={`${styles["one"]}`}>State</li>
-								<li className={`${styles["two"]}`}>Grade / 10.00</li>
+								<li className={`${styles["two"]}`}>Grade / 100</li>
 								<li className={`${styles["three"]}`}>Review</li>
 							</div>
 							<div className={`${styles["div--dynamic-table_down"]}`}>
 								<li className={`${styles["one"]}`}>
 									<span>Finished</span>
-									<span>Submitted date: {quizInfo.submitedDate}</span>
+									<span>
+										Submitted date:{" "}
+										{new Date(quizInfo.submittedDate).toString()}
+									</span>
 								</li>
 								<li className={`${styles["two"]}`}>{quizInfo.quizMark}</li>
 								<li className={`${styles["three"]}`}>
@@ -78,7 +114,15 @@ export default function QuizzFinishedPage({}: Props) {
 										<Button
 											text="Review your test!"
 											func={() => {
-												console.log("Quizz revied!");
+												navigate("/reviewQuizz", {
+													state: {
+														generalState: location.state,
+														subjectTitle: quizInfo.courseTitle,
+														sectionTitle: quizInfo.sectionTitle,
+														courseId: (location.state as any).courseId,
+														sectionId: (location.state as any).sectionId,
+													},
+												});
 											}}
 											type="1"
 										/>
@@ -102,7 +146,7 @@ export default function QuizzFinishedPage({}: Props) {
 			<Footer
 				courseTitle={quizInfo.courseTitle}
 				sectionTitle={quizInfo.sectionTitle}
-				quizzTitle={quizInfo.quizzTitle}
+				quizzTitle={quizInfo.quizTitle}
 			/>
 		</div>
 	);
