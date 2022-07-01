@@ -16,7 +16,13 @@ import QuizzMakerAlex from "./QuizzMakerAlex/QuizzMakerAlex";
 import QuizzFinishedPage from "./QuizzFinishedPage/QuizzFinishedPage";
 import QuizStartPage from "./QuizStartPage/QuizStartPage";
 import QuizLiveTimer from "./QuizLiveTimer/QuizLiveTimer";
+<<<<<<< HEAD
 import QuizzerForm from "./Quizzer/QuizzerForm";
+=======
+import QuizzTeacher from "./QuizzTeacherView/QuizzTeacher";
+import QuizzReview from "./QuizzReviewStudent/QuizzReviewStudent";
+import QuizResultsPage from "./pages/Quiz/QuizResultsPage";
+>>>>>>> f2c66bfb49c5067497810de7614088f1a26a78cd
 export default function App() {
   return (
     <BrowserRouter>
@@ -30,6 +36,7 @@ export default function App() {
           <Route path="/courses/:id" element={<CourseDetailPage />}></Route>
         </Route>
 
+<<<<<<< HEAD
         <Route path="/play" element={<QuizzPlay></QuizzPlay>}></Route>
 
         <Route path="/quizzer" element={<QuizzerForm />}></Route>
@@ -45,6 +52,29 @@ export default function App() {
 
         <Route path="/makeQuizz" element={<QuizzMaker></QuizzMaker>}></Route>
 
+=======
+        <Route path="/playQuizz" element={<QuizzPlay></QuizzPlay>}></Route>
+        <Route
+          path="/teacherQuizz"
+          element={<QuizzTeacher></QuizzTeacher>}
+        ></Route>
+        <Route
+          path="/reviewQuizz"
+          element={<QuizzReview></QuizzReview>}
+        ></Route>
+
+        <Route
+          path="/quizzFinishedPage"
+          element={<QuizzFinishedPage></QuizzFinishedPage>}
+        ></Route>
+        <Route
+          path="/quizzStartPage"
+          element={<QuizStartPage></QuizStartPage>}
+        ></Route>
+
+        <Route path="/makeQuizz" element={<QuizzMaker></QuizzMaker>}></Route>
+
+>>>>>>> f2c66bfb49c5067497810de7614088f1a26a78cd
         <Route
           path="/quizzMaker"
           element={<QuizzMakerAlex></QuizzMakerAlex>}
@@ -58,6 +88,15 @@ export default function App() {
             />
           }
         ></Route>
+<<<<<<< HEAD
+=======
+
+        <Route
+          path="/quizChart"
+          element={<QuizResultsPage></QuizResultsPage>}
+        ></Route>
+
+>>>>>>> f2c66bfb49c5067497810de7614088f1a26a78cd
         <Route path="*" element={<Navigate to="/loginPage" />}></Route>
         {/* <QuizzMaker></QuizzMaker>
       <QuizzPlay></QuizzPlay>

@@ -3,6 +3,7 @@ interface QuizGetDTO {
   quizName: string;
   description: string;
   isVisible: boolean;
+  isEnded: boolean;
 }
 
 export default QuizGetDTO;

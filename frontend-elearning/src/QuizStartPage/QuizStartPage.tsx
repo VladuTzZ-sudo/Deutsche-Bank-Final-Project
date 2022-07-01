@@ -5,11 +5,13 @@ import Footer from "../Footer/Footer";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 // la get trebuie date:
 // quizz ID
 // token de acces!
 export default function QuizStartPage({}: Props) {
+	let navigate = useNavigate();
 	const [quizInfo, setQuizzInfo] = useState({
 		subjectTitle: "Baze de date1",
 		sectionTitle: "Baze de date relationale",
@@ -21,11 +23,10 @@ export default function QuizStartPage({}: Props) {
 	});
 
 	let location = useLocation();
-	console.log(location.state);
 
 	function getDataForStartQuizPage() {
 		let token = (location.state as any).credentials.token;
-		console.log(token);
+
 		axios
 			.get(
 				"http://localhost:8080/courses/" +
@@ -41,7 +42,6 @@ export default function QuizStartPage({}: Props) {
 			)
 			.then((response) => {
 				setQuizzInfo(response.data);
-				console.log(response.data);
 			})
 			.catch((err) => {
 				alert(err);
@@ -89,7 +89,60 @@ export default function QuizStartPage({}: Props) {
 							<Button
 								text="Attempt quizz"
 								func={() => {
-									handleSubmit();
+									navigate("/reviewQuizz", {
+										state: {
+											generalState: location.state,
+											subjectTitle: quizInfo.subjectTitle,
+											sectionTitle: quizInfo.sectionTitle,
+											courseId: (location.state as any).courseId,
+											sectionId: (location.state as any).sectionId,
+										},
+									});
+								}}
+								type="1"
+							/>
+							<Button
+								text="Attempt quizz"
+								func={() => {
+									navigate("/playQuizz", {
+										state: {
+											generalState: location.state,
+											subjectTitle: quizInfo.subjectTitle,
+											sectionTitle: quizInfo.sectionTitle,
+											courseId: (location.state as any).courseId,
+											sectionId: (location.state as any).sectionId,
+										},
+									});
+								}}
+								type="1"
+							/>
+							<Button
+								text="Attempt quizz"
+								func={() => {
+									navigate("/teacherQuizz", {
+										state: {
+											generalState: location.state,
+											subjectTitle: quizInfo.subjectTitle,
+											sectionTitle: quizInfo.sectionTitle,
+											courseId: (location.state as any).courseId,
+											sectionId: (location.state as any).sectionId,
+										},
+									});
+								}}
+								type="1"
+							/>
+
+							<Button
+								text="Go to finis"
+								func={() => {
+									navigate("/quizzFinishedPage", {
+										state: {
+											quizId: 1,
+											credentials: (location.state as any).credentials,
+											courseId: (location.state as any).courseId,
+											sectionId: (location.state as any).sectionId,
+										},
+									});
 								}}
 								type="1"
 							/>
