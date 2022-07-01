@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "./QuizzPlay.module.css";
 import Button from "../Button/Button";
 import Footer from "../Footer/Footer";
-import MiniCard from "../components/QuizzMiniCard/MiniCard";
+import MiniCard, { MiniCardProps } from "../components/QuizzMiniCard/MiniCard";
 import Answer from "../QuizzMakerAlex/QuizComponents/Answer";
 import AnswerQuestion from "../components/AnswerQuizz/AnswerQuestion";
 import QuestionInfo from "../components/QuestionInfo/QuestionInfo";
@@ -20,11 +20,6 @@ import QuizzRepository from "../Repositories/Quizz/QuizzRepository";
 import UserAuth from "../models/UserAuth";
 
 type Props = {};
-
-const onClick = (questionNumber: number, answerNumber: number) => {
-    console.log("OPA, adevarat", questionNumber, answerNumber);
-};
-
 export interface QuestionQuizzProps {
     id?: string;
     onClick?: React.MouseEventHandler;
@@ -34,16 +29,16 @@ export interface QuestionQuizzProps {
     number: number;
     question: string;
     miniCard: React.ReactNode;
+    changeColor: any;
 }
 
 type HeaderProps = {
     children: React.ReactNode | React.ReactNode[];
 };
 
-
 export default function QuizzListen({ }: Props) {
     const location: Location = useLocation();
-
+    var ok = 0;
     const [loggedUser, setLoggedUser]: [
         UserAuth,
         React.Dispatch<React.SetStateAction<UserAuth>>
@@ -53,10 +48,19 @@ export default function QuizzListen({ }: Props) {
         token: "",
     });
 
+    const onClick = (questionNumber: number, answerNumber: number) => {
+        var question: QuestionQuizzProps | undefined = qustionsOk.at(questionNumber);
+        if (typeof question !== "undefined") {
+            let card : React.ReactNode = question.miniCard;
+            console.log(card, "00");
+        }
+    };
+
     useEffect(() => {
         setLoggedUser((location.state as any).credentials);
         console.log(location, "token");
         getQuestions();
+        ok = 0;
     }, []);
 
     const getQuestions = async () => {
@@ -73,43 +77,20 @@ export default function QuizzListen({ }: Props) {
         {
             answers: (
                 <>
-                    <AnswerQuestion
-                        questionNumber={1}
-                        answerNumber={1}
-                        onClick={onClick}
-                        answer="I have a bike"
-                        validation={true}
-                    ></AnswerQuestion>
-                    <AnswerQuestion
-                        questionNumber={1}
-                        answerNumber={2}
-                        onClick={onClick}
-                        answer="Incurajează implicarea clientului în procesul de dezvoltare."
-                        validation={false}
-                    ></AnswerQuestion>
-                    <AnswerQuestion
-                        questionNumber={1}
-                        answerNumber={3}
-                        onClick={onClick}
-                        answer="Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării."
-                        validation={false}
-                    ></AnswerQuestion>
-                    <AnswerQuestion
-                        questionNumber={1}
-                        answerNumber={4}
-                        onClick={onClick}
-                        answer="Acesta este raspunsul meu ahahah."
-                        validation={false}
-                    ></AnswerQuestion>
                 </>
             ),
             number: 1,
             question: "Diagramele de interactiune se folosesc pentru a modela",
             miniCard: (
                 <>
-                    <MiniCard number={1}></MiniCard>
+                    <MiniCard color={0} id={1} number={1}></MiniCard>
                 </>
             ),
+            changeColor: () => {
+                <>
+                    <MiniCard color={1} id={1} number={1}></MiniCard>
+                </>
+            }
         },
     ]);
 
@@ -128,18 +109,23 @@ export default function QuizzListen({ }: Props) {
 
                 <div className={`${styles["div--quizz"]}`}>
                     <div className={`${styles["div--all--questions"]}`}>
-                        {qustionsOk.map((question: QuestionQuizzProps) => (
-                            <Element name={question.number.toString()}>
-                                <div id={`${question.number}`}>
-                                    <QuestionQuizz
-                                        id={question.number.toString()}
-                                        question={question.question}
-                                        number={question.number}
-                                        answers={question.answers}
-                                    ></QuestionQuizz>
-                                </div>
-                            </Element>
-                        ))}
+                        {qustionsOk.map((question: QuestionQuizzProps) => {
+                            if (ok == 0) {
+                                ok = question.number - 1;
+                            }
+                            return (
+                                <Element name={question.number.toString()}>
+                                    <div id={`${question.number}`}>
+                                        <QuestionQuizz
+                                            id={question.number.toString()}
+                                            question={question.question}
+                                            number={question.number - ok}
+                                            answers={question.answers}
+                                        ></QuestionQuizz>
+                                    </div>
+                                </Element>
+                            )
+                        })}
 
                         <div className={`${styles["elemFlexCenter"]}`}>
                             <Element name="Submit">

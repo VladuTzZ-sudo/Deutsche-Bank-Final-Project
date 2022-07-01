@@ -30,21 +30,24 @@ const QuestionInfo: FC<QuestionInfoProps> = (props) => {
         </div>
       );
     } else {
-      if (typeof props.mark !== "undefined") {
+      if (typeof(props.mark) === 'undefined') {
+        console.log("cada");
         return (
           <div className={`${styles["div--question--info"]}`}>
             <span className={`${styles["paragraph_special"]}`}>Question <span className={`${styles["paragraph_number"]}`}>{props.number}</span></span>
             <span className={`${styles["paragraph_general"]}`}>Not complete</span>
-            <span className={`${styles["paragraph_general"]}`}>Marked {props.mark / 10} of 100</span>
+            <span className={`${styles["paragraph_general"]}`}>Marked - of 100</span>
             <span className={`${styles["paragraph_special"]}`}>Flag question</span>
           </div>
         );
       }else {
+        console.log("ca");
+
         return (
           <div className={`${styles["div--question--info"]}`}>
             <span className={`${styles["paragraph_special"]}`}>Question <span className={`${styles["paragraph_number"]}`}>{props.number}</span></span>
             <span className={`${styles["paragraph_general"]}`}>Completed</span>
-            <span className={`${styles["paragraph_special"]}`}>Marked - of 100</span>
+            <span className={`${styles["paragraph_special"]}`}>Marked {props.mark} of 100</span>
           </div>
         );
       }

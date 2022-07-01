@@ -44,8 +44,9 @@ export interface QuestionQuizzProps {
 }
 
 export default function QuizzTeacher({}: Props) {
+	const navigate = useNavigate();
 	const location: Location = useLocation();
-
+	var ok = 0;
 	const [loggedUser, setLoggedUser]: [
 		UserAuth,
 		React.Dispatch<React.SetStateAction<UserAuth>>
@@ -59,6 +60,7 @@ export default function QuizzTeacher({}: Props) {
 		setLoggedUser((location.state as any).credentials);
 		console.log(location, "token");
 		getQuestions();
+		ok = 0;
 	}, []);
 
 	const getQuestions = async () => {
@@ -76,45 +78,21 @@ export default function QuizzTeacher({}: Props) {
 		{
 			answers: (
 				<>
-					<AnswerQuestion
-						questionNumber={1}
-						answerNumber={1}
-						onClick={onClick}
-						answer="I have a bike"
-						validation={true}
-					></AnswerQuestion>
-					<AnswerQuestion
-						questionNumber={1}
-						answerNumber={2}
-						onClick={onClick}
-						answer="Incurajează implicarea clientului în procesul de dezvoltare."
-						validation={false}
-					></AnswerQuestion>
-					<AnswerQuestion
-						questionNumber={1}
-						answerNumber={3}
-						onClick={onClick}
-						answer="Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării."
-						validation={false}
-					></AnswerQuestion>
-					<AnswerQuestion
-						questionNumber={1}
-						answerNumber={4}
-						onClick={onClick}
-						answer="Acesta este raspunsul meu ahahah."
-						validation={false}
-					></AnswerQuestion>
 				</>
 			),
 			number: 1,
 			question: "Diagramele de interactiune se folosesc pentru a modela",
 			miniCard: (
 				<>
-					<MiniCard number={1}></MiniCard>
+					<MiniCard color={0} id={1} number={1}></MiniCard>
 				</>
 			),
 		},
 	]);
+
+	const handleSubmit = () => {
+        navigate(-1);
+    }
 
 	return (
 		<div>
@@ -130,19 +108,24 @@ export default function QuizzTeacher({}: Props) {
 
 				<div className={`${styles["div--quizz"]}`}>
 					<div className={`${styles["div--all--questions"]}`}>
-						{qustionsOk.map((question: QuestionQuizzProps) => (
-							<Element name={question.number.toString()}>
-								<div id={`${question.number}`}>
-									<QuestionQuizz
-										id={question.number.toString()}
-										question={question.question}
-										number={question.number}
-										answers={question.answers}
-										mode={1}
-									></QuestionQuizz>
-								</div>
-							</Element>
-						))}
+						{qustionsOk.map((question: QuestionQuizzProps) => {
+                            if (ok == 0) {
+                                ok = question.number - 1;
+                            }
+                            return (
+                                <Element name={question.number.toString()}>
+                                    <div id={`${question.number}`}>
+                                        <QuestionQuizz
+                                            id={question.number.toString()}
+                                            question={question.question}
+                                            number={question.number - ok}
+                                            answers={question.answers}
+											mode = {1}
+                                        ></QuestionQuizz>
+                                    </div>
+                                </Element>
+                            )
+                        })}
 
 						<div className={`${styles["elemFlexCenter"]}`}>
 							<Element name="Submit">
@@ -167,7 +150,7 @@ export default function QuizzTeacher({}: Props) {
 						</div>
 
 						<span
-							onClick={handleSubmit}
+							onClick={submit}
 							className={`${styles["paragraph_quiz--navaigation"]} ${styles["span-finish"]}`}
 						>
 							Back
@@ -180,16 +163,8 @@ export default function QuizzTeacher({}: Props) {
 	);
 }
 
-function handleSubmit() {
+function submit() {
 	scrollTo("Submit");
-
-	let answers = window.sessionStorage.getItem("answers")?.split("-");
-	if (typeof answers !== "undefined") {
-		for (let i of answers) {
-			let sol = window.sessionStorage.getItem(i.toString());
-			console.log("intrebare - ", i, "raspuns -", sol);
-		}
-	}
 }
 
 function scrollTo(name: string) {
