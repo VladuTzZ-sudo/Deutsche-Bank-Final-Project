@@ -187,7 +187,9 @@ const CourseDetailPage: FC = () => {
         section.onImageClick = async () => {
           const files = await getFiles(+id!, section.id!);
           setFocusedSection(section.id);
-          openFileModal();
+          if (files.length) {
+            openFileModal();
+          }
         };
         return section;
       });
@@ -321,6 +323,7 @@ const CourseDetailPage: FC = () => {
             validator={teacherFilesValidator}
             onFilesSent={sendFile}
             onFileClicked={downloadFile}
+            enableDrop={loggedUser.role === Roles.TEACHER ? true : false}
           ></DragFiles>
         </ModalContainer>
       )}

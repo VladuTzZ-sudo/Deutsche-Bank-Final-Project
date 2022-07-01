@@ -22,6 +22,7 @@ interface DragFilesProps {
   onFilesSent?: (files: FileList) => void;
   onFileClicked?: (e: any, dataInfo: Data) => void;
   validator?: (file: File) => boolean;
+  enableDrop?: boolean;
   className?: string;
 }
 
@@ -66,30 +67,33 @@ const DragFiles: FC<DragFilesProps> = (props) => {
   const onDrop = (e: DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const files = e.dataTransfer.files;
-      const validFiles: FileData[] = [];
 
-      for (let file of files) {
-        if (props.validator === undefined ? true : props.validator(file)) {
-          const fileSplitted = files[0].name.split(".");
-          const extension = fileSplitted[fileSplitted.length - 1];
-          validFiles.push({
-            name: file.name,
-            type: extension,
-            date: `${file.lastModified}`,
-          });
+    if (props.enableDrop) {
+      setIsDragging(false);
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        const files = e.dataTransfer.files;
+        const validFiles: FileData[] = [];
+
+        for (let file of files) {
+          if (props.validator === undefined ? true : props.validator(file)) {
+            const fileSplitted = files[0].name.split(".");
+            const extension = fileSplitted[fileSplitted.length - 1];
+            validFiles.push({
+              name: file.name,
+              type: extension,
+              date: `${file.lastModified}`,
+            });
+          }
         }
-      }
 
-      if (files.length !== 0) {
-        props.onFilesSent?.(files);
-      }
+        if (files.length !== 0) {
+          props.onFilesSent?.(files);
+        }
 
-      setDataItems((prev: FileData[]) => {
-        return [...prev, ...validFiles];
-      });
+        setDataItems((prev: FileData[]) => {
+          return [...prev, ...validFiles];
+        });
+      }
     }
   };
 
@@ -133,13 +137,17 @@ const DragFiles: FC<DragFilesProps> = (props) => {
       <div className={`${styles["content"]}`}>
         <div className={styles["data-container"]}>
           {files}
-          <DataCard
-            dataInfo={uploadCard}
-            className={`${styles["data__card"]} ${styles["data__upload"]}`}
-          ></DataCard>
+          {props.enableDrop && (
+            <DataCard
+              dataInfo={uploadCard}
+              className={`${styles["data__card"]} ${styles["data__upload"]}`}
+            ></DataCard>
+          )}
         </div>
       </div>
-      {isDragging && <div className={styles["overlay"]} ref={overlayRef}></div>}
+      {isDragging && props.enableDrop && (
+        <div className={styles["overlay"]} ref={overlayRef}></div>
+      )}
     </div>
   );
 };
