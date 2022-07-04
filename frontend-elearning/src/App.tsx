@@ -55,15 +55,12 @@ export default function App() {
         <Route path="/makeQuizz" element={<QuizzMaker></QuizzMaker>}></Route>
 
         <Route path="/quizzer" element={<QuizzerForm />}></Route>
-        <Route
+        {/* <Route
           path="/quizLiveTimer"
           element={
-            <QuizLiveTimer
-              closedDate={new Date(1656498780000)}
-              duration={1} // in minutes
-            />
+            <QuizLiveTimer closedDate={new Date(1699683630000)} duration={1} />
           }
-        ></Route>
+        ></Route> */}
 
         <Route
           path="/quizChart"

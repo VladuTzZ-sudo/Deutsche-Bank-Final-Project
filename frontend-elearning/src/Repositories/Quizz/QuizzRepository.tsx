@@ -12,7 +12,9 @@ import {
   QuizzGetDTO,
   QuizzPlayService,
 } from "../../Services/QuizzPlayService/QuizzPlayService";
-import MiniCard, { MiniCardProps } from "../../components/QuizzMiniCard/MiniCard";
+import MiniCard, {
+  MiniCardProps,
+} from "../../components/QuizzMiniCard/MiniCard";
 import AnswerQuestion from "../../components/AnswerQuizz/AnswerQuestion";
 import QuizzListen, { QuestionQuizzProps } from "../../QuizPlay/QuizzPlay";
 import {
@@ -26,7 +28,11 @@ import {
 import { FC } from "react";
 import { AnswersQuizzProps } from "../../QuizzReviewStudent/QuizzReviewStudent";
 
-const onClick = (questionNumber: number, answerNumber: number, questionComponent: QuestionQuizzProps) => {
+const onClick = (
+  questionNumber: number,
+  answerNumber: number,
+  questionComponent: QuestionQuizzProps
+) => {
   var raspunsIntrebare = questionNumber.toString();
 
   window.sessionStorage.setItem(
@@ -45,7 +51,6 @@ const onClick = (questionNumber: number, answerNumber: number, questionComponent
   }
 
   questionComponent.miniCard = questionComponent.changeColor();
-
 };
 
 var questions: QuestionQuizzProps[] = [];
@@ -109,13 +114,15 @@ const QuizzRepository = {
         number: apiQuestion.id,
         question: apiQuestion.contentQuestion,
         changeColor: () => {
-          return <MiniCard
-            color={1}
-            onClick={clickCard}
-            id={apiQuestion.id}
-            number={apiQuestion.id - i}
-            mode={mode}
-          ></MiniCard>
+          return (
+            <MiniCard
+              color={1}
+              onClick={clickCard}
+              id={apiQuestion.id}
+              number={apiQuestion.id - i}
+              mode={mode}
+            ></MiniCard>
+          );
         },
         miniCard: (
           <MiniCard
@@ -155,19 +162,19 @@ const QuizzRepository = {
   },
   getAllAnswers: async (
     authToken: string,
-    quizzId: string,
+    sectionId: string,
     mode?: number
   ): Promise<AnswersQuizzProps[]> => {
     {
       const apiQuestions: AllreviewDTO[] = await QuizzPlayService.getAllreview(
         authToken,
-        quizzId
+        sectionId
       );
 
       var i = 1;
       const answers: AnswersQuizzProps[] = [];
       for (let apiQuestion of apiQuestions) {
-        let a :React.ReactNode = <></>
+        let a: React.ReactNode = <></>;
 
         const question: AnswersQuizzProps = {
           id: i.toString(),
@@ -175,24 +182,24 @@ const QuizzRepository = {
           question: apiQuestion.contentQuestion,
           answers: a,
           miniCard: <></>,
-          mark: 0
+          mark: 0,
         } as AnswersQuizzProps;
 
         var correct = true;
         const answer: React.ReactNode = (
           <>
             {apiQuestion.answers.map((ans: AnswerAllDTO) => {
-              var mama : boolean = false;
+              var mama: boolean = false;
               if (ans.correctAnswer != ans.userAnswer) {
                 correct = false;
               }
-              
-              if (ans.userAnswer == true){
+
+              if (ans.userAnswer == true) {
                 mama = true;
               }
 
               return (
-                < AnswerQuestion
+                <AnswerQuestion
                   questionNumber={ans.answerId}
                   answerNumber={ans.answerId}
                   onClick={onClick}
@@ -201,35 +208,42 @@ const QuizzRepository = {
                   correct={mama}
                   mode={mode}
                 ></AnswerQuestion>
-              )
-            })
-            }
+              );
+            })}
           </>
         );
 
         if (correct == true) {
           question.mark = parseFloat((100 / apiQuestions.length).toFixed(2));
-          console.log (question.mark, "famsd");
+          console.log(question.mark, "famsd");
         }
 
         question.answers = answer;
 
         if (correct == true) {
-          question.miniCard = <><MiniCard
-            color={1}
-            onClick={clickCard}
-            id={i}
-            number={i}
-            mode={mode}
-          ></MiniCard></>
+          question.miniCard = (
+            <>
+              <MiniCard
+                color={1}
+                onClick={clickCard}
+                id={i}
+                number={i}
+                mode={mode}
+              ></MiniCard>
+            </>
+          );
         } else {
-          question.miniCard = <><MiniCard
-            color={0}
-            onClick={clickCard}
-            id={i}
-            number={i}
-            mode={mode}
-          ></MiniCard></>
+          question.miniCard = (
+            <>
+              <MiniCard
+                color={0}
+                onClick={clickCard}
+                id={i}
+                number={i}
+                mode={mode}
+              ></MiniCard>
+            </>
+          );
         }
 
         i++;
@@ -238,7 +252,7 @@ const QuizzRepository = {
       console.log(answers, "bine?");
       return answers;
     }
-  }
+  },
 };
 
 export default QuizzRepository;
