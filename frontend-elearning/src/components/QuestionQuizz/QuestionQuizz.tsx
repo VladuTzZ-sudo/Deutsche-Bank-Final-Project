@@ -11,11 +11,13 @@ interface QuestionQuizzProps {
   answers: React.ReactNode;
   number: number;
   question: string;
+  mark? : number;
   mode?: number;
 }
 
 const QuestionQuizz: FC<QuestionQuizzProps> = (props) => {
   if (typeof props.mode === "undefined") {
+    console.log("1", "ANSIADMOAIDA");
     return (
       <div className={`${styles["div--question--and--info"]}`}>
         <QuestionInfo number={props.number}></QuestionInfo>
@@ -26,6 +28,7 @@ const QuestionQuizz: FC<QuestionQuizzProps> = (props) => {
       </div>
     );
   } else if (props.mode == 1) {
+    console.log("2", "ANSIADMOAIDA");
     return (
       <div className={`${styles["div--question--and--info"]}`}>
         <QuestionInfo number={props.number} mode={props.mode}></QuestionInfo>
@@ -36,9 +39,10 @@ const QuestionQuizz: FC<QuestionQuizzProps> = (props) => {
       </div>
     );
   } else {
+    console.log("3", "ANSIADMOAIDA", props.mode);
     return (
       <div className={`${styles["div--question--and--info"]}`}>
-        <QuestionInfo number={props.number} mode={props.mode}></QuestionInfo>
+        <QuestionInfo number={props.number} mode={props.mode} mark={props.mark}></QuestionInfo>
         <div className={`${styles["div--question3"]}`}>
           <span className={`${styles["paragraph_navi"]}`}>{props.question}</span>
           <>{props.answers}</>

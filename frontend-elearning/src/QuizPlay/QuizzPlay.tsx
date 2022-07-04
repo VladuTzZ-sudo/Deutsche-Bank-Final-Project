@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "./QuizzPlay.module.css";
 import Button from "../Button/Button";
 import Footer from "../Footer/Footer";
-import MiniCard from "../components/QuizzMiniCard/MiniCard";
+import axios from "axios";
+import MiniCard, { MiniCardProps } from "../components/QuizzMiniCard/MiniCard";
 import AnswerQuestion from "../components/AnswerQuizz/AnswerQuestion";
 import QuestionInfo from "../components/QuestionInfo/QuestionInfo";
 import QuestionQuizz from "../components/QuestionQuizz/QuestionQuizz";
 import { JsxEmit, textSpanContainsTextSpan } from "typescript";
+
 import {
   Link,
   Element,
@@ -24,13 +26,9 @@ import {
 } from "react-router-dom";
 import QuizzRepository from "../Repositories/Quizz/QuizzRepository";
 import UserAuth from "../models/UserAuth";
+import QuizLiveTimer from "../QuizLiveTimer/QuizLiveTimer";
 
 type Props = {};
-
-const onClick = (questionNumber: number, answerNumber: number) => {
-  console.log("OPA, adevarat", questionNumber, answerNumber);
-};
-
 export interface QuestionQuizzProps {
   id?: string;
   onClick?: React.MouseEventHandler;
@@ -40,6 +38,7 @@ export interface QuestionQuizzProps {
   number: number;
   question: string;
   miniCard: React.ReactNode;
+  changeColor: any;
 }
 
 type HeaderProps = {
@@ -48,7 +47,54 @@ type HeaderProps = {
 
 export default function QuizzListen({}: Props) {
   const location: Location = useLocation();
+  let navigate = useNavigate();
+  console.log(location.state);
+  const [quizInfo, setQuizzInfo] = useState();
+  function sendQuizAnswersQuestion(payload: any) {
+    let token = (location.state as any).generalState.credentials.token;
+    axios
+      .post(
+        "http://localhost:8080/sections/" +
+          (location as any).state.sectionId +
+          "/takenQuiz",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        navigate("/quizzFinishedPage", {
+          state: {
+            credentials: (location.state as any).generalState.credentials,
+            sectionId: (location as any).state.sectionId,
+            courseId: (location as any).state.courseId,
+          },
+        });
+      })
+      .catch((err) => {
+        alert(err.response.data);
+      });
+  }
 
+  function handleSubmit() {
+    scrollTo("Submit");
+
+    let answers = window.sessionStorage.getItem("answers")?.split("-");
+
+    let payload: any = [];
+    if (typeof answers !== "undefined") {
+      for (let i of answers) {
+        let sol = window.sessionStorage.getItem(i.toString());
+        console.log("intrebare - ", i, "raspuns -", sol);
+        payload.push({ answerId: sol, questionId: i });
+      }
+
+      sendQuizAnswersQuestion(payload);
+    }
+  }
+  var ok = 0;
   const [loggedUser, setLoggedUser]: [
     UserAuth,
     React.Dispatch<React.SetStateAction<UserAuth>>
@@ -58,10 +104,47 @@ export default function QuizzListen({}: Props) {
     token: "",
   });
 
+  const onClick = (questionNumber: number, answerNumber: number) => {
+    var question: QuestionQuizzProps | undefined =
+      qustionsOk.at(questionNumber);
+    if (typeof question !== "undefined") {
+      let card: React.ReactNode = question.miniCard;
+      console.log(card, "00");
+    }
+  };
+
+  function getStartQuizz() {
+    console.log(location.state);
+    let token = (location.state as any).generalState.credentials.token;
+    axios
+      .get(
+        "http://localhost:8080/sections/" +
+          (location.state as any).sectionId +
+          "/takenQuiz",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        window.sessionStorage.setItem("startTime", response.data);
+        setQuizzInfo(response.data);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
   useEffect(() => {
+    // window.onpopstate = function (event) {
+    //   window.history.go(1);
+    // };
+    getStartQuizz();
     setLoggedUser((location.state as any).credentials);
     console.log(location, "token");
     getQuestions();
+    ok = 0;
   }, []);
 
   const getQuestions = async () => {
@@ -76,45 +159,19 @@ export default function QuizzListen({}: Props) {
 
   const [qustionsOk, setQuestionsOk] = useState<QuestionQuizzProps[]>([
     {
-      answers: (
-        <>
-          <AnswerQuestion
-            questionNumber={1}
-            answerNumber={1}
-            onClick={onClick}
-            answer="I have a bike"
-            validation={true}
-          ></AnswerQuestion>
-          <AnswerQuestion
-            questionNumber={1}
-            answerNumber={2}
-            onClick={onClick}
-            answer="Incurajează implicarea clientului în procesul de dezvoltare."
-            validation={false}
-          ></AnswerQuestion>
-          <AnswerQuestion
-            questionNumber={1}
-            answerNumber={3}
-            onClick={onClick}
-            answer="Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării."
-            validation={false}
-          ></AnswerQuestion>
-          <AnswerQuestion
-            questionNumber={1}
-            answerNumber={4}
-            onClick={onClick}
-            answer="Acesta este raspunsul meu ahahah."
-            validation={false}
-          ></AnswerQuestion>
-        </>
-      ),
+      answers: <></>,
       number: 1,
       question: "Diagramele de interactiune se folosesc pentru a modela",
       miniCard: (
         <>
-          <MiniCard number={1}></MiniCard>
+          <MiniCard color={0} id={1} number={1}></MiniCard>
         </>
       ),
+      changeColor: () => {
+        <>
+          <MiniCard color={1} id={1} number={1}></MiniCard>
+        </>;
+      },
     },
   ]);
 
@@ -132,18 +189,23 @@ export default function QuizzListen({}: Props) {
 
         <div className={`${styles["div--quizz"]}`}>
           <div className={`${styles["div--all--questions"]}`}>
-            {qustionsOk.map((question: QuestionQuizzProps) => (
-              <Element name={question.number.toString()}>
-                <div id={`${question.number}`}>
-                  <QuestionQuizz
-                    id={question.number.toString()}
-                    question={question.question}
-                    number={question.number}
-                    answers={question.answers}
-                  ></QuestionQuizz>
-                </div>
-              </Element>
-            ))}
+            {qustionsOk.map((question: QuestionQuizzProps) => {
+              if (ok == 0) {
+                ok = question.number - 1;
+              }
+              return (
+                <Element name={question.number.toString()}>
+                  <div id={`${question.number}`}>
+                    <QuestionQuizz
+                      id={question.number.toString()}
+                      question={question.question}
+                      number={question.number - ok}
+                      answers={question.answers}
+                    ></QuestionQuizz>
+                  </div>
+                </Element>
+              );
+            })}
 
             <div className={`${styles["elemFlexCenter"]}`}>
               <Element name="Submit">
@@ -158,6 +220,12 @@ export default function QuizzListen({}: Props) {
             </div>
           </div>
           <div className={`${styles["div--squareNumbers2"]}`}>
+            <QuizLiveTimer
+              closedDate={new Date((location.state as any).closedTime)} // in minutes
+              duration={(location.state as any).duration} // in minutes
+              submitFunction={handleSubmit}
+              starter={quizInfo}
+            />
             <span className={`${styles["text--subtitle"]}`}>
               Quiz Navigation
             </span>
@@ -179,18 +247,6 @@ export default function QuizzListen({}: Props) {
       <Footer />
     </div>
   );
-}
-
-function handleSubmit() {
-  scrollTo("Submit");
-
-  let answers = window.sessionStorage.getItem("answers")?.split("-");
-  if (typeof answers !== "undefined") {
-    for (let i of answers) {
-      let sol = window.sessionStorage.getItem(i.toString());
-      console.log("intrebare - ", i, "raspuns -", sol);
-    }
-  }
 }
 
 function scrollTo(name: string) {

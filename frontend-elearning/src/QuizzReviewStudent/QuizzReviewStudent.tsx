@@ -15,7 +15,7 @@ import {
   scrollSpy,
   scroller,
 } from "react-scroll";
-
+import { Routes, Route } from "react-router-dom";
 import {
   useLocation,
   useNavigate,
@@ -31,20 +31,21 @@ const onClick = (questionNumber: number, answerNumber: number) => {
   console.log("OPA, adevarat", questionNumber, answerNumber);
 };
 
-export interface QuestionQuizzProps {
+export interface AnswersQuizzProps {
   id?: string;
   onClick?: React.MouseEventHandler;
   className?: string;
   children?: React.ReactNode;
   answers: React.ReactNode;
   number: number;
+  mark: number;
   question: string;
   miniCard: React.ReactNode;
 }
 
 export default function QuizzReview({}: Props) {
+  const navigate = useNavigate();
   const location: Location = useLocation();
-
   const [loggedUser, setLoggedUser]: [
     UserAuth,
     React.Dispatch<React.SetStateAction<UserAuth>>
@@ -54,62 +55,40 @@ export default function QuizzReview({}: Props) {
     token: "",
   });
 
+  var grade = 0;
+
   useEffect(() => {
     setLoggedUser((location.state as any).credentials);
     console.log(location, "token");
     getQuestions();
+    grade = 0;
   }, []);
 
+  const handleSubmit = () => {
+    navigate(-1);
+  };
+
   const getQuestions = async () => {
-    let sections: QuestionQuizzProps[] = await QuizzRepository.getQuestions(
+    console.log(location.state);
+    let sections: AnswersQuizzProps[] = await QuizzRepository.getAllAnswers(
       (location.state as any).generalState.credentials.token,
-      (location.state as any).courseId,
       (location.state as any).sectionId,
+
       2
     );
 
     setQuestionsOk(sections);
   };
 
-  const [qustionsOk, setQuestionsOk] = useState<QuestionQuizzProps[]>([
+  const [qustionsOk, setQuestionsOk] = useState<AnswersQuizzProps[]>([
     {
-      answers: (
-        <>
-          <AnswerQuestion
-            questionNumber={1}
-            answerNumber={1}
-            onClick={onClick}
-            answer="I have a bike"
-            validation={true}
-          ></AnswerQuestion>
-          <AnswerQuestion
-            questionNumber={1}
-            answerNumber={2}
-            onClick={onClick}
-            answer="Incurajează implicarea clientului în procesul de dezvoltare."
-            validation={false}
-          ></AnswerQuestion>
-          <AnswerQuestion
-            questionNumber={1}
-            answerNumber={3}
-            onClick={onClick}
-            answer="Planurile de test sunt realizate în etapele de dezvoltare anterioare codificării."
-            validation={false}
-          ></AnswerQuestion>
-          <AnswerQuestion
-            questionNumber={1}
-            answerNumber={4}
-            onClick={onClick}
-            answer="Acesta este raspunsul meu ahahah."
-            validation={false}
-          ></AnswerQuestion>
-        </>
-      ),
+      answers: <></>,
+      mark: 50,
       number: 1,
       question: "Diagramele de interactiune se folosesc pentru a modela",
       miniCard: (
         <>
-          <MiniCard number={1}></MiniCard>
+          <MiniCard color={0} id={1} number={1}></MiniCard>
         </>
       ),
     },
@@ -129,19 +108,23 @@ export default function QuizzReview({}: Props) {
 
         <div className={`${styles["div--quizz"]}`}>
           <div className={`${styles["div--all--questions"]}`}>
-            {qustionsOk.map((question: QuestionQuizzProps) => (
-              <Element name={question.number.toString()}>
-                <div id={`${question.number}`}>
-                  <QuestionQuizz
-                    id={question.number.toString()}
-                    question={question.question}
-                    number={question.number}
-                    answers={question.answers}
-                    mode={2}
-                  ></QuestionQuizz>
-                </div>
-              </Element>
-            ))}
+            {qustionsOk.map((question: AnswersQuizzProps) => {
+              grade += question.mark;
+              return (
+                <Element name={question.number.toString()}>
+                  <div id={`${question.number}`}>
+                    <QuestionQuizz
+                      id={question.number.toString()}
+                      question={question.question}
+                      number={question.number}
+                      answers={question.answers}
+                      mode={2}
+                      mark={question.mark}
+                    ></QuestionQuizz>
+                  </div>
+                </Element>
+              );
+            })}
 
             <div className={`${styles["elemFlexCenter"]}`}>
               <Element name="Submit">
@@ -160,13 +143,15 @@ export default function QuizzReview({}: Props) {
               Quiz Navigation
             </span>
             <div className={`${styles["container-buttons"]}`}>
-              {qustionsOk.map((question: QuestionQuizzProps) => (
+              {qustionsOk.map((question: AnswersQuizzProps) => (
                 <>{question.miniCard}</>
               ))}
             </div>
-
+            <span className={`${styles["text--subtitle2"]}`}>
+              Total Points: {grade}
+            </span>
             <span
-              onClick={handleSubmit}
+              onClick={submit}
               className={`${styles["paragraph_quiz--navaigation"]} ${styles["span-finish"]}`}
             >
               Back
@@ -179,16 +164,8 @@ export default function QuizzReview({}: Props) {
   );
 }
 
-function handleSubmit() {
+function submit() {
   scrollTo("Submit");
-
-  let answers = window.sessionStorage.getItem("answers")?.split("-");
-  if (typeof answers !== "undefined") {
-    for (let i of answers) {
-      let sol = window.sessionStorage.getItem(i.toString());
-      console.log("intrebare - ", i, "raspuns -", sol);
-    }
-  }
 }
 
 function scrollTo(name: string) {

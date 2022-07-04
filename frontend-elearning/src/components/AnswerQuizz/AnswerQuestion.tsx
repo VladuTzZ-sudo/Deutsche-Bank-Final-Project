@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { QuestionQuizzProps } from "../../QuizPlay/QuizzPlay";
 import styles from "./AnswerQuestion.module.css";
 
 interface AnswerQuestionProps {
@@ -9,6 +10,8 @@ interface AnswerQuestionProps {
 	questionNumber: number;
 	answerNumber: number;
 	validation: boolean;
+	correct?: boolean;
+	questionComponent?: QuestionQuizzProps;
 	mode?: number;
 }
 
@@ -21,7 +24,7 @@ const AnswerQuestion: FC<AnswerQuestionProps> = (props) => {
 		return (
 			<div className={`${styles["answer"]}`}>
 				<input
-					onChange={() => props.onClick(props.questionNumber, props.answerNumber)}
+					onChange={() => props.onClick(props.questionNumber, props.answerNumber, props.questionComponent)}
 					type="radio"
 					id="vehicle1"
 					name={props.questionNumber.toString()}
@@ -54,7 +57,7 @@ const AnswerQuestion: FC<AnswerQuestionProps> = (props) => {
 					<input
 						type="radio"
 						id="vehicle1"
-						checked={props.validation}
+						checked={props.correct}
 						name={props.questionNumber.toString()}
 						value="Bike"
 					></input>
@@ -69,7 +72,7 @@ const AnswerQuestion: FC<AnswerQuestionProps> = (props) => {
 					<input
 						type="radio"
 						id="vehicle1"
-						checked={props.validation}
+						checked={props.correct}
 						name={props.questionNumber.toString()}
 						value="Bike"
 					></input>
