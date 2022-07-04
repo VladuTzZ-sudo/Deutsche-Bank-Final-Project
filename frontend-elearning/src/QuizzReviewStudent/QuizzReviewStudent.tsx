@@ -3,7 +3,6 @@ import styles from "./QuizzReviewStudent.module.css";
 import Button from "../Button/Button";
 import Footer from "../Footer/Footer";
 import MiniCard from "../components/QuizzMiniCard/MiniCard";
-import Answer from "../QuizzMakerAlex/QuizComponents/Answer";
 import AnswerQuestion from "../components/AnswerQuizz/AnswerQuestion";
 import QuestionInfo from "../components/QuestionInfo/QuestionInfo";
 import QuestionQuizz from "../components/QuestionQuizz/QuestionQuizz";

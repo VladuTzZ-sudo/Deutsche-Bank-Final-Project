@@ -2,6 +2,7 @@ import Course from "../../models/Course/Course";
 import CourseGetDTO from "../../models/Course/CourseGetDTO";
 import Section from "../../models/Course/Section/Section";
 import SectionGetDTO from "../../models/Course/Section/SectionGetDTO";
+import FileData from "../../models/FileData";
 import { CourseService } from "../../Services/Course/CourseService";
 
 // TODO: Exceptions
@@ -21,7 +22,10 @@ const CourseRepository = {
     return courses;
   },
 
-  getSections: async (courseId: number, authToken: string) => {
+  getSections: async (
+    courseId: number,
+    authToken: string
+  ): Promise<Section[]> => {
     const apiSections: SectionGetDTO[] = await CourseService.getSections(
       courseId,
       authToken
@@ -31,13 +35,46 @@ const CourseRepository = {
     for (let apiSection of apiSections) {
       const section: Section = apiSection as unknown as Section;
 
-      //TODO: actual values
+      // Add file type based on name
+      section.files?.map((file) => {
+        const fileSplitted = file.name.split(".");
+        file.type = fileSplitted[fileSplitted.length - 1];
+        return file;
+      });
 
       section.completed = true;
       sections.push(section);
     }
 
     return sections;
+  },
+
+  getFilesBySectionId: async (
+    courseId: number,
+    sectionId: number,
+    authToken: string
+  ): Promise<FileData[]> => {
+    const apiSections: SectionGetDTO[] = await CourseService.getSections(
+      courseId,
+      authToken
+    );
+
+    for (let apiSection of apiSections) {
+      const section: Section = apiSection as unknown as Section;
+
+      if (section.id === sectionId) {
+        const files = section.files!;
+        files?.map((file) => {
+          const fileSplitted = file.name.split(".");
+          file.type = fileSplitted[fileSplitted.length - 1];
+          return file;
+        });
+
+        return files;
+      }
+    }
+
+    return [];
   },
 };
 
