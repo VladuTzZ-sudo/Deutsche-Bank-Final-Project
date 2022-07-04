@@ -5,33 +5,41 @@ import QuizzerFormField from "./QuizzerFormField";
 import styles from "./QuizzerForm.module.css";
 import NavBar from "../Navbar/NavBar";
 import FooterMain from "../FooterMain/FooterMain";
-
+import {
+	useLocation,
+	useNavigate,
+	useParams,
+	Location,
+} from "react-router-dom";
 const QuizzerForm = () => {
-  const { handleSubmit, methods } = useQuizzerForm();
-  const navLinks = [
-    { text: "Login", linkUrl: "/loginPage" },
-    { text: "Register", linkUrl: "/registerPage" },
-  ];
+	let navigate = useNavigate();
+	const location: Location = useLocation();
+	console.log(location.state);
+	const { handleSubmit, methods } = useQuizzerForm(location.state);
+	const navLinks = [
+		{ text: "Login", linkUrl: "/loginPage" },
+		{ text: "Register", linkUrl: "/registerPage" },
+	];
 
-  return (
-    <div>
-      <NavBar links={navLinks} />
-      <div className="container">
-        <div className={styles["quizzTitle"]}>
-          <h1 className={styles["quizz-Title"]}>Quizz Maker</h1>
-        </div>
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <QuizzerFormField />
-            <div className={styles["divInputs"]}>
-              <button type="submit">Submit</button>
-            </div>
-          </form>
-        </FormProvider>
-      </div>
-      <FooterMain />
-    </div>
-  );
+	return (
+		<div>
+			<NavBar links={navLinks} />
+			<div className="container">
+				<div className={styles["quizzTitle"]}>
+					<h1 className={styles["quizz-Title"]}>Quizz Maker</h1>
+				</div>
+				<FormProvider {...methods}>
+					<form onSubmit={handleSubmit} className={styles.form}>
+						<QuizzerFormField />
+						<div className={styles["divInputs"]}>
+							<button type="submit">Submit</button>
+						</div>
+					</form>
+				</FormProvider>
+			</div>
+			<FooterMain />
+		</div>
+	);
 };
 
 export default QuizzerForm;
