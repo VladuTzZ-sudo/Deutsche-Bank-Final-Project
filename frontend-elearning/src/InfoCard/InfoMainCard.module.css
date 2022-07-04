@@ -1,53 +1,63 @@
-.text-part {
-  background-color: #5180a1;
-  width: 100%;
-  color: #f4e9ea;
+.left-div {
+  padding-left: 90px;
+  padding-top: 40px;
+  font-family: "PT Sans", sans-serif;
 }
 
-.container-center {
-  display: flex;
-  justify-content: center;
-  font-family: "PT Sans", sans-serif;
-  text-align: center;
-  max-width: 43%;
+.title-div {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.big-div {
+  max-width: 100%;
+  background-color: #f2f1ef;
+}
+
+.text-div {
+  text-align: left;
+  width: 76%;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.question-div {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.btn-div {
   margin: 0 auto;
 }
 
-.info-title {
-  margin-top: 90px;
-  margin-bottom: 60px;
-  font-size: 4rem;
+.title-cls {
+  font-size: 5rem !important;
 }
 
-.about-text {
-  margin-bottom: 20px;
-  font-size: 2.5rem;
+.text-cls {
+  font-size: 3rem;
+  line-height: 4rem;
 }
 
-.join-text {
-  margin-bottom: 20px;
-  font-size: 2.5rem;
-  margin-top: 30px;
+.img-class {
+  margin: auto 0;
 }
-#join-text-id {
-  margin-top: 20px;
+
+.right-div {
+  padding-top: 60px;
 }
 
 .join-btn {
   border-radius: 28px;
   font-family: "PT Sans", sans-serif;
-  color: #f4e9ea;
+  color: #f2f1ef;
   font-size: 27px;
-  background: #3da7ed;
+  background: #212529;
   padding: 5px 60px 5px 60px;
   text-decoration: none;
   display: block !important;
   margin: 0 auto;
-  margin-top: 30px;
-  margin-bottom: 100px;
-}
-
-.join-btn:hover {
-  background: #3cb0fd;
-  text-decoration: none;
+  margin-top: 20px;
+  margin-bottom: 70px;
+  margin-left: 50px;
 }
