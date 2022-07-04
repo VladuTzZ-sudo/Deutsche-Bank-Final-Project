@@ -7,45 +7,126 @@ import NavBar from "../../Navbar/NavBar";
 import styles from "./QuizResultsPage.module.css";
 import "../global.css";
 import UserAuth from "../../models/UserAuth";
+import PopularCourseGetDTO from "../../models/Course/PopularCourseGetDTO";
+import { CourseService } from "../../Services/Course/CourseService";
+import SectionAvgGrade from "../../models/Course/Section/SectionAvgGrade";
 
 const QuizResultsPage = () => {
+  const [loggedUser, setLoggedUser]: [
+    UserAuth,
+    React.Dispatch<React.SetStateAction<UserAuth>>
+  ] = useState({
+    name: "",
+    role: "",
+    token: "",
+  });
+
+  const [popularCourses, setPopularCourses] = useState<PopularCourseGetDTO[]>(
+    []
+  );
+  const [sectionsAvgGrade, setSectionsAvgGrade] = useState<SectionAvgGrade[]>(
+    []
+  );
+
+  const location: Location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      const courses = await getPopularCourses();
+      await getSectionsAvgGrade(courses[0].courseName);
+    };
+
+    setLoggedUser(location.state as UserAuth);
+    init();
+  }, []);
+
+  const onLogout = () => {
+    sessionStorage.removeItem("isAuth");
+    navigate(`/loginPage`, {});
+    // TODO: delete navigation history
+  };
+
+  const onDataPointSelection = async (
+    event: MouseEvent,
+    chartContext: any,
+    config: any
+  ) => {
+    const label = config.w.config.labels[config.dataPointIndex];
+    const value = config.w.config.series[config.dataPointIndex];
+
+    getSectionsAvgGrade(label);
+  };
+
+  const getPopularCourses = async (): Promise<PopularCourseGetDTO[]> => {
+    const mockToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0ZWFjaGVyIiwiaXNzIjoid3d3LmdvYWxkaWdnZXJzLmNvbSIsInN1YiI6IjM6c2Rhc2QifQ.-nEWzUxi7Zkc2BnLxxRrZuXp0pJJJDKIhNETu4pEXMI";
+
+    const courses: PopularCourseGetDTO[] =
+      await CourseService.getPopularCourses(mockToken);
+
+    setPopularCourses(courses);
+
+    return courses;
+  };
+
+  const getSectionsAvgGrade = async (
+    courseName: string
+  ): Promise<SectionAvgGrade[]> => {
+    const mockToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0ZWFjaGVyIiwiaXNzIjoid3d3LmdvYWxkaWdnZXJzLmNvbSIsInN1YiI6IjM6c2Rhc2QifQ.-nEWzUxi7Zkc2BnLxxRrZuXp0pJJJDKIhNETu4pEXMI";
+
+    const sections: SectionAvgGrade[] =
+      await CourseService.getAvgGradeForSections(courseName, mockToken);
+
+    setSectionsAvgGrade(sections);
+    console.log(sections);
+
+    return sections;
+  };
+
+  const responsiveChartBreakpoints = [
+    {
+      breakpoint: 1300,
+      options: {
+        chart: {
+          width: 450,
+        },
+      },
+    },
+  ];
+
   const chart1Options = {
-    series: [44, 55, 13, 43, 22],
+    series: popularCourses.map(
+      (popularCourse) => popularCourse.totalTakenQuizzes
+    ),
     options: {
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+      labels: popularCourses.map((popularCourse) => popularCourse.courseName),
+      legend: { fontSize: "15rem" },
       chart: {
         toolbar: {
           show: true,
         },
         events: {
-          dataPointSelection: (
-            event: MouseEvent,
-            chartContext: any,
-            config: any
-          ) => {
-            // console.log(event);
-            // console.log(chartContext);
-            // console.log(config);
-            console.log(config.w.config.labels[config.dataPointIndex]);
-            console.log(config.w.config.series[config.dataPointIndex]);
-          },
+          dataPointSelection: onDataPointSelection,
         },
       },
+      responsive: responsiveChartBreakpoints,
     },
   };
 
   const chart2Options = {
     series: [
       {
-        data: [21, 22, 10, 28, 16, 21, 13, 30],
+        data: sectionsAvgGrade.map((sectionAvg) => sectionAvg.grade),
       },
     ],
     options: {
       colors: ["#726abc"],
       plotOptions: {
         bar: {
-          columnWidth: "45%",
-          distributed: true,
+          borderRadius: 4,
+          horizontal: true,
         },
       },
       dataLabels: {
@@ -55,16 +136,7 @@ const QuizResultsPage = () => {
         show: false,
       },
       xaxis: {
-        categories: [
-          ["John", "Doe"],
-          ["Joe", "Smith"],
-          ["Jake", "Williams"],
-          "Amber",
-          ["Peter", "Brown"],
-          ["Mary", "Evans"],
-          ["David", "Wilson"],
-          ["Lily", "Roberts"],
-        ],
+        categories: sectionsAvgGrade.map((sectionAvg) => sectionAvg.name),
         labels: {
           style: {
             colors: [
@@ -78,33 +150,12 @@ const QuizResultsPage = () => {
 
               "#726abc",
             ],
-            fontSize: "12px",
+            fontSize: "1.5rem",
           },
         },
       },
+      responsive: responsiveChartBreakpoints,
     },
-  };
-
-  const [loggedUser, setLoggedUser]: [
-    UserAuth,
-    React.Dispatch<React.SetStateAction<UserAuth>>
-  ] = useState({
-    name: "",
-    role: "",
-    token: "",
-  });
-
-  const location: Location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setLoggedUser(location.state as UserAuth);
-  }, []);
-
-  const onLogout = () => {
-    sessionStorage.removeItem("isAuth");
-    navigate(`/loginPage`, {});
-    // TODO: delete navigation history
   };
 
   const studentLinks: CustomNavLink[] = [
@@ -123,12 +174,21 @@ const QuizResultsPage = () => {
     <React.Fragment>
       <NavBar links={teacherLinks}></NavBar>
       <div className={styles["content"]}>
+        <h1
+          className={`${styles["header--primary"]} ${styles["course-popularity"]}`}
+        >
+          Courses Popularity
+        </h1>
+        <h1
+          className={`${styles["header--primary"]} ${styles["text-centered"]}`}
+        >
+          Average Grade per Course
+        </h1>
         <div className={styles["chart"]}>
           <ReactApexChart
             options={chart1Options.options}
             series={chart1Options.series}
             type="pie"
-            width={500}
           />
         </div>
         <div className={styles["chart"]}>
@@ -136,8 +196,6 @@ const QuizResultsPage = () => {
             options={chart2Options.options}
             series={chart2Options.series}
             type="bar"
-            width={500}
-            height={350}
           />
         </div>
       </div>
