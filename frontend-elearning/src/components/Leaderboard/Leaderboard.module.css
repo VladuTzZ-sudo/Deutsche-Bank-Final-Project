@@ -1,17 +1,19 @@
 .list {
   list-style: none;
-  display: grid;
-  grid-auto-rows: 1fr;
+  display: flex;
+  flex-direction: column;
   row-gap: 0.8rem;
   border-radius: 1.4rem;
   box-shadow: 0rem 0rem 0.5rem 0.2rem rgba(0, 0, 0, 0.1);
   padding: 1.4rem;
+  align-items: flex-start;
 }
 
 .list__participant {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
+  width: 100%;
 }
 
 .list__icon {

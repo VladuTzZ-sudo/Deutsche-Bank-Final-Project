@@ -21,6 +21,7 @@ import CourseAddDTO from "../../../models/Course/CourseAddDTO";
 
 const CoursesMainPage: FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [leaderboardScores, setLeaderboardScores] = useState<UserScore[]>([]);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [loggedUser, setLoggedUser]: [
     UserAuth,
@@ -36,21 +37,30 @@ const CoursesMainPage: FC = () => {
 
   useEffect(() => {
     getCourses();
+    getLeaderBoardInfo();
     setLoggedUser(location.state as UserAuth);
   }, []);
 
   const users: UserScore[] = [
-    { name: "David Simpson", score: 789 },
-    { name: "David Simpson", score: 150 },
-    { name: "David Simpson", score: 6 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
-    { name: "David Simpson", score: 2 },
+    { nameAndSurname: "David Simpson", points: 789 },
+    { nameAndSurname: "David Simpson", points: 150 },
+    { nameAndSurname: "David Simpson", points: 6 },
+    { nameAndSurname: "David Simpson", points: 2 },
+    { nameAndSurname: "David Simpson", points: 2 },
+    { nameAndSurname: "David Simpson", points: 2 },
+    { nameAndSurname: "David Simpson", points: 2 },
+    { nameAndSurname: "David Simpson", points: 2 },
+    { nameAndSurname: "David Simpson", points: 2 },
+    { nameAndSurname: "David Simpson", points: 2 },
   ];
+
+  const getLeaderBoardInfo = async () => {
+    const scores = await CourseService.getLeaderboardInfo(
+      (location.state as UserAuth).token
+    );
+
+    setLeaderboardScores(scores);
+  };
 
   const openModal = (): void => {
     setIsModalOpened(true);
@@ -95,22 +105,23 @@ const CoursesMainPage: FC = () => {
     navigate(`/quizChart`, { state: location.state });
   };
 
-  const goToMainPage = () => {
-    navigate(`/mainPage`, { state: location.state });
-  };
-
   const goToSharedNotes = () => {
     navigate(`/sharedNotes`, { state: location.state });
   };
 
+  const goToMainPage = () => {
+    navigate(`/mainPage`, { state: location.state });
+  };
+
   const studentLinks: CustomNavLink[] = [
+    { text: "List courses", href: "/", onClick: goToMainPage },
     { text: "Show notes", href: "/", onClick: goToSharedNotes },
     { text: "Quiz results", href: "#" },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 
   const teacherLinks: CustomNavLink[] = [
-    { text: "Listing courses", href: "", onClick: goToMainPage },
+    { text: "List courses", href: "", onClick: goToMainPage },
     { text: "Quiz results", href: "/", onClick: goToTeacherReportModule },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
@@ -148,7 +159,7 @@ const CoursesMainPage: FC = () => {
           onCardClick={cardClickHandler}
           courses={courses!}
         ></CoursesList>
-        <Leaderboard participants={users}></Leaderboard>
+        <Leaderboard participants={leaderboardScores}></Leaderboard>
       </div>
       {isModalOpened && (
         <AddCourseModal

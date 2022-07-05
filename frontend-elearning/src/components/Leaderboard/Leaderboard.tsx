@@ -28,13 +28,13 @@ const Leaderboard: FC<LeaderboardProps> = (props) => {
       {index === 0 ? (
         <div className={styles["list__text-container"]}>
           <span className={styles["list__text--top"]}>Top Learner</span>
-          <span className={styles["list__text"]}>{user.name}</span>
+          <span className={styles["list__text"]}>{user.nameAndSurname}</span>
         </div>
       ) : (
-        <span className={styles["list__text"]}>{user.name}</span>
+        <span className={styles["list__text"]}>{user.nameAndSurname}</span>
       )}
       <span className={`${styles["list__score"]} ${styles["list__number"]}`}>
-        {user.score}
+        {user.points}
       </span>
     </li>
   ));

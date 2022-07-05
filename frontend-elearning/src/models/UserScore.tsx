@@ -1,6 +1,6 @@
 interface UserScore {
-  name: string;
-  score: number;
+  nameAndSurname: string;
+  points: number;
 }
 
 export default UserScore;

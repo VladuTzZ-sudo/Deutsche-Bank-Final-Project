@@ -10,6 +10,7 @@ import PopularCourseGetDTO from "../../models/Course/PopularCourseGetDTO";
 import SectionAddDTO from "../../models/Course/Section/SectionAddDTO";
 import SectionAvgGrade from "../../models/Course/Section/SectionAvgGrade";
 import SectionGetDTO from "../../models/Course/Section/SectionGetDTO";
+import UserScore from "../../models/UserScore";
 
 const CourseService = {
   getCourses: async (authToken: string): Promise<CourseGetDTO[]> => {
@@ -109,8 +110,6 @@ const CourseService = {
     section: SectionAddDTO,
     authToken: string
   ): Promise<SectionAddDTO> => {
-    console.log(section);
-
     try {
       const addResponse = await fetch(
         `${API_URLS.GET_COURSES}/${courseId}/sections`,
@@ -154,6 +153,23 @@ const CourseService = {
       return grades;
     } catch (e) {
       console.log(e);
+      return [];
+    }
+  },
+
+  getLeaderboardInfo: async (authToken: string): Promise<UserScore[]> => {
+    try {
+      const scoresResponse = await fetch(`${API_URLS.LEADERBOARD}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      const scores = (await scoresResponse.json()) as UserScore[];
+
+      return scores;
+    } catch (e) {
       return [];
     }
   },

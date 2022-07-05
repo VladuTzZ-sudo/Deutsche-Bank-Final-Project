@@ -9,6 +9,7 @@ import DragFiles from "../../components/DragFiles/DragFiles";
 import filesTypeValidator from "../../Services/Validation/Validator";
 import { ACCEPTED_FILE_TYPES, Roles } from "../../Constants/Constants";
 import Data from "../../models/Data";
+import "../global.css";
 
 const SharedNotesPage: FC = () => {
   const [loggedUser, setLoggedUser]: [
@@ -92,7 +93,12 @@ const SharedNotesPage: FC = () => {
     navigate(`/sharedNotes`, { state: location.state });
   };
 
+  const goToMainPage = () => {
+    navigate(`/mainPage`, { state: location.state });
+  };
+
   const studentLinks: CustomNavLink[] = [
+    { text: "List courses", href: "/", onClick: goToMainPage },
     { text: "Show notes", href: "/", onClick: goToSharedNotes },
     { text: "Quiz results", href: "#" },
     { text: "Log out", href: "/", onClick: onLogout },
@@ -103,9 +109,22 @@ const SharedNotesPage: FC = () => {
   return (
     <React.Fragment>
       <NavBar links={studentLinks}></NavBar>
-      <div ref={downloadRef}>
+      <div ref={downloadRef} className={styles["container"]}>
+        <div className={styles["image-container"]}>
+          <p className={styles["header--primary"]}>
+            Alone we can do so little,{" "}
+            <span className={styles["highlighted"]}>
+              <div className={styles["brush-stroke"]}></div>together
+            </span>{" "}
+            we can do so much.
+          </p>
+          <img
+            className={styles["image"]}
+            src={`${process.env.PUBLIC_URL}/assets/data-images/shaking-hands.png`}
+          />
+        </div>
         <DragFiles
-          className={`${styles["container"]} ${styles["drag-container"]}`}
+          className={`${styles["drag-container"]}`}
           data={files}
           validator={studentFilesValidator}
           onFilesSent={sendFile}
