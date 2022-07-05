@@ -1,7 +1,26 @@
 .text-part {
-  background-color: #5180a1;
+  /* background-image: url("info.jpg");
+  */
+  background: #3da7ed;
+
   width: 100%;
   color: #f4e9ea;
+}
+
+.each-slide-effect > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 350px;
+}
+
+.each-slide-effect span {
+  padding: 20px;
+  font-size: 20px;
+  background: #efefef;
+  text-align: center;
+  height: 350px;
 }
 
 .container-center {
@@ -29,6 +48,7 @@
   font-size: 2.5rem;
   margin-top: 30px;
 }
+
 #join-text-id {
   margin-top: 20px;
 }

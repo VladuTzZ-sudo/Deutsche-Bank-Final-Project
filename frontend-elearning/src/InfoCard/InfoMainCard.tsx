@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./InfoMainCard.module.css";
 import { useNavigate } from "react-router-dom";
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 
 export default function InfoMainCard() {
   let navigate = useNavigate();
