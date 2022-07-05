@@ -34,7 +34,7 @@ const QuizResultsPage = () => {
   useEffect(() => {
     const init = async () => {
       const courses = await getPopularCourses();
-      await getSectionsAvgGrade(1);
+      await getSectionsAvgGrade(courses[0].courseId);
     };
 
     setLoggedUser(location.state as UserAuth);
@@ -66,11 +66,8 @@ const QuizResultsPage = () => {
   };
 
   const getPopularCourses = async (): Promise<PopularCourseGetDTO[]> => {
-    const mockToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0ZWFjaGVyIiwiaXNzIjoid3d3LmdvYWxkaWdnZXJzLmNvbSIsInN1YiI6IjM6c2Rhc2QifQ.-nEWzUxi7Zkc2BnLxxRrZuXp0pJJJDKIhNETu4pEXMI";
-
     const courses: PopularCourseGetDTO[] =
-      await CourseService.getPopularCourses(mockToken);
+      await CourseService.getPopularCourses((location.state as UserAuth).token);
 
     setPopularCourses(courses);
 
@@ -80,11 +77,11 @@ const QuizResultsPage = () => {
   const getSectionsAvgGrade = async (
     courseId: number
   ): Promise<SectionAvgGrade[]> => {
-    const mockToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0ZWFjaGVyIiwiaXNzIjoid3d3LmdvYWxkaWdnZXJzLmNvbSIsInN1YiI6IjM6c2Rhc2QifQ.-nEWzUxi7Zkc2BnLxxRrZuXp0pJJJDKIhNETu4pEXMI";
-
     const sections: SectionAvgGrade[] =
-      await CourseService.getAvgGradeForSections(courseId, mockToken);
+      await CourseService.getAvgGradeForSections(
+        courseId,
+        (location.state as UserAuth).token
+      );
 
     setSectionsAvgGrade(sections);
 
@@ -166,15 +163,17 @@ const QuizResultsPage = () => {
     },
   };
 
-  const studentLinks: CustomNavLink[] = [
-    { text: "Show notes", href: "#" },
-    { text: "Quiz results", href: "#" },
-    { text: "Log out", href: "/", onClick: onLogout },
-  ];
+  const goToTeacherReportModule = () => {
+    navigate(`/quizChart`, { state: location.state });
+  };
+
+  const goToMainPage = () => {
+    navigate(`/mainPage`, { state: location.state });
+  };
 
   const teacherLinks: CustomNavLink[] = [
-    { text: "Listing courses", href: "#" },
-    { text: "Quiz results", href: "#" },
+    { text: "Listing courses", href: "", onClick: goToMainPage },
+    { text: "Quiz results", href: "/", onClick: goToTeacherReportModule },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 

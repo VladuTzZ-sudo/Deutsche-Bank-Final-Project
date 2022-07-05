@@ -91,15 +91,27 @@ const CoursesMainPage: FC = () => {
     // TODO: Exceptions + Validations
   };
 
+  const goToTeacherReportModule = () => {
+    navigate(`/quizChart`, { state: location.state });
+  };
+
+  const goToMainPage = () => {
+    navigate(`/mainPage`, { state: location.state });
+  };
+
+  const goToSharedNotes = () => {
+    navigate(`/sharedNotes`, { state: location.state });
+  };
+
   const studentLinks: CustomNavLink[] = [
-    { text: "Show notes", href: "#" },
+    { text: "Show notes", href: "/", onClick: goToSharedNotes },
     { text: "Quiz results", href: "#" },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 
   const teacherLinks: CustomNavLink[] = [
-    { text: "Listing courses", href: "#" },
-    { text: "Quiz results", href: "#" },
+    { text: "Listing courses", href: "", onClick: goToMainPage },
+    { text: "Quiz results", href: "/", onClick: goToTeacherReportModule },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 

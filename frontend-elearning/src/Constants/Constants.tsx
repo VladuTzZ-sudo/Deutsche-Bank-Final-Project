@@ -4,7 +4,7 @@ enum Roles {
 }
 
 const ACCEPTED_FILE_TYPES = {
-  STUDENT: [],
+  STUDENT: ["png"],
   TEACHER: ["png", "docx"],
 };
 
