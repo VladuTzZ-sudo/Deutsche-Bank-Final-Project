@@ -11,6 +11,7 @@ const ACCEPTED_FILE_TYPES = {
 const API_URLS = {
   GET_COURSES: "http://localhost:8080/courses",
   GET_POPULAR_COURSES: "http://localhost:8080/statistics/popularCourses",
+  STATISTICS_COURSES: "http://localhost:8080/statistics/courses",
   ADD_COURSE: "http://localhost:8080/courses", // restricted to teacher
   GET_QUESTIONS: "http://localhost:8080/courses",
 };

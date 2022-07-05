@@ -9,6 +9,8 @@
 }
 
 .chart {
+  align-self: center;
+  justify-self: center;
 }
 
 .header--primary {
@@ -21,5 +23,5 @@
 }
 
 .course-popularity {
-  margin-left: 8rem;
+  margin-left: 13rem;
 }
