@@ -23,9 +23,9 @@ export interface QuizzGetDTO {
 
 export interface AnswerAllDTO {
   answerId: number;
-  answerContent: string,
-  correctAnswer: boolean,
-  userAnswer: boolean
+  answerContent: string;
+  correctAnswer: boolean;
+  userAnswer: boolean;
 }
 
 export interface AllreviewDTO {
@@ -34,14 +34,26 @@ export interface AllreviewDTO {
 }
 
 const QuizzPlayService = {
-  getQuestions: async (authToken: string, courseId: string, sectionId: string): Promise<QuizzGetDTO[]> => {
+  getQuestions: async (
+    authToken: string,
+    courseId: string,
+    sectionId: string
+  ): Promise<QuizzGetDTO[]> => {
     try {
-      const questionsResponse = await fetch(API_URLS.GET_QUESTIONS + "/" + courseId + "/sections/" + sectionId + "/quizPlay", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const questionsResponse = await fetch(
+        API_URLS.GET_QUESTIONS +
+          "/" +
+          courseId +
+          "/sections/" +
+          sectionId +
+          "/quizPlay",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       const questions = (await questionsResponse.json()) as QuizzGetDTO[];
 
@@ -50,19 +62,26 @@ const QuizzPlayService = {
       console.log(e);
       return [];
     }
-  }, //      
+  }, //
 
-  getAllreview: async (authToken: string, quizzId : string): Promise<AllreviewDTO[]> => {
+  getAllreview: async (
+    authToken: string,
+    sectionId: string
+  ): Promise<AllreviewDTO[]> => {
+    console.log(sectionId, authToken);
     try {
-      const questionsResponse = await fetch("http://localhost:8080/quiz/" + quizzId + "/takenQuiz/answers", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const questionsResponse = await fetch(
+        "http://localhost:8080/sections/" + sectionId + "/takenQuiz/answers",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       const questions = (await questionsResponse.json()) as AllreviewDTO[];
-      
+      console.log(questions);
       return questions;
     } catch (e) {
       console.log(e);
@@ -95,7 +114,7 @@ const QuizzPlayService = {
       console.log(e);
       return course;
     }
-  }
+  },
 };
 
 export { QuizzPlayService };

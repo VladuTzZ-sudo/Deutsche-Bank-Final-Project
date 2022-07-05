@@ -5,7 +5,7 @@ export default function SecondSection() {
   return (
     <div className={styles["second-section"]}>
       <div className={styles["container-center"]}>
-        <h1 className={styles["info-title-second-section"]}>Modules</h1>
+        <h1 className={styles["info-title-second-section"]}>Actions</h1>
       </div>
       <div className={styles["row-container"]}>
         <div className={`col ${styles["col-text-align"]}`}>

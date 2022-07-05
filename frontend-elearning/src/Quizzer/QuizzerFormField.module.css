@@ -15,15 +15,26 @@
 }
 
 .addBtn {
-  padding-right: 10px;
-  padding-left: 10px;
+  border-radius: 28px;
+  font-family: "PT Sans", sans-serif;
+  color: #f4e9ea;
+  font-size: 27px;
+  background: #6a8bbc;
+  padding: 5px 60px 5px 60px;
+  text-decoration: none;
+  display: block !important;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
 }
 
 .answerBox {
-  width: 53%;
+  width: 73%;
   border: 1px solid black;
   text-align: center;
   margin: 20px auto;
+  border-radius: 5%;
+  background-color: #6a8bbc;
 }
 
 .divContainer {
@@ -34,4 +45,6 @@
   margin: 40px auto;
   padding-top: 30px;
   padding-bottom: 30px;
+  border-radius: 5%;
+  background-color: #726abc;
 }

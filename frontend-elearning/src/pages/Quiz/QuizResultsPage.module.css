@@ -1,11 +1,25 @@
 .content {
-  width: 130rem;
+  width: 150rem;
   margin: 0 auto;
   margin-top: 10rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10rem;
+  row-gap: 5rem;
 }
 
 .chart {
+}
+
+.header--primary {
+  font-size: 3.2rem;
+  font-weight: 600;
+}
+
+.text-centered {
+  text-align: center;
+}
+
+.course-popularity {
+  margin-left: 8rem;
 }
