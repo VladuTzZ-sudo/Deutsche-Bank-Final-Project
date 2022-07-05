@@ -11,6 +11,7 @@ import {
   useParams,
   Location,
 } from "react-router-dom";
+
 const QuizzerForm = () => {
   let navigate = useNavigate();
   const location: Location = useLocation();
@@ -24,7 +25,7 @@ const QuizzerForm = () => {
   return (
     <div>
       <NavBar links={navLinks} />
-      <div className="container">
+      <div className={`container`}>
         <div className={styles["quizzTitle"]}>
           <h1 className={styles["quizz-Title"]}>Quizz Maker</h1>
         </div>

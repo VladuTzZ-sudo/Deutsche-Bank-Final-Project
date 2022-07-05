@@ -1,13 +1,19 @@
 .pageColor {
-    background-color: #212529;
-    padding: 10px 600px 10px 600px;
-    display: flex;
-    flex-direction: column;
+  background-color: #212529;
+  padding: 10px 600px 10px 600px;
+  display: flex;
+  flex-direction: column;
 }
 
 .text--footer {
-    text-align:center;
-    font-size: 12px;
-    color: white;
-    margin-left: 0px;
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  margin-left: 0px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }

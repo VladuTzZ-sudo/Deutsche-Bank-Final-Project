@@ -34,7 +34,7 @@ const QuizResultsPage = () => {
   useEffect(() => {
     const init = async () => {
       const courses = await getPopularCourses();
-      await getSectionsAvgGrade(courses[0].courseName);
+      await getSectionsAvgGrade(courses[0].courseId);
     };
 
     setLoggedUser(location.state as UserAuth);
@@ -55,15 +55,19 @@ const QuizResultsPage = () => {
     const label = config.w.config.labels[config.dataPointIndex];
     const value = config.w.config.series[config.dataPointIndex];
 
-    getSectionsAvgGrade(label);
+    const course = popularCourses.filter(
+      (course) => course.courseName === label
+    );
+    const id = course[0].courseId;
+
+    if (id) {
+      getSectionsAvgGrade(id);
+    }
   };
 
   const getPopularCourses = async (): Promise<PopularCourseGetDTO[]> => {
-    const mockToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0ZWFjaGVyIiwiaXNzIjoid3d3LmdvYWxkaWdnZXJzLmNvbSIsInN1YiI6IjM6c2Rhc2QifQ.-nEWzUxi7Zkc2BnLxxRrZuXp0pJJJDKIhNETu4pEXMI";
-
     const courses: PopularCourseGetDTO[] =
-      await CourseService.getPopularCourses(mockToken);
+      await CourseService.getPopularCourses((location.state as UserAuth).token);
 
     setPopularCourses(courses);
 
@@ -71,16 +75,15 @@ const QuizResultsPage = () => {
   };
 
   const getSectionsAvgGrade = async (
-    courseName: string
+    courseId: number
   ): Promise<SectionAvgGrade[]> => {
-    const mockToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0ZWFjaGVyIiwiaXNzIjoid3d3LmdvYWxkaWdnZXJzLmNvbSIsInN1YiI6IjM6c2Rhc2QifQ.-nEWzUxi7Zkc2BnLxxRrZuXp0pJJJDKIhNETu4pEXMI";
-
     const sections: SectionAvgGrade[] =
-      await CourseService.getAvgGradeForSections(courseName, mockToken);
+      await CourseService.getAvgGradeForSections(
+        courseId,
+        (location.state as UserAuth).token
+      );
 
     setSectionsAvgGrade(sections);
-    console.log(sections);
 
     return sections;
   };
@@ -118,7 +121,7 @@ const QuizResultsPage = () => {
   const chart2Options = {
     series: [
       {
-        data: sectionsAvgGrade.map((sectionAvg) => sectionAvg.grade),
+        data: sectionsAvgGrade.map((sectionAvg) => sectionAvg.averageGrade),
       },
     ],
     options: {
@@ -136,7 +139,9 @@ const QuizResultsPage = () => {
         show: false,
       },
       xaxis: {
-        categories: sectionsAvgGrade.map((sectionAvg) => sectionAvg.name),
+        categories: sectionsAvgGrade.map(
+          (sectionAvg) => sectionAvg.sectionName
+        ),
         labels: {
           style: {
             colors: [
@@ -158,15 +163,17 @@ const QuizResultsPage = () => {
     },
   };
 
-  const studentLinks: CustomNavLink[] = [
-    { text: "Show notes", href: "#" },
-    { text: "Quiz results", href: "#" },
-    { text: "Log out", href: "/", onClick: onLogout },
-  ];
+  const goToTeacherReportModule = () => {
+    navigate(`/quizChart`, { state: location.state });
+  };
+
+  const goToMainPage = () => {
+    navigate(`/mainPage`, { state: location.state });
+  };
 
   const teacherLinks: CustomNavLink[] = [
-    { text: "Listing courses", href: "#" },
-    { text: "Quiz results", href: "#" },
+    { text: "Listing courses", href: "", onClick: goToMainPage },
+    { text: "Quiz results", href: "/", onClick: goToTeacherReportModule },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 
@@ -189,6 +196,7 @@ const QuizResultsPage = () => {
             options={chart1Options.options}
             series={chart1Options.series}
             type="pie"
+            width="700px"
           />
         </div>
         <div className={styles["chart"]}>
@@ -196,6 +204,7 @@ const QuizResultsPage = () => {
             options={chart2Options.options}
             series={chart2Options.series}
             type="bar"
+            width="700px"
           />
         </div>
       </div>

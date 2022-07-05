@@ -20,6 +20,7 @@ import QuizzTeacher from "./QuizzTeacherView/QuizzTeacher";
 import QuizzReview from "./QuizzReviewStudent/QuizzReviewStudent";
 import QuizResultsPage from "./pages/Quiz/QuizResultsPage";
 import QuizzerForm from "./Quizzer/QuizzerForm";
+import SharedNotesPage from "./pages/Files/SharedNotesPage";
 export default function App() {
   return (
     <BrowserRouter>
@@ -65,6 +66,11 @@ export default function App() {
         <Route
           path="/quizChart"
           element={<QuizResultsPage></QuizResultsPage>}
+        ></Route>
+
+        <Route
+          path="/sharedNotes"
+          element={<SharedNotesPage></SharedNotesPage>}
         ></Route>
 
         <Route path="*" element={<Navigate to="/loginPage" />}></Route>

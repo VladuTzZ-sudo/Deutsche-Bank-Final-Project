@@ -1,4 +1,5 @@
 interface PopularCourseGetDTO {
+  courseId: number;
   courseName: string;
   totalTakenQuizzes: number;
 }

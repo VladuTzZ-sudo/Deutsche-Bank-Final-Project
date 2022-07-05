@@ -135,47 +135,26 @@ const CourseService = {
   },
 
   getAvgGradeForSections: async (
-    courseName: string,
+    courseId: number,
     authToken: string
   ): Promise<SectionAvgGrade[]> => {
-    if (courseName === "Math Course") {
-      return [
+    try {
+      const sectionsResponse = await fetch(
+        `${API_URLS.STATISTICS_COURSES}/${courseId}/averageGrade`,
         {
-          name: "section1",
-          grade: 5,
-        },
-        {
-          name: "section2",
-          grade: 3,
-        },
-        {
-          name: "section4",
-          grade: 6,
-        },
-        {
-          name: "section5",
-          grade: 2,
-        },
-      ];
-    } else {
-      return [
-        {
-          name: "section1",
-          grade: 1,
-        },
-        {
-          name: "section2",
-          grade: 5,
-        },
-        {
-          name: "section4",
-          grade: 2,
-        },
-        {
-          name: "section5",
-          grade: 4,
-        },
-      ];
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      const grades = (await sectionsResponse.json()) as SectionAvgGrade[];
+
+      return grades;
+    } catch (e) {
+      console.log(e);
+      return [];
     }
   },
 };

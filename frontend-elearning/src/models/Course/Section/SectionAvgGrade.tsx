@@ -1,6 +1,6 @@
 interface SectionAvgGrade {
-  name: string;
-  grade: number;
+  sectionName: string;
+  averageGrade: number;
 }
 
 export default SectionAvgGrade;
