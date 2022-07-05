@@ -45,18 +45,21 @@ type HeaderProps = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-export default function QuizzListen({}: Props) {
+let visitedAlready = false;
+
+export default function QuizzListen({ }: Props) {
   const location: Location = useLocation();
   let navigate = useNavigate();
   console.log(location.state);
   const [quizInfo, setQuizzInfo] = useState();
   function sendQuizAnswersQuestion(payload: any) {
     let token = (location.state as any).generalState.credentials.token;
+    console.log("MAMA");
     axios
       .post(
         "http://localhost:8080/sections/" +
-          (location as any).state.sectionId +
-          "/takenQuiz",
+        (location as any).state.sectionId +
+        "/takenQuiz",
         payload,
         {
           headers: {
@@ -65,6 +68,7 @@ export default function QuizzListen({}: Props) {
         }
       )
       .then((response) => {
+        console.log("CICA");
         navigate("/quizzFinishedPage", {
           state: {
             credentials: (location.state as any).generalState.credentials,
@@ -74,13 +78,14 @@ export default function QuizzListen({}: Props) {
         });
       })
       .catch((err) => {
+        console.log("ERROR");
         alert(err.response.data);
       });
   }
 
   function handleSubmit() {
     scrollTo("Submit");
-
+    visitedAlready = true;
     let answers = window.sessionStorage.getItem("answers")?.split("-");
 
     let payload: any = [];
@@ -92,7 +97,10 @@ export default function QuizzListen({}: Props) {
       }
 
       sendQuizAnswersQuestion(payload);
+    } else {
+      sendQuizAnswersQuestion(payload);
     }
+    console.log("HAM");
   }
   var ok = 0;
   const [loggedUser, setLoggedUser]: [
@@ -119,8 +127,8 @@ export default function QuizzListen({}: Props) {
     axios
       .get(
         "http://localhost:8080/sections/" +
-          (location.state as any).sectionId +
-          "/takenQuiz",
+        (location.state as any).sectionId +
+        "/takenQuiz",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -137,14 +145,26 @@ export default function QuizzListen({}: Props) {
   }
 
   useEffect(() => {
-    // window.onpopstate = function (event) {
-    //   window.history.go(1);
-    // };
-    getStartQuizz();
-    setLoggedUser((location.state as any).credentials);
-    console.log(location, "token");
-    getQuestions();
-    ok = 0;
+    if (visitedAlready == true) {
+      if (typeof (location.state as any) === 'undefined') {
+      } else {
+        navigate("/quizzFinishedPage", {
+          state: {
+            credentials: (location.state as any).generalState.credentials,
+            sectionId: (location as any).state.sectionId,
+            courseId: (location as any).state.courseId,
+          },
+        });
+      }
+
+    } else {
+      console.log("DIIDIOTIDIDIDI");
+      getStartQuizz();
+      setLoggedUser((location.state as any).credentials);
+      console.log(location, "token");
+      getQuestions();
+      ok = 0;
+    }
   }, []);
 
   const getQuestions = async () => {

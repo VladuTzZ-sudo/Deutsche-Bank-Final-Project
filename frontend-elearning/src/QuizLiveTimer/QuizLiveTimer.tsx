@@ -34,7 +34,7 @@ export default function QuizLiveTimer(props: Props) {
         );
         var minutes = Math.floor((localDiff % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((localDiff % (1000 * 60)) / 1000);
-        console.log(hours + ":" + minutes + ":" + seconds);
+        // console.log(hours + ":" + minutes + ":" + seconds);
         setDifference(hours + ":" + minutes + ":" + seconds);
       } else if (localDiff <= 0) {
         console.log("DONE");

@@ -22,6 +22,7 @@ export default function LoginPage() {
 		email: "",
 		password: "",
 	});
+	
 
 	function gotToNextPage(data: toTransfer) {
 		console.log(data);

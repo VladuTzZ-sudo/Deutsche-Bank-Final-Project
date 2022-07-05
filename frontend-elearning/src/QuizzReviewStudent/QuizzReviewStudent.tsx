@@ -73,7 +73,6 @@ export default function QuizzReview({}: Props) {
     let sections: AnswersQuizzProps[] = await QuizzRepository.getAllAnswers(
       (location.state as any).generalState.credentials.token,
       (location.state as any).sectionId,
-
       2
     );
 
@@ -83,9 +82,9 @@ export default function QuizzReview({}: Props) {
   const [qustionsOk, setQuestionsOk] = useState<AnswersQuizzProps[]>([
     {
       answers: <></>,
-      mark: 50,
+      mark: 0,
       number: 1,
-      question: "Diagramele de interactiune se folosesc pentru a modela",
+      question: "You have no questions here.",
       miniCard: (
         <>
           <MiniCard color={0} id={1} number={1}></MiniCard>

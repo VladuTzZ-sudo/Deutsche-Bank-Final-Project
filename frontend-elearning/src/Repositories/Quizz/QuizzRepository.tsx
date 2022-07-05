@@ -153,6 +153,26 @@ const QuizzRepository = {
 
       question.answers = answers;
 
+      if (typeof question.id === 'undefined') {
+      }else{
+        var raspunsIntrebare = question.id.toString();
+
+        window.sessionStorage.setItem(
+          question.id.toString(),
+          "-1"
+        );
+
+        let haha = window.sessionStorage.getItem("answers");
+        if (haha == null) {
+          window.sessionStorage.setItem("answers", raspunsIntrebare);
+        } else {
+          if (haha.indexOf(raspunsIntrebare) == -1) {
+            raspunsIntrebare += "-" + haha;
+            window.sessionStorage.setItem("answers", raspunsIntrebare);
+          }
+        }
+      }
+
       questions.push(question);
     }
 
@@ -216,6 +236,8 @@ const QuizzRepository = {
         if (correct == true) {
           question.mark = parseFloat((100 / apiQuestions.length).toFixed(2));
           console.log(question.mark, "famsd");
+        } else {
+          question.mark = 0;
         }
 
         question.answers = answer;
