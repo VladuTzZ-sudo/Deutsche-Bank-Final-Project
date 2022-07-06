@@ -95,9 +95,9 @@ const QuizzRepository = {
     console.log(apiQuestions, "mama");
 
     questions = [];
-    var i = 0;
+    var i = -1;
     for (let apiQuestion of apiQuestions) {
-      if (i == 0) {
+      if (i == -1) {
         i = apiQuestion.id - 1;
       }
 

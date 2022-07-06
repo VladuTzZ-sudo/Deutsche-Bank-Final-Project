@@ -17,11 +17,13 @@
 .paragraph_navi {
   padding: 5px;
   padding-left: 10px;
-  font-size: 15px;
+  font-size: 17px;
+  text-decoration: solid;
 }
 
 .div--question {
-  background-color: #c9ebf0;
+  /* background-color: #c9ebf0; */
+  background-color: #DDCFFF;
   flex: 8;
   padding: 10px;
   align-items: left;
@@ -110,11 +112,11 @@
 }
 
 
-.button:hover{
+.button:hover {
   font-weight: bold;
   background-color: white;
   color: #125dff;
-  border:1px;
+  border: 1px;
   border-style: solid;
   border-color: #125dff;
   opacity: 1;

@@ -27,6 +27,7 @@ import {
 import QuizzRepository from "../Repositories/Quizz/QuizzRepository";
 import UserAuth from "../models/UserAuth";
 import QuizLiveTimer from "../QuizLiveTimer/QuizLiveTimer";
+import FooterMain from "../FooterMain/FooterMain";
 
 type Props = {};
 export interface QuestionQuizzProps {
@@ -163,7 +164,7 @@ export default function QuizzListen({ }: Props) {
       setLoggedUser((location.state as any).credentials);
       console.log(location, "token");
       getQuestions();
-      ok = 0;
+      ok = -1;
     }
   }, []);
 
@@ -176,6 +177,10 @@ export default function QuizzListen({ }: Props) {
 
     setQuestionsOk(sections);
   };
+
+  const goTo = () => {
+    scrollTo("Submit");
+  }
 
   const [qustionsOk, setQuestionsOk] = useState<QuestionQuizzProps[]>([
     {
@@ -196,21 +201,24 @@ export default function QuizzListen({ }: Props) {
   ]);
 
   return (
-    <div>
+    <div className={`${styles["page-style"]}`}>
       <div className={`${styles["page"]}`}>
         <div className={`${styles["div--description__principal"]}`}>
           <span className={`${styles["text--title"]}`}>
-            Course title: {(location.state as any).subjectTitle}
+            {(location.state as any).subjectTitle}
           </span>
-          <span className={`${styles["text--normal__principal"]}`}>
-            Section title: {(location.state as any).sectionTitle}
-          </span>
+          <div>
+            <span className={`${styles["text--normal__principal2"]}`}>Section</span>
+            <span className={`${styles["text--subtitle__principal"]}`}>
+              {(location.state as any).sectionTitle}
+            </span>
+          </div>
         </div>
 
         <div className={`${styles["div--quizz"]}`}>
           <div className={`${styles["div--all--questions"]}`}>
             {qustionsOk.map((question: QuestionQuizzProps) => {
-              if (ok == 0) {
+              if (ok == -1) {
                 ok = question.number - 1;
               }
               return (
@@ -240,15 +248,17 @@ export default function QuizzListen({ }: Props) {
             </div>
           </div>
           <div className={`${styles["div--squareNumbers2"]}`}>
-            <QuizLiveTimer
-              closedDate={new Date((location.state as any).closedTime)} // in minutes
-              duration={(location.state as any).duration} // in minutes
-              submitFunction={handleSubmit}
-              starter={quizInfo}
-            />
             <span className={`${styles["text--subtitle"]}`}>
               Quiz Navigation
             </span>
+            <div className={`${styles["timer"]}`}>
+              <QuizLiveTimer
+                closedDate={new Date((location.state as any).closedTime)} // in minutes
+                duration={(location.state as any).duration} // in minutes
+                submitFunction={handleSubmit}
+                starter={quizInfo}
+              />
+            </div>
             <div className={`${styles["container-buttons"]}`}>
               {qustionsOk.map((question: QuestionQuizzProps) => (
                 <>{question.miniCard}</>
@@ -256,7 +266,7 @@ export default function QuizzListen({ }: Props) {
             </div>
 
             <span
-              onClick={handleSubmit}
+              onClick={goTo}
               className={`${styles["paragraph_quiz--navaigation"]} ${styles["span-finish"]}`}
             >
               Finish attempt
@@ -264,7 +274,7 @@ export default function QuizzListen({ }: Props) {
           </div>
         </div>
       </div>
-      <Footer />
+      <FooterMain />
     </div>
   );
 }

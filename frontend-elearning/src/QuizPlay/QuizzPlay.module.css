@@ -9,11 +9,17 @@
     padding: 10px;
 }
 
+.page-style {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .div--description__principal {
     height: 130px;
     margin: 20px 0px 0px 0;
-    border: 1px solid #c1c2c7;
-    border-radius: 2px;
+    border: 1px solid #726abc;
+    border-radius: 10px;
     box-sizing: border-box;
     justify-content: center;
     display: flex;
@@ -27,8 +33,8 @@
     height: auto;
     margin: 0px 20px 0px 0px;
     padding: 20px;
-    border-radius: 2px;
-    border: 1px solid #c1c2c7;
+    border-radius: 10px;
+    border: 1px solid #726abc;
     box-sizing: border-box;
     justify-content: center;
     display: flex;
@@ -46,7 +52,7 @@
 }
 
 .div--question {
-    background-color: #c9ebf0;
+    /* background-color: #c9ebf0; */
     flex: 8;
     padding: 10px;
     align-items: left;
@@ -89,9 +95,13 @@
 }
 
 .text--title {
+    font-family: 'Enriqueta', arial, serif;
+    line-height: 1.25;
+    margin: 0 0 10px;
     margin-bottom: 10px;
-    font-size: 37px;
     padding-left: 20px;
+    font-size: 40px;
+    font-weight: bold;
 }
 
 .text--subtitle__principal {
@@ -115,14 +125,61 @@
 }
 
 .text--normal__principal {
-    padding-left: 25px;
-    font-size: 13px;
+    color: #333333;
+    padding-left: 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 21px;
+    font-weight: 200;
+    font-style: italic;
+    line-height: 1.5625;
 }
 
-.paragraph_general {
-    padding-left: 10px;
-    font-size: 12px;
-    padding-top: 7px;
+.text--normal__principal2 {
+    color: #333333;
+    font-weight: 500;
+    padding-left: 20px;
+    font-size: 19px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5625;
+    padding-right: 8px;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+.text--normal__principal3 {
+    color: #333333;
+    font-weight: 300;
+    font-size: 20px;
+    padding-right: 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5625;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+h4 {
+    font-size: 15px;
+}
+
+.timer {
+    margin-left: 10px;
+}
+
+.text--normal__principal4 {
+    color: #333333;
+    font-weight: 300;
+    font-size: 18px;
+    padding-right: 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5625;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+.paragraph {
+    padding-left: 20px;
+    width: 90vw;
+    text-align: left;
 }
 
 .paragraph_special {
@@ -193,8 +250,8 @@
 
 .paragraph_quiz--navaigation {
     padding: 5px;
-    padding-top: 10px;
-    padding-left: 20px;
+    padding-top: 15px;
+    padding-left: 25px;
     font-size: 15px;
     width: fit-content;
 }
@@ -223,7 +280,7 @@
 .container-buttons {
     display: flex;
     flex-wrap: wrap;
-    padding-left: 15px;
+    padding-left: 30px;
 }
 
 .div--squareNumbers2 {

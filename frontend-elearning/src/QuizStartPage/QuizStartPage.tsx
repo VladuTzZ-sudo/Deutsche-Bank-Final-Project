@@ -6,11 +6,14 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import FooterMain from "../FooterMain/FooterMain";
+import CustomNavLink from "../models/CustomNavLink";
+import NavBar from "../Navbar/NavBar";
 type Props = {};
 // la get trebuie date:
 // quizz ID
 // token de acces!
-export default function QuizStartPage({}: Props) {
+export default function QuizStartPage({ }: Props) {
   let navigate = useNavigate();
   const [quizInfo, setQuizzInfo] = useState({
     subjectTitle: "Baze de date1",
@@ -24,16 +27,36 @@ export default function QuizStartPage({}: Props) {
 
   let location = useLocation();
 
+  const goToSharedNotes = () => {
+    navigate(`/sharedNotes`, { state: location.state });
+  };
+
+  const goToMainPage = () => {
+    navigate(-1);
+  };
+
+  const onLogout = () => {
+    sessionStorage.removeItem("isAuth");
+    navigate(`/loginPage`, {});
+    // TODO: delete navigation history
+  };
+
+  const studentLinks: CustomNavLink[] = [
+    { text: "List sections", href: "/", onClick: goToMainPage },
+    { text: "Show notes", href: "/", onClick: goToSharedNotes },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
+
   function getDataForStartQuizPage() {
     let token = (location.state as any).credentials.token;
 
     axios
       .get(
         "http://localhost:8080/courses/" +
-          (location.state as any).courseId +
-          "/sections/" +
-          (location.state as any).sectionId +
-          "/quizStart",
+        (location.state as any).courseId +
+        "/sections/" +
+        (location.state as any).sectionId +
+        "/quizStart",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -51,27 +74,42 @@ export default function QuizStartPage({}: Props) {
     getDataForStartQuizPage();
   }, []);
   return (
-    <div>
+    <div className={`${styles["page-style"]}`}>
+      <NavBar
+        links={studentLinks}
+      ></NavBar>
       <div className={`${styles["page"]}`}>
         <div className={`${styles["div--description__principal"]}`}>
           <span className={`${styles["text--title"]}`}>
             {quizInfo.subjectTitle}
           </span>
-          <span className={`${styles["text--normal__principal"]}`}>
-            Section: {quizInfo.sectionTitle}
-          </span>
+          <div>
+            <span className={`${styles["text--normal__principal2"]}`}>Section</span>
+            <span className={`${styles["text--subtitle__principal"]}`}>
+              {quizInfo.sectionTitle}
+            </span>
+          </div>
         </div>
         <div className={`${styles["div--incapsulation"]}`}>
           <div className={`${styles["div--description"]}`}>
-            <span className={`${styles["text--subtitle__principal"]}`}>
-              Quizz title: {quizInfo.quizTitle}{" "}
-            </span>
-            <span className={`${styles["text--normal"]}`}>
-              Duration time: {quizInfo.duration} minutes
-            </span>
-            <span className={`${styles["text--normal"]}`}>
-              Closed: {new Date(quizInfo.endDate).toString()}
-            </span>
+            <div>
+              <span className={`${styles["text--normal__principal3"]}`}>Quiz title</span>
+              <span className={`${styles["text--subtitle__principal"]}`}>
+                {quizInfo.quizTitle}{" "}
+              </span>
+            </div>
+            <div>
+              <span className={`${styles["text--normal__principal4"]}`}>Duration</span>
+              <span className={`${styles["text--normal"]}`}>
+                {quizInfo.duration} minutes
+              </span>
+            </div>
+            <div>
+              <span className={`${styles["text--normal__principal4"]}`}>Closed</span>
+              <span className={`${styles["text--normal"]}`}>
+                {new Date(quizInfo.endDate).toString()}
+              </span>
+            </div>
           </div>
           <div className={`${styles["div--must-description"]}`}>
             <div className={`${styles["paragraph"]}`}>
@@ -110,7 +148,7 @@ export default function QuizStartPage({}: Props) {
           </div>
         </div>
       </div>
-      <Footer />
+      <FooterMain />
     </div>
   );
 }

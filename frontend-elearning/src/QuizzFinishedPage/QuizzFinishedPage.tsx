@@ -6,13 +6,18 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import FooterMain from "../FooterMain/FooterMain";
+import NavBar from "../Navbar/NavBar";
+import CustomNavLink from "../models/CustomNavLink";
+import UserAuth from "../models/UserAuth";
+import { Roles } from "../Constants/Constants";
 type Props = {};
 
 // Pentru get, ar trebuie sa trimit:
 // id student
 // id quizz
 // acces Token
-export default function QuizzFinishedPage({}: Props) {
+export default function QuizzFinishedPage({ }: Props) {
   let location = useLocation();
   let navigate = useNavigate();
   const [quizInfo, setQuizInfo] = useState({
@@ -26,6 +31,43 @@ export default function QuizzFinishedPage({}: Props) {
     quizMark: 9.0,
     isQuizEnded: 1,
   });
+  const [loggedUser, setLoggedUser]: [
+    UserAuth,
+    React.Dispatch<React.SetStateAction<UserAuth>>
+  ] = useState({
+    name: "",
+    role: "",
+    token: "",
+  });
+
+  const navLinks = [
+    { text: "Login", linkUrl: "/loginPage" },
+    { text: "Register", linkUrl: "/registerPage" },
+  ];
+
+  const goToTeacherReportModule = () => {
+    navigate(`/quizChart`, { state: location.state });
+  };
+
+  const goToSharedNotes = () => {
+    navigate(`/sharedNotes`, { state: location.state });
+  };
+
+  const goToMainPage = () => {
+    navigate(-1);
+  };
+
+  const onLogout = () => {
+    sessionStorage.removeItem("isAuth");
+    navigate(`/loginPage`, {});
+    // TODO: delete navigation history
+  };
+
+  const studentLinks: CustomNavLink[] = [
+    { text: "List sections", href: "/", onClick: goToMainPage },
+    { text: "Show notes", href: "/", onClick: goToSharedNotes },
+    { text: "Log out", href: "/", onClick: onLogout },
+  ];
 
   function getDataForFinishedQuizPage() {
     let token = (location.state as any).credentials.token;
@@ -33,10 +75,10 @@ export default function QuizzFinishedPage({}: Props) {
     axios
       .get(
         "http://localhost:8080/courses/" +
-          (location.state as any).courseId +
-          "/sections/" +
-          (location.state as any).sectionId +
-          "/takenQuiz",
+        (location.state as any).courseId +
+        "/sections/" +
+        (location.state as any).sectionId +
+        "/takenQuiz",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,34 +92,52 @@ export default function QuizzFinishedPage({}: Props) {
         alert(err);
       });
   }
+
   useEffect(() => {
     // window.onpopstate = function (event) {
     //   window.history.go(1);
     // };
     getDataForFinishedQuizPage();
+    setLoggedUser(location.state as UserAuth);
   }, []);
   return (
-    <div>
+    <div className={`${styles["page-style"]}`}>
+      <NavBar
+        links={studentLinks}
+      ></NavBar>
+
       <div className={`${styles["page"]}`}>
         <div className={`${styles["div--description__principal"]}`}>
           <span className={`${styles["text--title"]}`}>
             {quizInfo.courseTitle}
           </span>
-          <span className={`${styles["text--normal__principal"]}`}>
-            Section: {quizInfo.sectionTitle}
-          </span>
+          <div>
+            <span className={`${styles["text--normal__principal2"]}`}>Section</span>
+            <span className={`${styles["text--subtitle__principal"]}`}>
+              {quizInfo.sectionTitle}
+            </span>
+          </div>
         </div>
         <div className={`${styles["div--incapsulation"]}`}>
           <div className={`${styles["div--description"]}`}>
-            <span className={`${styles["text--subtitle__principal"]}`}>
-              Quiz title: {quizInfo.quizTitle}{" "}
-            </span>
+            <div>
+              <span className={`${styles["text--normal__principal3"]}`}>Quiz title</span>
+              <span className={`${styles["text--subtitle__principal"]}`}>
+                {quizInfo.quizTitle}{" "}
+              </span>
+            </div>
+            <div>
+            <span className={`${styles["text--normal__principal4"]}`}>Duration</span>
             <span className={`${styles["text--normal"]}`}>
-              Duration: {quizInfo.durationQuiz} minutes
+              {quizInfo.durationQuiz} minutes
             </span>
+            </div>
+            <div>
+            <span className={`${styles["text--normal__principal4"]}`}>Closed</span>
             <span className={`${styles["text--normal"]}`}>
-              Closed: {new Date(quizInfo.endDateQuiz).toString()}
+              {new Date(quizInfo.endDateQuiz).toString()}
             </span>
+            </div>
           </div>
           <div className={`${styles["div--must-description"]}`}>
             <p className={`${styles["paragraph"]}`}>
@@ -147,12 +207,9 @@ export default function QuizzFinishedPage({}: Props) {
           </div>
         </div>
       </div>
-      <Footer
-        courseTitle={quizInfo.courseTitle}
-        sectionTitle={quizInfo.sectionTitle}
-        quizzTitle={quizInfo.quizTitle}
-      />
-    </div>
+      <FooterMain />
+
+    </div >
   );
 }
 

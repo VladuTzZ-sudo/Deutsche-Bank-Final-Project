@@ -36,22 +36,24 @@
   width: fit-content;
   padding: 12px 20px;
   margin: 8px 0;
-  border: 1px solid #ccc;
+  border: 1px solid #212529;
   border-radius: 4px;
   box-sizing: border-box;
   outline:none;
-  background-color: #125dff;
-  color: white;
+  font-weight: bold;
+
+  background-color: white;
+  color: #212529;
   opacity: 1;
 }
 
 .btn2:hover{
   font-weight: bold;
-    background-color: white;
-    color: #125dff;
+    background-color: #726abc;
+    color: white;
     border-radius: 50px;
     border:1px;
     border-style: solid;
-    border-color: #125dff;
+    border-color: #726abc;
     opacity: 1;
 }
