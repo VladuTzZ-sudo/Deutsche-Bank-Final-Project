@@ -35,6 +35,13 @@
   flex-direction: column;
 }
 
+.page-style {
+  background-color: red;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .div--incapsulation {
   background-color: white !important;
   border-radius: 2px;

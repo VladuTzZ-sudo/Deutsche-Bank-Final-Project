@@ -22,7 +22,7 @@ export default function LoginPage() {
 		email: "",
 		password: "",
 	});
-	
+
 
 	function gotToNextPage(data: toTransfer) {
 		console.log(data);
@@ -105,7 +105,7 @@ export default function LoginPage() {
 		<div className={styles["login-page"]}>
 			<div className={styles["login-page__form"]}>
 				<h1 className={styles["login-page__title"]}>
-					Sign in to your account!
+					Sign in to your account !
 				</h1>
 				<label className={styles["login-page__form__label"]}>Email</label>
 				<input
@@ -125,20 +125,22 @@ export default function LoginPage() {
 					placeholder="Your password is...."
 					required
 				/>
-
-				<Button
-					text="Sign in"
-					func={() => {
-						handleSubmit();
-					}}
-				></Button>
-
-				<Button
-					text="Go back!!"
-					func={() => {
-						navigate("/");
-					}}
-				></Button>
+				<div className={styles["button-margins2"]}>
+					<Button
+						text="Sign in"
+						func={() => {
+							handleSubmit();
+						}}
+					></Button>
+				</div>
+				<div className={styles["button-margins"]}>
+					<Button
+						text="Go back !"
+						func={() => {
+							navigate("/");
+						}}
+					></Button>
+				</div>
 			</div>
 		</div>
 	);

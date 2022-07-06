@@ -20,7 +20,7 @@ export default function InfoMainCard() {
           </h2>
         </div>
         <div className={styles["question-div"]}>
-          <h2 className={styles["text-cls"]}>Are you interested?</h2>
+          <h2 className={styles["text-cls"]}>Are you interested ?</h2>
         </div>
         <div className={styles["btn-div"]}>
           <button
@@ -29,7 +29,7 @@ export default function InfoMainCard() {
             }}
             className={styles["join-btn"]}
           >
-            Yes!
+            Yes !
           </button>
         </div>
       </div>

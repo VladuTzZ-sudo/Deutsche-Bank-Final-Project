@@ -75,10 +75,9 @@ export default function QuizzMaker({ }: Props) {
     ];
 
     return (
-        <div>
-            <div className={`${styles["page"]}`}>
+        <div className={`${styles["page-style"]}`}>
                 <div className={`${styles["div--description__principal"]}`}>
-                    <span className={`${styles["text--title"]}`}>Add Course</span>
+                    <span className={`${styles["text--title"]}`}>Add dasdasd</span>
                     <span className={`${styles["text--normal__principal"]}`}>Dashboard / My courses / 03-ACS-L-A3-S2-BD1-CC / 14 March - 20 March / Test_Cap2</span>
                 </div>
                 <div className={`${styles["div--incapsulation"]}`}>
@@ -95,7 +94,6 @@ export default function QuizzMaker({ }: Props) {
                         ></CoursesListV2>
                     </div>
                 </div>
-            </div>
             <Footer />
         </div>
     )

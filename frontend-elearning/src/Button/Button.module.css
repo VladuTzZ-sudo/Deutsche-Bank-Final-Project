@@ -9,22 +9,23 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-weight: bold;
     outline:none;
-    margin-top: 60px;
-    background-color: #125dff;
-    color: white;
-    opacity: 0.5;
+    /* background-color: #125dff; */
+    background-color: #f7f7f7;
+    color: black;
+    opacity: 1;
   }
 
 
 .btn:hover{
   font-weight: bold;
     background-color: white;
-    color: #125dff;
-    border-radius: 50px;
+    color: #726abc;
+    border-radius: 20px;
     border:1px;
     border-style: solid;
-    border-color: #125dff;
+    border-color: #726abc;
     opacity: 1;
 }
 
@@ -41,7 +42,7 @@
   outline:none;
   background-color: #125dff;
   color: white;
-  opacity: 0.5;
+  opacity: 1;
 }
 
 .btn2:hover{

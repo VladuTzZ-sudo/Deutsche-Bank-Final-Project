@@ -23,9 +23,9 @@ const QuizzerForm = () => {
   ];
 
   return (
-    <div>
+    <div className={`${styles["page-style"]}`}>
       <NavBar links={navLinks} />
-      <div className={`container`}>
+      <div className={`${styles["container"]}`}>
         <div className={styles["quizzTitle"]}>
           <h1 className={styles["quizz-Title"]}>Quizz Maker</h1>
         </div>

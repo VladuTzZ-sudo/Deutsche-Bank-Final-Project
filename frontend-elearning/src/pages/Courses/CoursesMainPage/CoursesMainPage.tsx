@@ -18,6 +18,7 @@ import { Roles } from "../../../Constants/Constants";
 import CourseRepository from "../../../Repositories/Course/CourseRepository";
 import { CourseService } from "../../../Services/Course/CourseService";
 import CourseAddDTO from "../../../models/Course/CourseAddDTO";
+import FooterMain from "../../../FooterMain/FooterMain";
 
 const CoursesMainPage: FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -127,7 +128,7 @@ const CoursesMainPage: FC = () => {
   ];
 
   return (
-    <React.Fragment>
+    <div className={`${styles["page-style"]}`}>
       <NavBar
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
@@ -169,7 +170,9 @@ const CoursesMainPage: FC = () => {
           onSave={onAddCourse}
         ></AddCourseModal>
       )}
-    </React.Fragment>
+      <FooterMain />
+    </div>
+
   );
 };
 

@@ -29,6 +29,7 @@ import { faArrowRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import CircleProgress from "../../../components/CircleProgress/CircleProgress";
 import FileData from "../../../models/FileData";
 import Data from "../../../models/Data";
+import FooterMain from "../../../FooterMain/FooterMain";
 
 const CourseDetailPage: FC = () => {
   const navigate = useNavigate();
@@ -149,11 +150,11 @@ const CourseDetailPage: FC = () => {
         section.buttonIcon = section.quiz ? faArrowRight : faPlus;
         section.onButtonClick = section.quiz
           ? () => {
-              goToViewQuizTeacher(section.id!, +id!, section.title);
-            }
+            goToViewQuizTeacher(section.id!, +id!, section.title);
+          }
           : () => {
-              goToAddQuiz(section.id!);
-            };
+            goToAddQuiz(section.id!);
+          };
         section.completed = section.quiz ? false : true;
         section.onImageClick = async () => {
           const files = await getFiles(+id!, section.id!);
@@ -310,7 +311,7 @@ const CourseDetailPage: FC = () => {
   };
 
   return (
-    <React.Fragment>
+    <div className={`${styles["page-style"]}`}>
       <NavBar
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
@@ -350,7 +351,9 @@ const CourseDetailPage: FC = () => {
           onSave={onAddSection}
         ></AddCourseModal>
       )}
-    </React.Fragment>
+      <div className={`${styles["spatiu"]}`}></div>
+      <FooterMain></FooterMain>
+    </div>
   );
 };
 
