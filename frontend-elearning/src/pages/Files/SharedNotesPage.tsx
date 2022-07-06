@@ -127,7 +127,6 @@ const SharedNotesPage: FC = () => {
   const studentLinks: CustomNavLink[] = [
     { text: "List courses", href: "/", onClick: goToMainPage },
     { text: "Show notes", href: "/", onClick: goToSharedNotes },
-    { text: "Quiz results", href: "#" },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 
