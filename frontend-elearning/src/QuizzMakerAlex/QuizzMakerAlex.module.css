@@ -11,6 +11,17 @@
   margin-bottom: 30px;
 }
 
+.container {
+  overflow-y: auto;
+  background-color: red;
+}
+
+.page-style {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .borderDiv {
   border: 1px solid black;
   padding-top: 30px;

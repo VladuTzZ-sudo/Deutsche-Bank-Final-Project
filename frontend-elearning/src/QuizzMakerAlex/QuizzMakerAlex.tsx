@@ -38,14 +38,14 @@ export default function QuizzMakerAlex() {
   }
 
   return (
-    <div>
+    <div className={`${styles["page-style"]}`}>
       <NavBar links={navLinks} />
-      <div className="container">
-        <h1 className={styles["title"]}>Quizz Maker</h1>
+      <div className={`${styles["container"]}`}>
+        <h1 className={styles["title"]}>dadada</h1>
         <form>
           <div className={styles["quizz-inputs"]}>
             <label>
-              Quizz Title:
+              Quizz 2:
               <input onChange={handleChange} type="text" id="quizzTitle" />
             </label>
           </div>
@@ -71,7 +71,7 @@ export default function QuizzMakerAlex() {
             {/* Question 1 */}
             <div className={styles["question-borderDiv"]}>
               <label>
-                Question no.1:
+                Question no.2:
                 <input onChange={onQuestionChange} type="text" id="question1" />
               </label>
               <div className={styles["answer-text"]}>

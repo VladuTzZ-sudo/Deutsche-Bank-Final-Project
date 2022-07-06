@@ -178,12 +178,14 @@ export default function RegisterPage() {
 					<option value="teacher">Teacher</option>
 					<option value="student">Student</option>
 				</select>
-				<Button
-					text="Register!"
-					func={() => {
-						handleSubmit();
-					}}
-				/>
+				<div className={styles["button-margins"]}>
+					<Button
+						text="Register!"
+						func={() => {
+							handleSubmit();
+						}}
+					/>
+				</div>
 			</div>
 		</div>
 	);

@@ -13,7 +13,7 @@ export default function MainPage() {
   ];
 
   return (
-    <div className={styles["main-page"]}>
+    <div className={styles["page-style"]}>
       <NavBar links={navLinks}></NavBar>
       <InfoMainCard></InfoMainCard>
       {/* <SecondSection></SecondSection>
