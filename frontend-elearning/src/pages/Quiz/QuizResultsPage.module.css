@@ -25,3 +25,8 @@
 .course-popularity {
   margin-left: 13rem;
 }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+}

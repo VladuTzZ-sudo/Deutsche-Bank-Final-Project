@@ -150,11 +150,11 @@ const CourseDetailPage: FC = () => {
         section.buttonIcon = section.quiz ? faArrowRight : faPlus;
         section.onButtonClick = section.quiz
           ? () => {
-            goToViewQuizTeacher(section.id!, +id!, section.title);
-          }
+              goToViewQuizTeacher(section.id!, +id!, section.title);
+            }
           : () => {
-            goToAddQuiz(section.id!);
-          };
+              goToAddQuiz(section.id!);
+            };
         section.completed = section.quiz ? false : true;
         section.onImageClick = async () => {
           const files = await getFiles(+id!, section.id!);
@@ -311,7 +311,7 @@ const CourseDetailPage: FC = () => {
   };
 
   return (
-    <div className={`${styles["page-style"]}`}>
+    <React.Fragment>
       <NavBar
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
@@ -351,9 +351,8 @@ const CourseDetailPage: FC = () => {
           onSave={onAddSection}
         ></AddCourseModal>
       )}
-      <div className={`${styles["spatiu"]}`}></div>
-      <FooterMain></FooterMain>
-    </div>
+      <FooterMain className={styles["footer"]} />
+    </React.Fragment>
   );
 };
 

@@ -16,6 +16,7 @@ import Data from "../../models/Data";
 import "../global.css";
 import FileData from "../../models/FileData";
 import CourseRepository from "../../Repositories/Course/CourseRepository";
+import FooterMain from "../../FooterMain/FooterMain";
 
 const SharedNotesPage: FC = () => {
   const [files, setFiles] = useState<FileData[]>([]);
@@ -156,6 +157,7 @@ const SharedNotesPage: FC = () => {
           enableDrop={loggedUser.role === Roles.STUDENT ? true : false}
         ></DragFiles>
       </div>
+      <FooterMain className={styles["footer"]} />
     </React.Fragment>
   );
 };
