@@ -10,6 +10,7 @@ import PopularCourseGetDTO from "../../models/Course/PopularCourseGetDTO";
 import SectionAddDTO from "../../models/Course/Section/SectionAddDTO";
 import SectionAvgGrade from "../../models/Course/Section/SectionAvgGrade";
 import SectionGetDTO from "../../models/Course/Section/SectionGetDTO";
+import FileData from "../../models/FileData";
 import UserScore from "../../models/UserScore";
 
 const CourseService = {
@@ -170,6 +171,25 @@ const CourseService = {
 
       return scores;
     } catch (e) {
+      return [];
+    }
+  },
+
+  getStudentFiles: async (authToken: string): Promise<FileData[]> => {
+    // TODO: Exceptions
+    try {
+      const filesResponse = await fetch(`${API_URLS.GET_STUDENT_FILES}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      const files = (await filesResponse.json()) as FileData[];
+
+      return files;
+    } catch (e) {
+      console.log(e);
       return [];
     }
   },

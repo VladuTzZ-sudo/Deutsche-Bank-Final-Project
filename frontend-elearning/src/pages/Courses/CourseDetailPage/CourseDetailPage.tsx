@@ -150,11 +150,11 @@ const CourseDetailPage: FC = () => {
         section.buttonIcon = section.quiz ? faArrowRight : faPlus;
         section.onButtonClick = section.quiz
           ? () => {
-            goToViewQuizTeacher(section.id!, +id!, section.title);
-          }
+              goToViewQuizTeacher(section.id!, +id!, section.title);
+            }
           : () => {
-            goToAddQuiz(section.id!);
-          };
+              goToAddQuiz(section.id!);
+            };
         section.completed = section.quiz ? false : true;
         section.onImageClick = async () => {
           const files = await getFiles(+id!, section.id!);
@@ -221,7 +221,6 @@ const CourseDetailPage: FC = () => {
   const studentLinks: CustomNavLink[] = [
     { text: "List courses", href: "/", onClick: goToMainPage },
     { text: "Show notes", href: "/", onClick: goToSharedNotes },
-    { text: "Quiz results", href: "#" },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 
@@ -231,8 +230,13 @@ const CourseDetailPage: FC = () => {
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 
-  const teacherFilesValidator = (file: File) => {
-    return filesTypeValidator(file, ACCEPTED_FILE_TYPES.TEACHER);
+  const validateFile = (file: File) => {
+    return filesTypeValidator(
+      file,
+      loggedUser.role === Roles.TEACHER
+        ? ACCEPTED_FILE_TYPES.TEACHER
+        : ACCEPTED_FILE_TYPES.STUDENT
+    );
   };
 
   const onAddSection = async (title: string, description: string) => {
@@ -306,7 +310,7 @@ const CourseDetailPage: FC = () => {
   };
 
   return (
-    <div className={`${styles["page-style"]}`}>
+    <React.Fragment>
       <NavBar
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
@@ -331,7 +335,7 @@ const CourseDetailPage: FC = () => {
           <DragFiles
             className={`${styles["container"]} ${styles["drag-container"]}`}
             data={files}
-            validator={teacherFilesValidator}
+            validator={validateFile}
             onFilesSent={sendFile}
             onFileClicked={downloadFile}
             enableDrop={loggedUser.role === Roles.TEACHER ? true : false}
@@ -346,9 +350,8 @@ const CourseDetailPage: FC = () => {
           onSave={onAddSection}
         ></AddCourseModal>
       )}
-      <div className={`${styles["spatiu"]}`}></div>
-      <FooterMain></FooterMain>
-    </div>
+      <FooterMain className={styles["footer"]} />
+    </React.Fragment>
   );
 };
 

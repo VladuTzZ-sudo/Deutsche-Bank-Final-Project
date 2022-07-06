@@ -51,3 +51,8 @@
   transform: scale(2) translateY(-0.3rem);
   z-index: -1;
 }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+}

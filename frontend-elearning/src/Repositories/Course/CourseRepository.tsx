@@ -76,6 +76,18 @@ const CourseRepository = {
 
     return [];
   },
+
+  getStudentFiles: async (authToken: string): Promise<FileData[]> => {
+    const apiFiles: FileData[] = await CourseService.getStudentFiles(authToken);
+
+    apiFiles.map((file) => {
+      const fileSplitted = file.name.split(".");
+      file.type = fileSplitted[fileSplitted.length - 1];
+      return file;
+    });
+
+    return apiFiles;
+  },
 };
 
 export default CourseRepository;

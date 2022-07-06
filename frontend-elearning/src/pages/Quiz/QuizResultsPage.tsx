@@ -10,6 +10,7 @@ import UserAuth from "../../models/UserAuth";
 import PopularCourseGetDTO from "../../models/Course/PopularCourseGetDTO";
 import { CourseService } from "../../Services/Course/CourseService";
 import SectionAvgGrade from "../../models/Course/Section/SectionAvgGrade";
+import FooterMain from "../../FooterMain/FooterMain";
 
 const QuizResultsPage = () => {
   const [loggedUser, setLoggedUser]: [
@@ -208,6 +209,7 @@ const QuizResultsPage = () => {
           />
         </div>
       </div>
+      <FooterMain className={styles["footer"]} />
     </React.Fragment>
   );
 };
