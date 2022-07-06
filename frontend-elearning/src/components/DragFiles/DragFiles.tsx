@@ -4,7 +4,9 @@ import {
   DragEventHandler,
   FC,
   SetStateAction,
+  useCallback,
   useEffect,
+  useReducer,
   useRef,
   useState,
 } from "react";
@@ -12,6 +14,7 @@ import Data from "../../models/Data";
 import DataCard from "../DataCard/DataCard";
 import styles from "./DragFiles.module.css";
 import FileData from "../../models/FileData";
+import { FILE_ICON } from "../../Constants/Constants";
 
 interface DragFilesProps {
   data?: FileData[];
@@ -103,17 +106,30 @@ const DragFiles: FC<DragFilesProps> = (props) => {
     icon: process.env.PUBLIC_URL + "/assets/data-images/upload.png",
   };
 
-  const files = dataItems.map((file, index) => {
-    const folderIcon: string =
-      process.env.PUBLIC_URL + "/assets/data-images/folder-blue-icon.png";
+  const getFileIcon = (type: string): string => {
+    for (let file_type_image of FILE_ICON) {
+      if (file_type_image.type.includes(type)) {
+        return process.env.PUBLIC_URL + "/assets/" + file_type_image.icon;
+      }
+    }
 
-    const fileIcon: string =
-      process.env.PUBLIC_URL + "/assets/data-images/file-generic-icon.jpg";
+    return "";
+  };
+
+  const files = props.data?.map((file, index) => {
+    // const folderIcon: string =
+    //   process.env.PUBLIC_URL + "/assets/data-images/folder-blue-icon.png";
+
+    // const fileIcon: string =
+    //   process.env.PUBLIC_URL + "/assets/data-images/file-generic-icon.jpg";
+
+    const fileIcon = getFileIcon(file.type);
+    console.log(fileIcon);
 
     const cardInfo: Data = {
       title: file.name,
       date: new Date(),
-      icon: file.type === "" ? folderIcon : fileIcon,
+      icon: fileIcon,
     };
 
     return (

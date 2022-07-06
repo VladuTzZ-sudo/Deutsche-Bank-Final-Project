@@ -27,6 +27,7 @@
   width: 16rem;
   transition: 0.2s ease-in-out;
   outline-color: #d5d2eb;
+  min-height: 16rem;
 }
 
 .data__card:hover {

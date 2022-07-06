@@ -7,11 +7,18 @@ import CustomNavLink from "../../models/CustomNavLink";
 import NavBar from "../../Navbar/NavBar";
 import DragFiles from "../../components/DragFiles/DragFiles";
 import filesTypeValidator from "../../Services/Validation/Validator";
-import { ACCEPTED_FILE_TYPES, Roles } from "../../Constants/Constants";
+import {
+  ACCEPTED_FILE_TYPES,
+  API_URLS,
+  Roles,
+} from "../../Constants/Constants";
 import Data from "../../models/Data";
 import "../global.css";
+import FileData from "../../models/FileData";
+import CourseRepository from "../../Repositories/Course/CourseRepository";
 
 const SharedNotesPage: FC = () => {
+  const [files, setFiles] = useState<FileData[]>([]);
   const [loggedUser, setLoggedUser]: [
     UserAuth,
     React.Dispatch<React.SetStateAction<UserAuth>>
@@ -21,16 +28,30 @@ const SharedNotesPage: FC = () => {
     token: "",
   });
 
+  // force update
+  const [rerender, setRerender] = useState(false);
+
   const location: Location = useLocation();
   const navigate = useNavigate();
   const downloadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setLoggedUser(location.state as UserAuth);
-  }, []);
+    getFiles();
+  }, [rerender]);
 
   const studentFilesValidator = (file: File) => {
     return filesTypeValidator(file, ACCEPTED_FILE_TYPES.STUDENT);
+  };
+
+  const getFiles = async () => {
+    const newFiles = await CourseRepository.getStudentFiles(
+      (location.state as UserAuth).token
+    );
+
+    setFiles(newFiles);
+
+    return newFiles;
   };
 
   const sendFile = async (files: FileList) => {
@@ -41,7 +62,7 @@ const SharedNotesPage: FC = () => {
     }
 
     try {
-      const fileResponse = await fetch(`http://localhost:8080/courses/`, {
+      const fileResponse = await fetch(`${API_URLS.GET_STUDENT_FILES}`, {
         method: "POST",
         mode: "cors",
         headers: {
@@ -51,6 +72,8 @@ const SharedNotesPage: FC = () => {
       });
 
       console.log("file added " + files[0].name);
+
+      setRerender(!rerender);
     } catch (e) {
       console.log(e);
     }
@@ -60,13 +83,16 @@ const SharedNotesPage: FC = () => {
     e.preventDefault();
 
     try {
-      const fileResponse = await fetch(`http://localhost:8080/courses/`, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          Authorization: `Bearer ${loggedUser.token}`,
-        },
-      });
+      const fileResponse = await fetch(
+        `${API_URLS.GET_STUDENT_FILES}/${dataInfo.title}`,
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            Authorization: `Bearer ${loggedUser.token}`,
+          },
+        }
+      );
 
       const fileData = await fileResponse.blob();
       const url = window.URL.createObjectURL(fileData);
@@ -103,8 +129,6 @@ const SharedNotesPage: FC = () => {
     { text: "Quiz results", href: "#" },
     { text: "Log out", href: "/", onClick: onLogout },
   ];
-
-  const files = [{ name: "File1", type: "File2", date: "qdd" }];
 
   return (
     <React.Fragment>
