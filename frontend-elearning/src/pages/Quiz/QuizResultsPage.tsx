@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import Chart from "react-apexcharts";
 import { useLocation, useNavigate, Location } from "react-router-dom";
@@ -11,6 +11,9 @@ import PopularCourseGetDTO from "../../models/Course/PopularCourseGetDTO";
 import { CourseService } from "../../Services/Course/CourseService";
 import SectionAvgGrade from "../../models/Course/Section/SectionAvgGrade";
 import FooterMain from "../../FooterMain/FooterMain";
+import ClassicButton from "../../components/Buttons/ClassicButton/ClassicButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
 
 const QuizResultsPage = () => {
   const [loggedUser, setLoggedUser]: [
@@ -31,6 +34,7 @@ const QuizResultsPage = () => {
 
   const location: Location = useLocation();
   const navigate = useNavigate();
+  const downloadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const init = async () => {
@@ -178,10 +182,39 @@ const QuizResultsPage = () => {
     { text: "Log out", href: "/", onClick: onLogout },
   ];
 
+  const downloadGrades = async () => {
+    const grades = await CourseService.getAllGrades(
+      (location.state as UserAuth).token
+    );
+
+    const replacer = (key: any, value: any) => (value === null ? "" : value); // specify how you want to handle null values here
+    const header = Object.keys(grades[0]);
+    const csv = [
+      header.join(","), // header row first
+      ...grades.map((row: any) =>
+        header
+          .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+          .join(",")
+      ),
+    ].join("\r\n");
+
+    console.log(csv);
+    const fileData = new Blob([csv]);
+    const url = window.URL.createObjectURL(fileData);
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.style.display = "none";
+    downloadAnchor.href = url;
+    downloadAnchor.download = "results.csv";
+    downloadRef.current?.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadRef.current?.removeChild(downloadAnchor);
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <React.Fragment>
       <NavBar links={teacherLinks}></NavBar>
-      <div className={styles["content"]}>
+      <div className={styles["content"]} ref={downloadRef}>
         <h1
           className={`${styles["header--primary"]} ${styles["course-popularity"]}`}
         >
@@ -208,6 +241,16 @@ const QuizResultsPage = () => {
             width="700px"
           />
         </div>
+        <ClassicButton
+          className={`${styles["btn-download"]}`}
+          onClick={downloadGrades}
+        >
+          <FontAwesomeIcon
+            className={styles["btn__icon"]}
+            icon={faBookOpenReader}
+          />
+          <span className={styles["btn__text"]}>DOWNLOAD ALL GRADES</span>
+        </ClassicButton>
       </div>
       <FooterMain className={styles["footer"]} />
     </React.Fragment>

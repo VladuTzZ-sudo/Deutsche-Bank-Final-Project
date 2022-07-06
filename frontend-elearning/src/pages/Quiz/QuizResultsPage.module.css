@@ -30,3 +30,21 @@
   position: fixed;
   bottom: 0;
 }
+
+.btn__text {
+  font-size: 1.6rem;
+}
+
+.btn__icon {
+  font-size: 1.8rem;
+}
+
+.btn-download {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #000;
+  grid-column: 1 / span 2;
+  align-self: center;
+  justify-self: center;
+}

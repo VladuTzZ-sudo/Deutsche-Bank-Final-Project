@@ -25,6 +25,7 @@ const API_URLS = {
   GET_QUESTIONS: "http://localhost:8080/courses",
   LEADERBOARD: "http://localhost:8080/statistics/leaderboard",
   GET_STUDENT_FILES: "http://localhost:8080/files",
+  GET_ALL_GRADES: "http://localhost:8080/statistics/resources",
 };
 
 export { Roles, ACCEPTED_FILE_TYPES, API_URLS, FILE_ICON };

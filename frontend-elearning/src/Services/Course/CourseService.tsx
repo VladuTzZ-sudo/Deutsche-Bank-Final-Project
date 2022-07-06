@@ -6,6 +6,7 @@ import { API_URLS } from "../../Constants/Constants";
 import Course from "../../models/Course/Course";
 import CourseAddDTO from "../../models/Course/CourseAddDTO";
 import CourseGetDTO from "../../models/Course/CourseGetDTO";
+import CourseGrades from "../../models/Course/Grades/CourseGrades";
 import PopularCourseGetDTO from "../../models/Course/PopularCourseGetDTO";
 import SectionAddDTO from "../../models/Course/Section/SectionAddDTO";
 import SectionAvgGrade from "../../models/Course/Section/SectionAvgGrade";
@@ -188,6 +189,25 @@ const CourseService = {
       const files = (await filesResponse.json()) as FileData[];
 
       return files;
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  },
+
+  getAllGrades: async (authToken: string): Promise<CourseGrades[]> => {
+    // TODO: Exceptions
+    try {
+      const gradesResponse = await fetch(`${API_URLS.GET_ALL_GRADES}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      const grades = (await gradesResponse.json()) as CourseGrades[];
+
+      return grades;
     } catch (e) {
       console.log(e);
       return [];
