@@ -20,8 +20,10 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .container {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .quizz-Title {
@@ -38,6 +40,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #f2f1ef;
 }
 
 .addBtn {
