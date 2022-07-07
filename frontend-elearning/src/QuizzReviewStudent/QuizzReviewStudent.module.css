@@ -12,8 +12,8 @@
 .div--description__principal {
     height: 130px;
     margin: 20px 0px 0px 0;
-    border: 1px solid #c1c2c7;
-    border-radius: 2px;
+    border: 1px solid #726abc;
+    border-radius: 10px;
     box-sizing: border-box;
     justify-content: center;
     display: flex;
@@ -27,8 +27,8 @@
     height: auto;
     margin: 0px 20px 0px 0px;
     padding: 20px;
-    border-radius: 2px;
-    border: 1px solid #c1c2c7;
+    border-radius: 10px;
+    border: 1px solid #726abc;
     box-sizing: border-box;
     justify-content: center;
     display: flex;
@@ -122,8 +122,61 @@
 }
 
 .text--normal__principal {
-    padding-left: 25px;
-    font-size: 13px;
+    color: #333333;
+    padding-left: 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 21px;
+    font-weight: 200;
+    font-style: italic;
+    line-height: 1.5625;
+}
+
+.text--normal__principal2 {
+    color: #333333;
+    font-weight: 500;
+    padding-left: 20px;
+    font-size: 19px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5625;
+    padding-right: 8px;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+.text--normal__principal3 {
+    color: #333333;
+    font-weight: 300;
+    font-size: 20px;
+    padding-right: 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5625;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+h4 {
+    font-size: 15px;
+}
+
+.timer {
+    margin-left: 10px;
+}
+
+.text--normal__principal4 {
+    color: #333333;
+    font-weight: 300;
+    font-size: 18px;
+    padding-right: 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5625;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+.paragraph {
+    padding-left: 20px;
+    width: 90vw;
+    text-align: left;
 }
 
 .paragraph_general {
@@ -204,6 +257,12 @@
     padding-left: 15px;
     font-size: 15px;
     width: fit-content;
+}
+
+.page-style {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .span-finish {

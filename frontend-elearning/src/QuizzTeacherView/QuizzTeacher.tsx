@@ -24,6 +24,7 @@ import {
 } from "react-router-dom";
 import QuizzRepository from "../Repositories/Quizz/QuizzRepository";
 import UserAuth from "../models/UserAuth";
+import FooterMain from "../FooterMain/FooterMain";
 
 type Props = {};
 
@@ -42,7 +43,7 @@ export interface QuestionQuizzProps {
 	miniCard: React.ReactNode;
 }
 
-export default function QuizzTeacher({}: Props) {
+export default function QuizzTeacher({ }: Props) {
 	const navigate = useNavigate();
 	const location: Location = useLocation();
 	var ok = 0;
@@ -90,41 +91,44 @@ export default function QuizzTeacher({}: Props) {
 	]);
 
 	const handleSubmit = () => {
-        navigate(-1);
-    }
+		navigate(-1);
+	}
 
 	return (
-		<div>
+		<div className={`${styles["page-style"]}`}>
 			<div className={`${styles["page"]}`}>
 				<div className={`${styles["div--description__principal"]}`}>
 					<span className={`${styles["text--title"]}`}>
-						{/* Course title: {(location.state as any).subjectTitle} */}
+						{(location.state as any).subjectTitle}
 					</span>
-					<span className={`${styles["text--normal__principal"]}`}>
-						Section title: {(location.state as any).sectionTitle}
-					</span>
+					<div>
+						<span className={`${styles["text--normal__principal2"]}`}>Section</span>
+						<span className={`${styles["text--subtitle__principal"]}`}>
+							{(location.state as any).sectionTitle}
+						</span>
+					</div>
 				</div>
 
 				<div className={`${styles["div--quizz"]}`}>
 					<div className={`${styles["div--all--questions"]}`}>
 						{qustionsOk.map((question: QuestionQuizzProps) => {
-                            if (ok == 0) {
-                                ok = question.number - 1;
-                            }
-                            return (
-                                <Element name={question.number.toString()}>
-                                    <div id={`${question.number}`}>
-                                        <QuestionQuizz
-                                            id={question.number.toString()}
-                                            question={question.question}
-                                            number={question.number - ok}
-                                            answers={question.answers}
-											mode = {1}
-                                        ></QuestionQuizz>
-                                    </div>
-                                </Element>
-                            )
-                        })}
+							if (ok == 0) {
+								ok = question.number - 1;
+							}
+							return (
+								<Element name={question.number.toString()}>
+									<div id={`${question.number}`}>
+										<QuestionQuizz
+											id={question.number.toString()}
+											question={question.question}
+											number={question.number - ok}
+											answers={question.answers}
+											mode={1}
+										></QuestionQuizz>
+									</div>
+								</Element>
+							)
+						})}
 
 						<div className={`${styles["elemFlexCenter"]}`}>
 							<Element name="Submit">
@@ -157,7 +161,7 @@ export default function QuizzTeacher({}: Props) {
 					</div>
 				</div>
 			</div>
-			<Footer />
+			<FooterMain />
 		</div>
 	);
 }

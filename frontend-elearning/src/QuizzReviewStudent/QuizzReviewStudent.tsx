@@ -24,6 +24,7 @@ import {
 } from "react-router-dom";
 import QuizzRepository from "../Repositories/Quizz/QuizzRepository";
 import UserAuth from "../models/UserAuth";
+import FooterMain from "../FooterMain/FooterMain";
 
 type Props = {};
 
@@ -94,15 +95,18 @@ export default function QuizzReview({}: Props) {
   ]);
 
   return (
-    <div >
+    <div className={`${styles["page-style"]}`}>
       <div className={`${styles["page"]}`}>
         <div className={`${styles["div--description__principal"]}`}>
           <span className={`${styles["text--title"]}`}>
-            Course title: {(location.state as any).subjectTitle}
+            {(location.state as any).subjectTitle}
           </span>
-          <span className={`${styles["text--normal__principal"]}`}>
-            Section title: {(location.state as any).sectionTitle}
-          </span>
+          <div>
+            <span className={`${styles["text--normal__principal2"]}`}>Section</span>
+            <span className={`${styles["text--subtitle__principal"]}`}>
+              {(location.state as any).sectionTitle}
+            </span>
+          </div>
         </div>
 
         <div className={`${styles["div--quizz"]}`}>
@@ -158,7 +162,7 @@ export default function QuizzReview({}: Props) {
           </div>
         </div>
       </div>
-      <Footer />
+      <FooterMain />
     </div>
   );
 }
