@@ -30,7 +30,7 @@
   font-size: 27px;
   border: 1px solid #726abc;
 
-  background: #f2f1ef ;
+  background: #f2f1ef;
   padding: 5px 60px 5px 60px;
   text-decoration: solid;
   display: block !important;
@@ -45,7 +45,7 @@
   text-align: center;
   margin: 10px auto;
   border-radius: 5px;
-  background-color: #726abc;
+  background-color: #f2f1ef;
 }
 
 .divContainer {

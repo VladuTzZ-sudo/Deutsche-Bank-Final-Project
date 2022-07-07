@@ -2,7 +2,7 @@
   text-align: center;
   font-size: 2rem;
   margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 50px !important;
 }
 
 .quizzTitle {
@@ -20,12 +20,12 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .container {
--ms-overflow-style: none;  /* IE and Edge */
-scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .quizz-Title {
-  font-family: 'Enriqueta', arial, serif;
+  font-family: "Enriqueta", arial, serif;
   line-height: 1.25;
   margin: 0 0 10px;
   font-size: 40px;
@@ -48,11 +48,11 @@ scrollbar-width: none;  /* Firefox */
   font-size: 27px;
   border: 1px solid #726abc;
 
-  background: #f2f1ef ;
+  background: #f2f1ef;
   padding: 5px 60px 5px 60px;
   text-decoration: solid;
   display: block !important;
   margin: 0 auto;
   margin-top: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 50px !important;
 }
