@@ -322,20 +322,23 @@ const CourseDetailPage: FC = () => {
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
       {/* <CircleProgress></CircleProgress> */}
-      <div className={styles["container"]} ref={downloadRef}>
-        {loggedUser.role === Roles.TEACHER ? (
-          <ClassicButton
-            className={`${styles["btn-add"]}`}
-            onClick={openSectionModal}
-          >
-            <FontAwesomeIcon
-              className={styles["btn__icon"]}
-              icon={faBookOpenReader}
-            />
-            <span className={styles["btn__text"]}>ADD SECTION</span>
-          </ClassicButton>
-        ) : null}
-        <SectionsList sections={sections}></SectionsList>
+      <div className={styles["spacing"]}>
+        <div className={styles["container"]} ref={downloadRef}>
+          {loggedUser.role === Roles.TEACHER ? (
+            <ClassicButton
+              className={`${styles["btn-add"]}`}
+              onClick={openSectionModal}
+            >
+              <FontAwesomeIcon
+                className={styles["btn__icon"]}
+                icon={faBookOpenReader}
+              />
+              <span className={styles["btn__text"]}>ADD SECTION</span>
+            </ClassicButton>
+          ) : null}
+          <SectionsList sections={sections}></SectionsList>
+        </div>
+        <FooterMain className={styles["footer"]} />
       </div>
       {isFileModalOpened && (
         <ModalContainer onClose={closeFileModal}>
@@ -357,7 +360,6 @@ const CourseDetailPage: FC = () => {
           onSave={onAddSection}
         ></AddCourseModal>
       )}
-      <FooterMain className={styles["footer"]} />
     </React.Fragment>
   );
 };

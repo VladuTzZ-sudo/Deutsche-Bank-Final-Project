@@ -17,6 +17,7 @@
   align-items: flex-end;
   row-gap: 5rem;
   margin-top: 2.6rem;
+  margin-bottom: 8rem;
 }
 
 /* ADD SECTION BUTTON */
@@ -41,4 +42,6 @@
 
 .footer {
   margin-top: auto;
+  position: fixed;
+  bottom: 0;
 }
