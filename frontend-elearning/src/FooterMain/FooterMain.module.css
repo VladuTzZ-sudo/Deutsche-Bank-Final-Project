@@ -1,8 +1,6 @@
 .footer-text {
   display: flex;
   justify-content: center;
-  position: sticky;
-  bottom: 0px;
   margin-top: auto;
   color: #f4e9ea;
   background-color: #212529;

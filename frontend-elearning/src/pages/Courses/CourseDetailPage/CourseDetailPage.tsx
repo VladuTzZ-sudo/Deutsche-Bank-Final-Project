@@ -310,7 +310,8 @@ const CourseDetailPage: FC = () => {
   };
 
   return (
-<div className={`${styles["page-style"]}`}>      <NavBar
+    <React.Fragment>
+      <NavBar
         links={loggedUser.role === Roles.TEACHER ? teacherLinks : studentLinks}
       ></NavBar>
       {/* <CircleProgress></CircleProgress> */}
@@ -350,7 +351,7 @@ const CourseDetailPage: FC = () => {
         ></AddCourseModal>
       )}
       <FooterMain className={styles["footer"]} />
-    </div>
+    </React.Fragment>
   );
 };
 

@@ -14,6 +14,7 @@ import FooterMain from "../../FooterMain/FooterMain";
 import ClassicButton from "../../components/Buttons/ClassicButton/ClassicButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
+import { Parser } from "json2csv";
 
 const QuizResultsPage = () => {
   const [loggedUser, setLoggedUser]: [
@@ -187,16 +188,22 @@ const QuizResultsPage = () => {
       (location.state as UserAuth).token
     );
 
-    const replacer = (key: any, value: any) => (value === null ? "" : value); // specify how you want to handle null values here
-    const header = Object.keys(grades[0]);
-    const csv = [
-      header.join(","), // header row first
-      ...grades.map((row: any) =>
-        header
-          .map((fieldName) => JSON.stringify(row[fieldName], replacer))
-          .join(",")
-      ),
-    ].join("\r\n");
+    // const replacer = (key: any, value: any) => (value === null ? "" : value); // specify how you want to handle null values here
+    // const header = Object.keys(grades[0]);
+    // const csv = [
+    //   header.join(","), // header row first
+    //   ...grades.map((row: any) =>
+    //     header
+    //       .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+    //       .join(",")
+    //   ),
+    // ].join("\r\n");
+
+    const fields = ["field1", "field2", "field3"];
+    const opts = { fields };
+
+    const parser = new Parser(opts);
+    const csv = parser.parse(grades);
 
     console.log(csv);
     const fileData = new Blob([csv]);
@@ -209,6 +216,8 @@ const QuizResultsPage = () => {
     downloadAnchor.click();
     downloadRef.current?.removeChild(downloadAnchor);
     window.URL.revokeObjectURL(url);
+
+    return grades;
   };
 
   return (
