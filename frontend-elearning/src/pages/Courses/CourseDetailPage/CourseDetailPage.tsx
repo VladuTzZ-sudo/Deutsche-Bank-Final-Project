@@ -49,12 +49,18 @@ const CourseDetailPage: FC = () => {
   const [sections, setSections] = useState<Section[]>([]);
   const [files, setFiles] = useState<FileData[]>([]);
   const downloadRef = useRef<HTMLDivElement>(null);
-  const [focusedSection, setFocusedSection] = useState<number>();
+  const [focusedSection, setFocusedSection] = useState<number>(1);
+  // force update
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     setLoggedUser(location.state as UserAuth);
     getSections();
   }, []);
+
+  useEffect(() => {
+    getFiles(+id!, focusedSection);
+  }, [rerender]);
 
   const openFileModal = () => {
     setIsFileModalOpened(true);
@@ -158,7 +164,7 @@ const CourseDetailPage: FC = () => {
         section.completed = section.quiz ? false : true;
         section.onImageClick = async () => {
           const files = await getFiles(+id!, section.id!);
-          setFocusedSection(section.id);
+          setFocusedSection(section.id!);
           openFileModal();
         };
         return section;
@@ -189,7 +195,7 @@ const CourseDetailPage: FC = () => {
         section.completed = section.quiz ? false : true;
         section.onImageClick = async () => {
           const files = await getFiles(+id!, section.id!);
-          setFocusedSection(section.id);
+          setFocusedSection(section.id!);
           if (files.length) {
             openFileModal();
           }
@@ -274,6 +280,7 @@ const CourseDetailPage: FC = () => {
       );
 
       console.log("file added " + files[0].name);
+      setRerender(!rerender);
     } catch (e) {
       console.log(e);
     }
