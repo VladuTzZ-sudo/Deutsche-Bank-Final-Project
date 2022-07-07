@@ -94,7 +94,7 @@ export default function QuizzReview({}: Props) {
   ]);
 
   return (
-    <div>
+    <div >
       <div className={`${styles["page"]}`}>
         <div className={`${styles["div--description__principal"]}`}>
           <span className={`${styles["text--title"]}`}>

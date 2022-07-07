@@ -9,6 +9,10 @@
     flex-direction: column;
 }
 
+.body {
+    overflow: hidden;
+}
+
 .page {
     margin: 10px 10px 10px 10px;
     background-color: white;

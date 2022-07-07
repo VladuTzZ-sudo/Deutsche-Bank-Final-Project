@@ -111,7 +111,7 @@ const QuizzRepository = {
 
       const question: QuestionQuizzProps = {
         id: apiQuestion.id.toString(),
-        number: apiQuestion.id,
+        number: apiQuestion.id - i,
         question: apiQuestion.contentQuestion,
         changeColor: () => {
           return (
